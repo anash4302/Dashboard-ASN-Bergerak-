@@ -295,12 +295,12 @@
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="bulan_pemantauan" value="6"><span class="text-slate-700 font-medium">Bulan Ke-6</span></label>
                                 </div>
                             </div>
-                            <div class="md:col-span-2 bg-teal-50 p-4 rounded-lg border border-teal-100 hidden" id="bulanPertamaIndicator">
+                            <div class="md:col-span-2 bg-teal-50 p-4 rounded-lg border border-teal-100" id="bulanPertamaIndicator" hidden>
                                 <p class="text-sm font-semibold text-teal-800">5. Bulan pemantauan: <span class="font-bold">Bulan Ke-1 (Kunjungan Pertama)</span> &mdash; otomatis</p>
                                 <input type="radio" name="bulan_pemantauan" value="1" id="bulanPemantauanSatu" class="hidden">
                             </div>
 
-                            <div id="namaOrtuWrapper" class="hidden">
+                            <div id="namaOrtuWrapper" hidden>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1">Nama orang tua</label>
                                 <input type="text" name="nama_ortu" class="w-full rounded-lg border-slate-300 border p-2.5 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 shadow-sm bg-white">
                             </div>
@@ -384,7 +384,7 @@
                     </div>
 
                     <!-- ============ FIELDS: KUNJUNGAN PERTAMA (BULAN 1) ============ -->
-                    <div id="pertamaSections" class="hidden space-y-6">
+                    <div id="pertamaSections" hidden class="space-y-6">
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
                         <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 flex items-center gap-3">
                             <div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">B</div>
@@ -599,22 +599,31 @@
                                 </div>
                             </div>
 
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana panjang/tinggi badan dibandingkan bulan lalu?</label>
+                                <div class="flex gap-6">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="perbandingan_tb" value="Bertambah" required><span class="text-slate-700">Bertambah</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="perbandingan_tb" value="Tetap/sama"><span class="text-slate-700">Tetap/sama</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="perbandingan_tb" value="Berkurang"><span class="text-slate-700">Berkurang</span></label>
+                                </div>
+                            </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-slate-100 pt-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana kondisi balita bulan ini?</label>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-2">6. Bagaimana kondisi balita bulan ini?</label>
                                     <div class="flex gap-6 mb-3">
                                         <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="kondisi_balita" value="Sehat" required><span class="font-medium text-emerald-700">Sehat</span></label>
                                         <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="kondisi_balita" value="Sakit"><span class="font-medium text-rose-600">Sakit</span></label>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">6. Jika sakit, sebutkan penyakitnya...</label>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">7. Jika sakit, sebutkan penyakitnya...</label>
                                     <input type="text" name="penyakit_balita" placeholder="Kosongkan jika sehat..." class="w-full rounded-lg border-slate-300 border p-2.5 focus:border-emerald-500 shadow-sm text-sm">
                                 </div>
                             </div>
 
                             <div class="border-t border-slate-100 pt-4">
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">7. Apakah perkembangan balita bulan ini sesuai dengan usianya?</label>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">8. Apakah perkembangan balita bulan ini sesuai dengan usianya?</label>
                                 <div class="space-y-3">
                                     <label class="flex items-start gap-3 cursor-pointer"><input type="radio" name="perkembangan" value="Sesuai bulan ini dan lalu" class="mt-1" required><span class="text-slate-700">Bulan ini dan bulan lalu <strong>sesuai</strong> (jika semua item pertanyaan dapat dilakukan balita)</span></label>
                                     <label class="flex items-start gap-3 cursor-pointer"><input type="radio" name="perkembangan" value="Bulan ini belum sesuai, lalu sesuai" class="mt-1"><span class="text-slate-700">Bulan ini <strong>belum sesuai</strong> (jika ada salah satu item pertanyaan belum dapat dilakukan balita), bulan lalu sesuai</span></label>
@@ -625,7 +634,7 @@
 
                             <div class="border-t border-slate-100 pt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">8. Bagaimana status imunisasi balita bulan ini?</label>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-2">9. Bagaimana status imunisasi balita bulan ini?</label>
                                     <div class="space-y-2">
                                         <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="status_imunisasi" value="Sudah lengkap" class="mt-1" required><span class="text-slate-700 text-sm">Sudah lengkap sesuai usia</span></label>
                                         <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="status_imunisasi" value="Belum lengkap" class="mt-1"><span class="text-slate-700 text-sm">Belum lengkap sesuai usia</span></label>
@@ -633,7 +642,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">9. Jika belum lengkap, sebutkan imunisasi yang kurang</label>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">10. Jika belum lengkap, sebutkan imunisasi yang kurang</label>
                                     <textarea name="imunisasi_kurang" rows="3" class="w-full rounded-lg border-slate-300 border p-2.5 focus:border-emerald-500 shadow-sm text-sm" placeholder="Sebutkan jenis imunisasi..."></textarea>
                                 </div>
                             </div>
@@ -667,13 +676,27 @@
                             </div>
 
                             <div class="border-t border-slate-100 pt-4">
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">3. Khusus usia ≥6 bulan: Dalam 24 jam terakhir, makanan dengan komposisi (Boleh pilih >1):</label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
-                                    <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" name="komposisi_makanan" value="Makanan pokok" class="mt-0.5"><span class="text-sm text-slate-700">Makanan pokok (nasi, kentang, ubi, singkong, macaroni, roti)</span></label>
-                                    <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" name="komposisi_makanan" value="Lauk hewani" class="mt-0.5"><span class="text-sm text-slate-700">Lauk hewani (telur, ikan, daging sapi, ayam, susu)</span></label>
-                                    <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" name="komposisi_makanan" value="Lauk nabati" class="mt-0.5"><span class="text-sm text-slate-700">Lauk nabati (kacang-kacangan, tempe, tahu, kedelai)</span></label>
-                                    <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" name="komposisi_makanan" value="Sayuran" class="mt-0.5"><span class="text-sm text-slate-700">Sayuran (wortel, brokoli, bayam, buncis, kembang kol)</span></label>
-                                    <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" name="komposisi_makanan" value="Buah-buahan" class="mt-0.5"><span class="text-sm text-slate-700">Buah-buahan (pisang, pepaya, melon, mangga, jeruk)</span></label>
+                                <label class="block text-sm font-semibold text-slate-700 mb-3">3. Khusus usia &ge;6 bulan: Dalam 24 jam terakhir, balita mendapat makanan dari kelompok berikut?</label>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+                                        <thead>
+                                            <tr class="bg-slate-100 text-slate-600">
+                                                <th class="text-left p-2.5 font-semibold">Kelompok bahan makanan</th>
+                                                <th class="p-2.5 font-semibold w-16 text-center">Ya</th>
+                                                <th class="p-2.5 font-semibold w-16 text-center">Tidak</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-100">
+                                            <tr><td class="p-2.5 text-slate-700">ASI</td><td class="text-center p-2.5"><input type="radio" name="gizi_asi" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_asi" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Makanan pokok (serealia, umbi-umbian)</td><td class="text-center p-2.5"><input type="radio" name="gizi_makanan_pokok" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_makanan_pokok" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Kacang-kacangan (tempe, tahu, kedelai, dll)</td><td class="text-center p-2.5"><input type="radio" name="gizi_kacang" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_kacang" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Produk susu hewani (susu, yogurt, keju)</td><td class="text-center p-2.5"><input type="radio" name="gizi_susu_hewani" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_susu_hewani" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Daging-dagingan (ayam, ikan, daging merah, dll)</td><td class="text-center p-2.5"><input type="radio" name="gizi_daging" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_daging" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Telur</td><td class="text-center p-2.5"><input type="radio" name="gizi_telur" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_telur" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Buah & sayur kaya vitamin A</td><td class="text-center p-2.5"><input type="radio" name="gizi_sayur_vitA" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_sayur_vitA" value="Tidak"></td></tr>
+                                            <tr><td class="p-2.5 text-slate-700">Buah & sayur lainnya</td><td class="text-center p-2.5"><input type="radio" name="gizi_sayur_lain" value="Ya"></td><td class="text-center p-2.5"><input type="radio" name="gizi_sayur_lain" value="Tidak"></td></tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
@@ -946,6 +969,26 @@
             appId: "1:46506527118:web:fa053420f51dd440c9bcdf",
             measurementId: "G-Q5R00CM75T"
         };
+
+        // --- PENAMPIL ERROR (biar error JS kelihatan di layar, gampang di-screenshot buat debug) ---
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error || e.message);
+            if (document.getElementById('jsErrorBanner')) return; // jangan dobel
+            const banner = document.createElement('div');
+            banner.id = 'jsErrorBanner';
+            banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:white;padding:10px 14px;font-size:12px;z-index:99999;font-family:monospace;white-space:pre-wrap;';
+            banner.textContent = 'ERROR APLIKASI: ' + (e.message || 'unknown') + ' — file:' + (e.filename ? e.filename.split('/').pop() : '?') + ' baris:' + e.lineno;
+            document.body.appendChild(banner);
+        });
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled promise rejection:', e.reason);
+            if (document.getElementById('jsErrorBanner')) return;
+            const banner = document.createElement('div');
+            banner.id = 'jsErrorBanner';
+            banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:white;padding:10px 14px;font-size:12px;z-index:99999;font-family:monospace;white-space:pre-wrap;';
+            banner.textContent = 'ERROR PROMISE: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason));
+            document.body.appendChild(banner);
+        });
 
         const fbApp = initializeApp(firebaseConfig);
         const db = getFirestore(fbApp);
@@ -1374,7 +1417,8 @@
                 'Jenis Kunjungan', 'Nama ASN', 'NIP', 'Tanggal Kunjungan', 'Bulan Pemantauan', 'Nama Balita', 'NIK Balita',
                 'Nama Orang Tua', 'Jenis Kelamin', 'Tanggal Lahir', 'Usia (Bulan)', 'Kecamatan', 'Desa', 'Puskesmas', 'Posyandu',
                 'BB (kg)', 'TB (cm)', 'IMT',
-                'Kondisi Balita (Lanjutan)', 'Perbandingan BB (Lanjutan)', 'Status Imunisasi (Lanjutan)',
+                'Kondisi Balita (Lanjutan)', 'Perbandingan BB (Lanjutan)', 'Perbandingan TB (Lanjutan)', 'Status Imunisasi (Lanjutan)',
+                'Gizi-ASI', 'Gizi-Makanan Pokok', 'Gizi-Kacang2an', 'Gizi-Susu Hewani', 'Gizi-Daging', 'Gizi-Telur', 'Gizi-Sayur VitA', 'Gizi-Sayur Lain',
                 'JKN/BPJS (Pertama)', 'Air Bersih (Pertama)', 'Jamban (Pertama)', 'Imunisasi Status (Pertama)', 'Merokok (Pertama)',
                 'Kecacingan (Pertama)', 'KEK Ibu (Pertama)', 'Penyakit Penyerta (Pertama)', 'Vitamin A (Pertama)', 'Perkembangan (Pertama)',
                 'Kunjungan Posyandu (Pertama)', 'Terakhir Posyandu (Pertama)',
@@ -1384,7 +1428,8 @@
                 'jenis_kunjungan', 'nama_asn', 'nip_asn', 'tanggal_kunjungan', 'bulan_pemantauan', 'nama_balita', 'nik_balita',
                 'nama_ortu', 'jenis_kelamin_balita', 'tanggal_lahir_balita', 'usia_balita_bulan', 'kecamatan', 'desa', 'puskesmas', 'posyandu',
                 'bb', 'tb', 'imt',
-                'kondisi_balita', 'perbandingan_bb', 'status_imunisasi',
+                'kondisi_balita', 'perbandingan_bb', 'perbandingan_tb', 'status_imunisasi',
+                'gizi_asi', 'gizi_makanan_pokok', 'gizi_kacang', 'gizi_susu_hewani', 'gizi_daging', 'gizi_telur', 'gizi_sayur_vitA', 'gizi_sayur_lain',
                 'jkn_bpjs', 'air_bersih_p1', 'jamban_p1', 'imunisasi_status_p1', 'merokok_p1',
                 'kecacingan_p1', 'kek_ibu', 'penyakit_penyerta_p1', 'vitamin_a', 'perkembangan_p1',
                 'kunjung_posyandu_p1', 'terakhir_posyandu',
@@ -1430,7 +1475,7 @@
             // Buang field yang nggak relevan sesuai jenis kunjungan, biar data tetap rapi
             const isPertama = dataObj.jenis_kunjungan === 'pertama';
             const pertamaOnlyKeys = ['jkn_bpjs','air_bersih_p1','jamban_p1','merokok_p1','kecacingan_p1','kek_ibu','imunisasi_status_p1','penyakit_penyerta_p1','penyakit_penyerta_sebutkan','kunjung_posyandu_p1','terakhir_posyandu','vitamin_a','perkembangan_p1','nama_ortu','usia_kategori_p1','keterangan_tambahan'];
-            const lanjutanOnlyKeys = ['kunjung_posyandu','perbandingan_bb','kondisi_balita','penyakit_balita','perkembangan','status_imunisasi','dapat_pmt','konsumsi_pmt','air_bersih','jamban','cacingan','penyakit_penyerta','merokok','edukasi_dijalankan','kendala_keluarga'];
+            const lanjutanOnlyKeys = ['kunjung_posyandu','perbandingan_bb','perbandingan_tb','kondisi_balita','penyakit_balita','perkembangan','status_imunisasi','gizi_asi','gizi_makanan_pokok','gizi_kacang','gizi_susu_hewani','gizi_daging','gizi_telur','gizi_sayur_vitA','gizi_sayur_lain','dapat_pmt','konsumsi_pmt','air_bersih','jamban','cacingan','penyakit_penyerta','merokok','edukasi_dijalankan','kendala_keluarga'];
             (isPertama ? lanjutanOnlyKeys : pertamaOnlyKeys).forEach(k => delete dataObj[k]);
             
             // Add custom calculated fields needed for charts
