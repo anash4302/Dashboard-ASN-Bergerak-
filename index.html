@@ -76,7 +76,7 @@
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8">
             <div class="flex justify-center mb-5">
                 <!-- CUSTOM LOGO PUSKESMAS/MASKARA -->
-                <img src="MASKARA LOGO.jpg" alt="Maskara Logo" onerror="this.src='https://placehold.co/100x100/0d9488/ffffff?text=LOGO'" class="w-24 h-24 rounded-full object-cover shadow-md border-4 border-teal-100">
+                <img src="maskara-logo.jpg" alt="Maskara Logo" onerror="this.src='https://placehold.co/100x100/0d9488/ffffff?text=LOGO'" class="w-24 h-24 rounded-full object-cover shadow-md border-4 border-teal-100">
             </div>
             <h2 class="text-lg font-bold text-slate-800 text-center mb-1">ASN Bergerak Cegah Stunting</h2>
             <p class="text-sm text-slate-500 text-center mb-6">Puskesmas Karangkobar</p>
@@ -107,7 +107,7 @@
     <aside id="sidebar" class="w-64 bg-teal-800 text-teal-100 flex flex-col shadow-xl z-30 flex-shrink-0 absolute md:relative h-full transition-transform duration-300 transform -translate-x-full md:translate-x-0">
         <div class="p-5 flex items-center gap-3 border-b border-teal-700/50">
             <!-- CUSTOM SIDEBAR LOGO -->
-            <img src="MASKARA LOGO.jpg" alt="Logo" onerror="this.style.display='none'" class="w-12 h-12 rounded-lg object-cover shadow-sm bg-white flex-shrink-0">
+            <img src="maskara-logo.jpg" alt="Logo" onerror="this.style.display='none'" class="w-12 h-12 rounded-lg object-cover shadow-sm bg-white flex-shrink-0">
             <div class="flex-1 overflow-hidden">
                 <h1 class="font-bold text-[15px] leading-tight text-white truncate">ASN Bergerak</h1>
                 <p class="text-[11px] text-teal-300 leading-tight">Cegah Stunting - Puskesmas Karangkobar</p>
@@ -646,6 +646,19 @@
             updateUI(); document.getElementById('editModeBanner').classList.remove('hidden'); document.querySelector('[data-target="sec-form"]').click();
         };
         window.triggerDeleteData = async id => { if(await showConfirm('Hapus data ini?')){ if(id.startsWith('temp-')) cachedData = cachedData.filter(d=>d.id!==id); else await deleteDoc(doc(db, 'kunjungan_balita', id)); renderTable(); } };
+        // --- TOMBOL BATAL EDIT ---
+        document.getElementById('cancelEditBtn').onclick = () => {
+            editingId = null;
+            document.getElementById('monitoringForm').reset();
+            document.getElementById('tgl_kunjungan').value = localDate;
+            document.getElementById('nama_asn').value = "Anas Hamdani, S. Kep.";
+            document.getElementById('nip_asn').value = "199511292020121014";
+            document.getElementById('inputLainnya').disabled = true;
+            document.getElementById('hapusFotoBtn').click(); // Reset foto
+            document.getElementById('editModeBanner').classList.add('hidden');
+            document.getElementById('simpanBtnText').textContent = 'Simpan Data Kunjungan';
+            updateUI();
+        };
 
         // --- DASHBOARD & TABLE ---
         function updateDashboardCards() {
