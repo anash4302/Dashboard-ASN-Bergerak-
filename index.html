@@ -99,6 +99,7 @@
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl"><svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sakit (Bulan Ini)</p><h4 class="text-3xl font-bold text-rose-600" id="dash-sakit">-</h4></div></div>
                 </div>
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mt-6"><div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-4 gap-2"><div><h4 class="font-bold text-slate-800 text-lg">Progres Kunjungan Bulan Ini</h4><p class="text-xs text-slate-500">Cakupan target balita yang sudah dikunjungi di bulan berjalan</p></div><div class="text-left sm:text-right"><span id="progress-text" class="text-3xl font-black text-teal-600">0%</span></div></div><div class="w-full bg-slate-100 rounded-full h-4 mb-3 overflow-hidden border border-slate-200"><div id="progress-bar" class="bg-teal-500 h-4 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div></div><p class="text-sm text-slate-600 font-medium"><span id="progress-count" class="text-teal-700 font-bold">0</span> dari <span id="progress-total" class="font-bold">0</span> Target Balita telah dikunjungi</p></div>
+                <div class="bg-white rounded-2xl shadow-sm border border-rose-200 overflow-hidden mt-6"><div class="bg-rose-50 px-6 py-4 flex items-center gap-3 border-b border-rose-100"><svg class="h-6 w-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><h4 class="font-bold text-rose-800">Perlu Kunjungan Bulan Ini (<span id="dash-unvisited-count">0</span> Balita)</h4></div><div class="p-6"><p class="text-sm text-slate-500 mb-4">Balita target yang belum di-entry datanya untuk bulan berjalan.</p><ul id="dash-unvisited-list" class="space-y-1"><li class="text-sm text-slate-400 italic">Memuat data...</li></ul></div></div>
             </section>
 
             <!-- FORM KUNJUNGAN -->
@@ -122,35 +123,21 @@
                     </div>
 
                     <!-- ========================================== -->
-                    <!-- BLOK 1: FORM KUNJUNGAN PERTAMA (ISOLASI)   -->
+                    <!-- BLOK 1: FORM KUNJUNGAN PERTAMA             -->
                     <!-- ========================================== -->
                     <div id="wrapperFormPertama" hidden class="space-y-6">
-                        
-                        <!-- A. Identitas (Pertama) -->
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3">
-                                <div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div>
-                                <h3 class="text-lg font-bold text-teal-900">A. Identitas</h3>
-                            </div>
+                            <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3"><div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div><h3 class="text-lg font-bold text-teal-900">A. Identitas</h3></div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-                                <div><label class="block text-sm font-semibold text-slate-700 mb-1">1. Nama lengkap ASN pendamping:</label><input type="text" name="nama_asn_p1" id="nama_asn_p1" list="asnListDatalist" autocomplete="off" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 bg-slate-50 outline-none"></div>
+                                <div><label class="block text-sm font-semibold text-slate-700 mb-1">1. Nama lengkap ASN pendamping:</label><input type="text" name="nama_asn_p1" id="nama_asn_p1" list="asnListDatalist" autocomplete="off" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 bg-slate-50 outline-none"><datalist id="asnListDatalist"></datalist></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">2. NIP:</label><input type="text" name="nip_asn_p1" id="nip_asn_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 bg-slate-50 outline-none"></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">3. Asal OPD:</label><select name="asal_opd_p1" class="w-full rounded-lg border border-slate-300 p-2.5 bg-slate-50 font-medium text-teal-800 outline-none"><option value="Dinas Kesehatan Kabupaten Banjarnegara" selected>Dinas Kesehatan Kab. Banjarnegara</option></select></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">4. Tanggal kunjungan :</label><input type="date" name="tanggal_kunjungan_p1" id="tgl_kunjungan_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
-                                
-                                <div class="md:col-span-2 mt-2 border-t border-slate-200 pt-4"></div>
-                                
+                                <div class="md:col-span-2 bg-teal-50 p-4 rounded-lg border border-teal-100"><p class="text-sm font-semibold text-teal-800">5. Bulan pemantauan ke: <span class="font-bold">1 (Kunjungan Pertama)</span></p></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">5. Nama lengkap balita:</label><input type="text" name="nama_balita_p1" id="nama_balita_p1" list="balitaListDatalist" autocomplete="off" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none" placeholder="Ketik atau pilih dari daftar..."><datalist id="balitaListDatalist"></datalist></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">6. NIK balita:</label><input type="number" name="nik_balita_p1" id="nik_balita_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">7. Tanggal lahir balita:</label><input type="date" name="tanggal_lahir_balita_p1" id="tgl_lahir_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">8. Usia balita: (Pilih & lingkari salah satu)</label>
-                                    <div class="flex flex-col gap-2 mt-2">
-                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_a_p1" value="0-5 bulan"><span class="text-slate-700 text-sm">a. 0-5 bulan</span></label>
-                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_b_p1" value="6-11 bulan"><span class="text-slate-700 text-sm">b. 6-11 bulan</span></label>
-                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_c_p1" value="12-23 bulan"><span class="text-slate-700 text-sm">c. 12-23 bulan</span></label>
-                                    </div>
-                                </div>
+                                <div><label class="block text-sm font-semibold text-slate-700 mb-1">8. Usia balita: (Pilih & lingkari salah satu)</label><div class="flex flex-col gap-2 mt-2"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_a_p1" value="0-5 bulan"><span class="text-slate-700 text-sm">a. 0-5 bulan</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_b_p1" value="6-11 bulan"><span class="text-slate-700 text-sm">b. 6-11 bulan</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="usia_kategori_p1" id="usia_c_p1" value="12-23 bulan"><span class="text-slate-700 text-sm">c. 12-23 bulan</span></label></div></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">9. Nama orang tua :</label><input type="text" name="nama_ortu_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">10. Kecamatan :</label><select name="kecamatan_p1" class="w-full rounded-lg border border-slate-300 p-2.5 bg-slate-50 font-medium text-slate-700 outline-none"><option value="Karangkobar" selected>Karangkobar</option></select></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">11. Desa:</label><select name="desa_p1" id="desa_p1" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"><option value="" disabled selected>Pilih Desa...</option><option value="Ambal">Ambal</option><option value="Binangun">Binangun</option><option value="Gumelar">Gumelar</option><option value="Jlegong">Jlegong</option><option value="Karanggondang">Karanggondang</option><option value="Karangkobar">Karangkobar</option><option value="Leksana">Leksana</option><option value="Pagerpelah">Pagerpelah</option><option value="Pasuruhan">Pasuruhan</option><option value="Paweden">Paweden</option><option value="Purwodadi">Purwodadi</option><option value="Sampang">Sampang</option><option value="Slatri">Slatri</option></select></div>
@@ -159,137 +146,32 @@
                             </div>
                         </div>
 
-                        <!-- B. Identifikasi Faktor Risiko (Pertama) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 flex items-center gap-3">
-                                <div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">B</div>
-                                <h3 class="text-lg font-bold text-emerald-900">B. Identifikasi Faktor Risiko</h3>
-                            </div>
-                            <div class="p-6 space-y-6">
-                                <p class="text-sm text-slate-500 mb-4">(Pilih jawaban yang tersedia dengan melingkari jawaban atau memberikan tanda centang)</p>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">1. Apakah balita memiliki JKN/BPJS (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="jkn_bpjs_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="jkn_bpjs_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">2. Apakah tersedia air bersih di rumah (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah tersedia jamban sehat di rumah (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="jamban_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="jamban_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">6. Apakah ada anggota keluarga di rumah yang merokok (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="merokok_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="merokok_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">7. Apakah balita menderita kecacingan (pernah keluar cacing saat BAB)? (Ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kecacingan_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="kecacingan_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">8. Apakah saat hamil ibu balita mengalami kurang energi kronis (lingkar lengan atas kurang dari 23,5 cm)? *cek buku kia</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kek_ibu_p1" value="KEK"><span class="text-sm">KEK</span></label><label class="flex gap-2 items-center"><input type="radio" name="kek_ibu_p1" value="Tidak KEK"><span class="text-sm">Tidak KEK</span></label></div></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">4. Apakah balita sudah mendapatkan imunisasi sesuai usianya? *cek buku KIA halaman pelayanan imunisasi</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="imunisasi_status_p1" value="Lengkap sesuai usia"><span class="text-sm">Lengkap sesuai usia</span></label><label class="flex gap-2 items-center"><input type="radio" name="imunisasi_status_p1" value="Tidak lengkap sesuai usia"><span class="text-sm">Tidak lengkap sesuai usia</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">5. Jika tidak lengkap, imunisasi apa yang kurang sebutkan.</label><textarea name="imunisasi_kurang_p1" rows="2" class="w-full border p-2 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">9. Apakah balita memiliki penyakit penyerta? (Ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">10. Jika ya, sebutkan....</label><input type="text" name="penyakit_penyerta_sebutkan_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">11. Apakah bulan ini anak sudah berkunjung ke Posyandu? *cek KMS pada buku KIA</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Sudah ke Posyandu"><span class="text-sm">Sudah ke Posyandu</span></label><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Tidak ke Posyandu"><span class="text-sm">Tidak ke Posyandu</span></label><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Belum jadwal Posyandu"><span class="text-sm">Belum jadwal Posyandu</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">12. Kapan terakhir berkunjung ke Posyandu (sebutkan bulan dan tahun)? *cek KMS pada buku KIA</label><input type="text" name="terakhir_posyandu_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">13. Berapa BB anak berdasarkan hasil penimbangan terakhir? *cek KMS pada buku KIA</label><div class="flex"><input type="number" step="0.1" name="berat_badan_kg_p1" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">kg</span></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">14. Berapa panjang badan balita berdasarkan pengukuran terakhir?*cek KMS pada buku KIA</label><div class="flex"><input type="number" step="0.1" name="tinggi_badan_cm_p1" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">cm</span></div></div>
-                                </div>
-                                <div class="grid grid-cols-1 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">15. Apakah balita sudah mendapatkan vitamin A bulan ini? (sudah/belum)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="vitamin_a_p1" value="Sudah"><span class="text-sm">Sudah</span></label><label class="flex gap-2 items-center"><input type="radio" name="vitamin_a_p1" value="Belum"><span class="text-sm">Belum</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">16. Apakah perkembangan balita sesuai dengan usianya? *gunakan cek list perkembangan balita sesuai usia pada buku KIA!</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-start"><input type="radio" name="perkembangan_p1" value="Sesuai (jika semua item pertanyaan dapat dilakukan balita)" class="mt-1"><span class="text-sm">a. Sesuai (jika semua item pertanyaan dapat dilakukan balita)</span></label><label class="flex gap-2 items-start"><input type="radio" name="perkembangan_p1" value="Belum sesuai (jika ada satu atau lebih item pertanyaan belum dapat dilakukan balita)" class="mt-1"><span class="text-sm">b. Belum sesuai (jika ada satu atau lebih item pertanyaan belum dapat dilakukan balita)</span></label></div></div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">17. Apakah balita masih mendapatkan ASI (disusui)? (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="dapat_asi_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="dapat_asi_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">18. Apakah balita mendapatkan ASI saja tanpa makanan & minuman lainnya (ASI eksklusif)? *Untuk usia 0-5 bulan* (Jika berusia lebih dari 6 bulan tidak perlu diisi)</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_p1" value="Ya, ASI eksklusif"><span class="text-sm">a. Ya, ASI eksklusif</span></label><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_p1" value="Tidak ASI eksklusif"><span class="text-sm">b. Tidak ASI eksklusif</span></label></div></div>
-                                </div>
-                                <div class="border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">19. Pada hari kemarin (24 jam yang lalu) balita mendapatkan makanan pendamping ASI (MPASI) yang terdiri dari (Jika berusia kurang dari 6 bulan dan masih ASI eksklusif tidak perlu diisi)</label>
-                                    <p class="text-xs text-slate-500 mb-3">Pilih kelompok makanan sesuai yang dikonsumsi balita dengan memberikan tanda centang (v), dapat dipilih lebih dari satu!</p>
-                                    <div class="flex flex-col gap-3">
-                                        <label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Makanan pokok" class="mt-0.5"><span class="text-sm">Makanan pokok (nasi, kentang, ubi, singkong, macaroni, roti, dll)</span></label>
-                                        <label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Lauk hewani" class="mt-0.5"><span class="text-sm">Lauk hewani (telur, ikan, daging sapi, ayam, susu, dll)</span></label>
-                                        <label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Lauk nabati" class="mt-0.5"><span class="text-sm">Lauk nabati (kacang-kacangan, tempe, tahu, kedelai, dll)</span></label>
-                                        <label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Sayuran" class="mt-0.5"><span class="text-sm">Sayuran (wortel, brokoli, bayam, buncis, kembang kol, daun singkong, dll)</span></label>
-                                        <label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Buah-buahan" class="mt-0.5"><span class="text-sm">Buah-buahan (pisang, papaya, melon, mangga, jeruk, dll)</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 flex items-center gap-3"><div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">B</div><h3 class="text-lg font-bold text-emerald-900">B. Identifikasi Faktor Risiko</h3></div><div class="p-6 space-y-6"><p class="text-sm text-slate-500 mb-4">(Pilih jawaban yang tersedia dengan melingkari jawaban atau memberikan tanda centang)</p><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block text-sm font-semibold text-slate-700 mb-2">1. Apakah balita memiliki JKN/BPJS (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="jkn_bpjs_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="jkn_bpjs_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">2. Apakah tersedia air bersih di rumah (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah tersedia jamban sehat di rumah (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="jamban_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="jamban_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">6. Apakah ada anggota keluarga di rumah yang merokok (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="merokok_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="merokok_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">7. Apakah balita menderita kecacingan (pernah keluar cacing saat BAB)? (Ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kecacingan_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="kecacingan_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">8. Apakah saat hamil ibu balita mengalami kurang energi kronis (lingkar lengan atas kurang dari 23,5 cm)? *cek buku kia (KEK/Tidak KEK)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kek_ibu_p1" value="KEK"><span class="text-sm">KEK</span></label><label class="flex gap-2 items-center"><input type="radio" name="kek_ibu_p1" value="Tidak KEK"><span class="text-sm">Tidak KEK</span></label></div></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">4. Apakah balita sudah mendapatkan imunisasi sesuai usianya? *cek buku KIA halaman pelayanan imunisasi (lengkap sesuai usia / tidak lengkap sesuai usia)</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="imunisasi_status_p1" value="Lengkap sesuai usia"><span class="text-sm">Lengkap sesuai usia</span></label><label class="flex gap-2 items-center"><input type="radio" name="imunisasi_status_p1" value="Tidak lengkap sesuai usia"><span class="text-sm">Tidak lengkap sesuai usia</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">5. Jika tidak lengkap, imunisasi apa yang kurang sebutkan.</label><textarea name="imunisasi_kurang_p1" rows="2" class="w-full border p-2 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">9. Apakah balita memiliki penyakit penyerta? (Ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">10. Jika ya, sebutkan....</label><input type="text" name="penyakit_penyerta_sebutkan_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">11. Apakah bulan ini anak sudah berkunjung ke Posyandu? *cek KMS pada buku KIA</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Sudah ke Posyandu"><span class="text-sm">Sudah ke Posyandu</span></label><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Tidak ke Posyandu"><span class="text-sm">Tidak ke Posyandu</span></label><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_p1" value="Belum jadwal Posyandu"><span class="text-sm">Belum jadwal Posyandu</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">12. Kapan terakhir berkunjung ke Posyandu (sebutkan bulan dan tahun)? *cek KMS pada buku KIA</label><input type="text" name="terakhir_posyandu_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200"><div><label class="block text-sm font-semibold text-slate-700 mb-1">13. Berapa BB anak berdasarkan hasil penimbangan terakhir? *cek KMS pada buku KIA</label><div class="flex"><input type="number" step="0.1" name="berat_badan_kg_p1" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">kg</span></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">14. Berapa panjang badan balita berdasarkan pengukuran terakhir?*cek KMS pada buku KIA</label><div class="flex"><input type="number" step="0.1" name="tinggi_badan_cm_p1" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">cm</span></div></div></div><div class="grid grid-cols-1 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">15. Apakah balita sudah mendapatkan vitamin A bulan Agustus ini? (sudah/belum)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="vitamin_a_p1" value="Sudah"><span class="text-sm">Sudah</span></label><label class="flex gap-2 items-center"><input type="radio" name="vitamin_a_p1" value="Belum"><span class="text-sm">Belum</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">16. Apakah perkembangan balita sesuai dengan usianya? *gunakan cek list perkembangan balita sesuai usia pada buku KIA!</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-start"><input type="radio" name="perkembangan_p1" value="Sesuai (jika semua item pertanyaan dapat dilakukan balita)" class="mt-1"><span class="text-sm">a. Sesuai (jika semua item pertanyaan dapat dilakukan balita)</span></label><label class="flex gap-2 items-start"><input type="radio" name="perkembangan_p1" value="Belum sesuai (jika ada satu atau lebih item pertanyaan belum dapat dilakukan balita)" class="mt-1"><span class="text-sm">b. Belum sesuai (jika ada satu atau lebih item pertanyaan belum dapat dilakukan balita)</span></label></div></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">17. Apakah balita masih mendapatkan ASI (disusui)? (ya/tidak)</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="dapat_asi_p1" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="dapat_asi_p1" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">18. Apakah balita mendapatkan ASI saja tanpa makanan & minuman lainnya (ASI eksklusif)? *Untuk usia 0-5 bulan* (Jika berusia lebih dari 6 bulan tidak perlu diisi)</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_p1" value="Ya, ASI eksklusif"><span class="text-sm">a. Ya, ASI eksklusif</span></label><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_p1" value="Tidak ASI eksklusif"><span class="text-sm">b. Tidak ASI eksklusif</span></label></div></div></div><div class="border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-2">19. Pada hari kemarin (24 jam yang lalu) balita mendapatkan makanan pendamping ASI (MPASI) yang terdiri dari (Jika berusia kurang dari 6 bulan dan masih ASI eksklusif tidak perlu diisi)</label><p class="text-xs text-slate-500 mb-3">Pilih kelompok makanan sesuai yang dikonsumsi balita dengan memberikan tanda centang (v), dapat dipilih lebih dari satu!</p><div class="flex flex-col gap-3"><label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Makanan pokok" class="mt-0.5"><span class="text-sm">Makanan pokok (nasi, kentang, ubi, singkong, macaroni, roti, dll)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Lauk hewani" class="mt-0.5"><span class="text-sm">Lauk hewani (telur, ikan, daging sapi, ayam, susu, dll)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Lauk nabati" class="mt-0.5"><span class="text-sm">Lauk nabati (kacang-kacangan, tempe, tahu, kedelai, dll)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Sayuran" class="mt-0.5"><span class="text-sm">Sayuran (wortel, brokoli, bayam, buncis, kembang kol, daun singkong, dll)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="komposisi_makanan_p1" value="Buah-buahan" class="mt-0.5"><span class="text-sm">Buah-buahan (pisang, papaya, melon, mangga, jeruk, dll)</span></label></div></div></div></div>
 
-                        <!-- C. Tindakan ASN (Pertama) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-blue-50 px-6 py-4 border-b border-blue-100 flex items-center gap-3">
-                                <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">C</div>
-                                <h3 class="text-lg font-bold text-blue-900">C. Tindakan yang dilakukan oleh ASN pendamping</h3>
-                            </div>
-                            <div class="p-6">
-                                <label class="block text-sm font-semibold text-slate-700 mb-3">1. Berikan tanda centang pada pilihan tindakan yang dilakukan (dapat dipilih lebih dari satu)!</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6">
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang ASI dan MPASI bergizi seimbang" class="mt-1"><span class="text-sm">Edukasi tentang ASI dan MPASI bergizi seimbang</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang pemantauan perkembangan sesuai usia balita" class="mt-1"><span class="text-sm">Edukasi tentang pemantauan perkembangan sesuai usia balita</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang imunisasi" class="mt-1"><span class="text-sm">Edukasi tentang imunisasi</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun" class="mt-1"><span class="text-sm">Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang etika merokok dan bahaya asap rokok bagi balita" class="mt-1"><span class="text-sm">Edukasi tentang etika merokok dan bahaya asap rokok bagi balita</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Menghimbau rutin datang ke Posyandu (setiap bulan)" class="mt-1"><span class="text-sm">Menghimbau rutin datang ke Posyandu (setiap bulan)</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit" class="mt-1"><span class="text-sm">Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Dukungan gizi berupa bantuan makanan atau lainnya" class="mt-1"><span class="text-sm">Dukungan gizi berupa bantuan makanan atau lainnya</span></label>
-                                    <label class="flex gap-3 items-center"><input type="checkbox" name="tindakan_asn_p1" value="Lainnya" id="chkLainnya_p1" class="mt-1"><span class="text-sm">Lainnya, sebutkan</span></label>
-                                </div>
-                                <div class="mt-2"><input type="text" name="tindakan_lainnya_p1" id="inputLainnya_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none" disabled></div>
-                                
-                                <div class="mt-6 border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">2. Keterangan tambahan (silahkan tambahkan keterangan/catatan yang diperlukan terkait balita dan keluarganya atau Tindakan yang telah dilakukan saat pendampingan)</label>
-                                    <textarea name="keterangan_tambahan_p1" rows="3" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-blue-50 px-6 py-4 border-b border-blue-100 flex items-center gap-3"><div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">C</div><h3 class="text-lg font-bold text-blue-900">C. Tindakan yang dilakukan oleh ASN pendamping</h3></div><div class="p-6"><label class="block text-sm font-semibold text-slate-700 mb-3">1. Berikan tanda centang pada pilihan tindakan yang dilakukan (dapat dipilih lebih dari satu)!</label><div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6"><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang ASI dan MPASI bergizi seimbang" class="mt-1"><span class="text-sm">Edukasi tentang ASI dan MPASI bergizi seimbang</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang pemantauan perkembangan sesuai usia balita" class="mt-1"><span class="text-sm">Edukasi tentang pemantauan perkembangan sesuai usia balita</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang imunisasi" class="mt-1"><span class="text-sm">Edukasi tentang imunisasi</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun" class="mt-1"><span class="text-sm">Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Edukasi tentang etika merokok dan bahaya asap rokok bagi balita" class="mt-1"><span class="text-sm">Edukasi tentang etika merokok dan bahaya asap rokok bagi balita</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Menghimbau rutin datang ke Posyandu (setiap bulan)" class="mt-1"><span class="text-sm">Menghimbau rutin datang ke Posyandu (setiap bulan)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit" class="mt-1"><span class="text-sm">Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_p1" value="Dukungan gizi berupa bantuan makanan atau lainnya" class="mt-1"><span class="text-sm">Dukungan gizi berupa bantuan makanan atau lainnya</span></label><label class="flex gap-3 items-center"><input type="checkbox" name="tindakan_asn_p1" value="Lainnya" id="chkLainnya_p1" class="mt-1"><span class="text-sm">Lainnya, sebutkan</span></label></div><div class="mt-2"><input type="text" name="tindakan_lainnya_p1" id="inputLainnya_p1" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none" disabled></div><div class="mt-6 border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-2">2. Keterangan tambahan (silahkan tambahkan keterangan/catatan yang diperlukan terkait balita dan keluarganya atau Tindakan yang telah dilakukan saat pendampingan)</label><textarea name="keterangan_tambahan_p1" rows="3" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div></div></div>
                     </div>
 
 
                     <!-- ========================================== -->
-                    <!-- BLOK 2: FORM KUNJUNGAN LANJUTAN (ISOLASI)  -->
+                    <!-- BLOK 2: FORM KUNJUNGAN LANJUTAN            -->
                     <!-- ========================================== -->
                     <div id="lanjutanSections" class="space-y-6">
-                        
-                        <!-- A. Identitas (Lanjutan) -->
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3">
-                                <div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div>
-                                <h3 class="text-lg font-bold text-teal-900">A. IDENTITAS</h3>
-                            </div>
+                            <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3"><div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div><h3 class="text-lg font-bold text-teal-900">A. IDENTITAS</h3></div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">1. Nama lengkap ASN pendamping:</label><input type="text" name="nama_asn_l" id="nama_asn_l" list="asnListDatalist_l" autocomplete="off" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 bg-slate-50 outline-none"><datalist id="asnListDatalist_l"></datalist></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">2. NIP:</label><input type="text" name="nip_asn_l" id="nip_asn_l" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 bg-slate-50 outline-none"></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">3. Asal OPD:</label><select name="asal_opd_l" class="w-full rounded-lg border border-slate-300 p-2.5 bg-slate-50 font-medium text-teal-800 outline-none"><option value="Dinas Kesehatan Kabupaten Banjarnegara" selected>Dinas Kesehatan Kab. Banjarnegara</option></select></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">4. Tanggal kunjungan :</label><input type="date" name="tanggal_kunjungan_l" id="tgl_kunjungan_l" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
-                                
-                                <div class="md:col-span-2 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">5. Bulan pemantauan ke (lingkari):</label>
-                                    <div class="flex flex-wrap gap-x-6 gap-y-3">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="2"><span>2</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="3"><span>3</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="4"><span>4</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="5"><span>5</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="6"><span>6</span></label>
-                                    </div>
-                                </div>
+                                <div class="md:col-span-2 bg-slate-50 p-4 rounded-lg border border-slate-100"><label class="block text-sm font-semibold text-slate-700 mb-2">5. Bulan pemantauan ke (lingkari):</label><div class="flex flex-wrap gap-x-6 gap-y-3"><label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="2"><span>2</span></label><label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="3"><span>3</span></label><label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="4"><span>4</span></label><label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="5"><span>5</span></label><label class="flex gap-2 items-center"><input type="radio" name="bulan_pemantauan_l" value="6"><span>6</span></label></div></div>
                                 
                                 <div class="md:col-span-2 mt-2 border-t border-slate-200 pt-4"></div>
                                 
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">6. Namalengkap balita yang didampingi :</label><input type="text" name="nama_balita_l" id="nama_balita_l" list="balitaListDatalist_l" autocomplete="off" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none" placeholder="Ketik atau pilih dari daftar..."><datalist id="balitaListDatalist_l"></datalist></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">7. NIK balita:</label><input type="number" name="nik_balita_l" id="nik_balita_l" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">8. Jenis kelamin balita: L/P</label>
-                                    <div class="flex gap-6">
-                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jenis_kelamin_l" id="jk_l_L" value="L"><span class="text-slate-700">Laki-laki (L)</span></label>
-                                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jenis_kelamin_l" id="jk_l_P" value="P"><span class="text-slate-700">Perempuan (P)</span></label>
-                                    </div>
-                                </div>
+                                <div><label class="block text-sm font-semibold text-slate-700 mb-2">8. Jenis kelamin balita: L/P</label><div class="flex gap-6"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jenis_kelamin_l" id="jk_l_L" value="L"><span class="text-slate-700">Laki-laki (L)</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jenis_kelamin_l" id="jk_l_P" value="P"><span class="text-slate-700">Perempuan (P)</span></label></div></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">9. Tanggal lahir balita:</label><input type="date" name="tanggal_lahir_balita_l" id="tgl_lahir_l" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"></div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">10. Usia balita saat ini :</label>
-                                    <div class="flex items-center max-w-sm">
-                                        <input type="number" name="usia_balita_bulan_l" id="usia_bulan_l" readonly class="w-full rounded-l-lg border border-slate-300 bg-slate-100 p-2.5 text-slate-600 font-bold text-center outline-none">
-                                        <span class="bg-slate-200 border border-l-0 border-slate-300 px-4 py-2.5 rounded-r-lg text-slate-700 font-medium">bulan</span>
-                                    </div>
-                                </div>
+                                <div class="md:col-span-2"><label class="block text-sm font-semibold text-slate-700 mb-1">10. Usia balita saat ini :</label><div class="flex items-center max-w-sm"><input type="number" name="usia_balita_bulan_l" id="usia_bulan_l" readonly class="w-full rounded-l-lg border border-slate-300 bg-slate-100 p-2.5 text-slate-600 font-bold text-center outline-none"><span class="bg-slate-200 border border-l-0 border-slate-300 px-4 py-2.5 rounded-r-lg text-slate-700 font-medium">bulan</span></div></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">11. Kecamatan :</label><select name="kecamatan_l" class="w-full rounded-lg border border-slate-300 p-2.5 shadow-sm bg-slate-50 font-medium text-slate-700 outline-none"><option value="Karangkobar" selected>Karangkobar</option></select></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">12. Desa:</label><select name="desa_l" id="desa_l" class="w-full rounded-lg border border-slate-300 p-2.5 focus:border-teal-500 outline-none"><option value="" disabled selected>Pilih Desa...</option><option value="Ambal">Ambal</option><option value="Binangun">Binangun</option><option value="Gumelar">Gumelar</option><option value="Jlegong">Jlegong</option><option value="Karanggondang">Karanggondang</option><option value="Karangkobar">Karangkobar</option><option value="Leksana">Leksana</option><option value="Pagerpelah">Pagerpelah</option><option value="Pasuruhan">Pasuruhan</option><option value="Paweden">Paweden</option><option value="Purwodadi">Purwodadi</option><option value="Sampang">Sampang</option><option value="Slatri">Slatri</option></select></div>
                                 <div><label class="block text-sm font-semibold text-slate-700 mb-1">13. Puskesmas :</label><select name="puskesmas_l" class="w-full rounded-lg border border-slate-300 p-2.5 shadow-sm bg-slate-50 font-medium outline-none"><option value="Karangkobar" selected>Karangkobar</option></select></div>
@@ -297,221 +179,20 @@
                             </div>
                         </div>
 
-                        <!-- B. Pertumbuhan & Perkembangan (Lanjutan) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 flex items-center gap-3">
-                                <div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">B</div>
-                                <h3 class="text-lg font-bold text-emerald-900">B. PEMANTAUAN PERTUMBUHAN DAN PERKEMBANGAN</h3>
-                            </div>
-                            <div class="p-6 space-y-6">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">1. Apakah balita berkunjung ke Posyandu bulan ini?</label>
-                                    <div class="flex gap-6">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_l" value="Ya"><span class="text-sm">Ya</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_l" value="Tidak"><span class="text-sm">Tidak</span></label>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">2. Berapa berat badan balita berdasarkan hasil penimbangan bulan ini?</label><div class="flex"><input type="number" step="0.1" name="berat_badan_kg_l" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">Kg</span></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">4. Berapa panjang/tinggi badan balita berdasarkan pengukuran bulan ini?</label><div class="flex"><input type="number" step="0.1" name="tinggi_badan_cm_l" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">cm</span></div></div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">3. Bagaimana berat badan balita dibandingkan bulan lalu?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Naik sesuai kenaikan berat minimal (KBM)"><span class="text-sm">Naik sesuai kenaikan berat minimal (KBM)</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Naik tidak sesuai KBM"><span class="text-sm">Naik tidak sesuai KBM</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Tetap"><span class="text-sm">Tetap</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Turun"><span class="text-sm text-rose-600 font-bold">Turun</span></label>
-                                    </div>
-                                </div>
-                                <div class="border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana panjang/tinggi badan dibandingkan bulan lalu?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Bertambah"><span class="text-sm">Bertambah</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Tetap/sama"><span class="text-sm">Tetap/sama</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Berkurang"><span class="text-sm">Berkurang</span></label>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">6. Bagaimana kondisi balita bulan ini?</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kondisi_balita_l" value="Sehat"><span class="text-emerald-700 font-medium">Sehat</span></label><label class="flex gap-2 items-center"><input type="radio" name="kondisi_balita_l" value="Sakit"><span class="text-rose-600 font-medium">Sakit</span></label></div></div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">7. Jika sakit, sebutkan penyakitnya.</label><input type="text" name="penyakit_balita_l" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div>
-                                </div>
-                                <div class="border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">8. Apakah perkembangan balita bulan ini sesuai dengan usianya?</label>
-                                    <div class="flex flex-col gap-3">
-                                        <label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini dan bulan lalu sesuai (jika semua item pertanyaan dapat dilakukan balita)" class="mt-1"><span class="text-sm">Bulan ini dan bulan lalu sesuai (jika semua item pertanyaan dapat dilakukan balita)</span></label>
-                                        <label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini belum sesuai (jika ada salah satu item pertanyaan belum dapat dilakukan balita), bulan lalu sesuai" class="mt-1"><span class="text-sm">Bulan ini belum sesuai (jika ada salah satu item pertanyaan belum dapat dilakukan balita), bulan lalu sesuai</span></label>
-                                        <label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini sesuai, bulan lalu belum sesuai" class="mt-1"><span class="text-sm">Bulan ini sesuai, bulan lalu belum sesuai</span></label>
-                                        <label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini maupun bulan lalu belum sesuai" class="mt-1"><span class="text-sm">Bulan ini maupun bulan lalu belum sesuai</span></label>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">9. Bagaimana status imunisasi balita bulan ini?</label>
-                                        <div class="flex flex-col gap-2">
-                                            <label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Sudah lengkap sesuai usia"><span class="text-sm">Sudah lengkap sesuai usia</span></label>
-                                            <label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Belum lengkap sesuai usia"><span class="text-sm">Belum lengkap sesuai usia</span></label>
-                                            <label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Melengkapi/mengejar imunisasi yang belum lengkap bulan sebelumnya"><span class="text-sm">Melengkapi/mengejar imunisasi yang belum lengkap bulan sebelumnya</span></label>
-                                        </div>
-                                    </div>
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-1">10. Jika belum lengkap, sebutkan imunisasi yang kurang</label><textarea name="imunisasi_kurang_l" rows="2" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 flex items-center gap-3"><div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">B</div><h3 class="text-lg font-bold text-emerald-900">B. PEMANTAUAN PERTUMBUHAN DAN PERKEMBANGAN</h3></div><div class="p-6 space-y-6"><div><label class="block text-sm font-semibold text-slate-700 mb-2">1. Apakah balita berkunjung ke Posyandu bulan ini?</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_l" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="kunjung_posyandu_l" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200"><div><label class="block text-sm font-semibold text-slate-700 mb-1">2. Berapa berat badan balita berdasarkan hasil penimbangan bulan ini?</label><div class="flex"><input type="number" step="0.1" name="berat_badan_kg_l" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">Kg</span></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">4. Berapa panjang/tinggi badan balita berdasarkan pengukuran bulan ini?</label><div class="flex"><input type="number" step="0.1" name="tinggi_badan_cm_l" class="w-full border p-2.5 rounded-l-lg border-slate-300 focus:border-teal-500 outline-none"><span class="bg-slate-200 border border-slate-300 px-4 py-2.5 rounded-r-lg font-semibold text-slate-700 border-l-0">cm</span></div></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Bagaimana berat badan balita dibandingkan bulan lalu?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Naik sesuai kenaikan berat minimal (KBM)"><span class="text-sm">Naik sesuai kenaikan berat minimal (KBM)</span></label><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Naik tidak sesuai KBM"><span class="text-sm">Naik tidak sesuai KBM</span></label><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Tetap"><span class="text-sm">Tetap</span></label><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_bb_l" value="Turun"><span class="text-sm text-rose-600 font-bold">Turun</span></label></div></div><div class="border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana panjang/tinggi badan dibandingkan bulan lalu?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Bertambah"><span class="text-sm">Bertambah</span></label><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Tetap/sama"><span class="text-sm">Tetap/sama</span></label><label class="flex gap-2 items-center"><input type="radio" name="perbandingan_tb_l" value="Berkurang"><span class="text-sm">Berkurang</span></label></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">6. Bagaimana kondisi balita bulan ini?</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="kondisi_balita_l" value="Sehat"><span class="text-emerald-700 font-medium">Sehat</span></label><label class="flex gap-2 items-center"><input type="radio" name="kondisi_balita_l" value="Sakit"><span class="text-rose-600 font-medium">Sakit</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">7. Jika sakit, sebutkan penyakitnya.</label><input type="text" name="penyakit_balita_l" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></div></div><div class="border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-2">8. Apakah perkembangan balita bulan ini sesuai dengan usianya?</label><div class="flex flex-col gap-3"><label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini dan bulan lalu sesuai (jika semua item pertanyaan dapat dilakukan balita)" class="mt-1"><span class="text-sm">Bulan ini dan bulan lalu sesuai (jika semua item pertanyaan dapat dilakukan balita)</span></label><label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini belum sesuai (jika ada salah satu item pertanyaan belum dapat dilakukan balita), bulan lalu sesuai" class="mt-1"><span class="text-sm">Bulan ini belum sesuai (jika ada salah satu item pertanyaan belum dapat dilakukan balita), bulan lalu sesuai</span></label><label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini sesuai, bulan lalu belum sesuai" class="mt-1"><span class="text-sm">Bulan ini sesuai, bulan lalu belum sesuai</span></label><label class="flex gap-3 items-start"><input type="radio" name="perkembangan_l" value="Bulan ini maupun bulan lalu belum sesuai" class="mt-1"><span class="text-sm">Bulan ini maupun bulan lalu belum sesuai</span></label></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">9. Bagaimana status imunisasi balita bulan ini?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Sudah lengkap sesuai usia"><span class="text-sm">Sudah lengkap sesuai usia</span></label><label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Belum lengkap sesuai usia"><span class="text-sm">Belum lengkap sesuai usia</span></label><label class="flex gap-2 items-center"><input type="radio" name="status_imunisasi_l" value="Melengkapi/mengejar imunisasi yang belum lengkap bulan sebelumnya"><span class="text-sm">Melengkapi/mengejar imunisasi yang belum lengkap bulan sebelumnya</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-1">10. Jika belum lengkap, sebutkan imunisasi yang kurang</label><textarea name="imunisasi_kurang_l" rows="2" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div></div></div></div>
 
-                        <!-- C. Asupan Gizi (Lanjutan) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-orange-50 px-6 py-4 border-b border-orange-100 flex items-center gap-3">
-                                <div class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">C</div>
-                                <h3 class="text-lg font-bold text-orange-900">C. PEMANTAUAN ASUPAN GIZI</h3>
-                            </div>
-                            <div class="p-6 space-y-6">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">1. Khusus usia 0-5 bulan: Dalam 24 jam, apakah balita mendapatkan ASI saja tanpa makanan & minuman lainnya (ASI eksklusif)? *Jika berusia lebih dari 6 bulan tidak perlu diisi*</label>
-                                    <div class="flex gap-6">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_l" value="Ya, ASI eksklusif"><span class="text-sm">Ya, ASI eksklusif</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_l" value="Tidak ASI eksklusif"><span class="text-sm">Tidak ASI eksklusif</span></label>
-                                    </div>
-                                </div>
-                                <div class="border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">2. Khusus usia &ge;6 bulan: Dalam 24 jam terakhir, balita mendapat makanan dengan komposisi dari kelompok makanan sebagai berikut:</label>
-                                    <p class="text-xs text-slate-500 mb-3">(Pilih kelompok makanan sesuai yang dikonsumsi balita dengan memberikan tanda centang (v) pada pilihan ya atau tidak!)</p>
-                                    <div class="overflow-x-auto">
-                                        <table class="w-full text-sm border border-slate-300">
-                                            <thead class="bg-slate-100 text-left">
-                                                <tr>
-                                                    <th class="p-3 border-b border-slate-300">Kelompok bahan makanan</th>
-                                                    <th class="p-3 w-16 text-center border-l border-b border-slate-300">Ya</th>
-                                                    <th class="p-3 w-16 text-center border-l border-b border-slate-300">Tidak</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="divide-y divide-slate-200">
-                                                <tr><td class="p-3">ASI</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_asi_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_asi_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Makanan pokok (serealia (misalnya nasi, mie, jagung, roti, bubur bayi, dll), umbi-umbian (misalnya kentang, ubi, dll))</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_makanan_pokok_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_makanan_pokok_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Kacang-kacangan (tempe, tahu, kacang hijau, kacang tanah, kacang kedelai, kacang polong, atau kacang lainnya, dan produk olahannya)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_kacang_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_kacang_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Produk susu hewani (susu cair, susu bubuk, susu formula, yogurt, keju)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_susu_hewani_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_susu_hewani_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Daging-dagingan (ayam (termasuk ceker), ikan, daging merah, makanan laut, jeroan, daging/ikan olahan, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_daging_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_daging_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Telur (ayam, puyuh, bebek, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_telur_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_telur_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Buah dan sayuran kaya vitamin A (pepaya, mangga, wortel, dan sayuran berdaun hijau gelap seperti bayam, kangkung, daun katuk, daun singkong, daun kelor, brokoli, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_vitA_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_vitA_l" value="Tidak"></td></tr>
-                                                <tr><td class="p-3">Buah dan sayuran lainnya (pisang, jeruk, semangka, kol, kembang kol, buncis, kacang panjang, terong, kecambah, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_lain_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_lain_l" value="Tidak"></td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-                                    <div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah balita mendapatkan PMT/MBG?</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="dapat_pmt_l" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="dapat_pmt_l" value="Tidak"><span class="text-sm">Tidak</span></label></div></div>
-                                    <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">4. Jika mendapatkan PMT/MBG apakah setiap hari dimakan oleh balita?</label>
-                                        <div class="flex flex-col gap-2">
-                                            <label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Rutin dimakan"><span class="text-sm">Rutin dimakan</span></label>
-                                            <label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Kadang-kadang dimakan"><span class="text-sm">Kadang-kadang dimakan</span></label>
-                                            <label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Tidak dimakan balita"><span class="text-sm">Tidak dimakan balita</span></label>
-                                            <label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Dimakan anggota keluarga lainnya"><span class="text-sm">Dimakan anggota keluarga lainnya</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-orange-50 px-6 py-4 border-b border-orange-100 flex items-center gap-3"><div class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">C</div><h3 class="text-lg font-bold text-orange-900">C. PEMANTAUAN ASUPAN GIZI</h3></div><div class="p-6 space-y-6"><div><label class="block text-sm font-semibold text-slate-700 mb-2">1. Khusus usia 0-5 bulan: Dalam 24 jam, apakah balita mendapatkan ASI saja tanpa makanan & minuman lainnya (ASI eksklusif)? *Jika berusia lebih dari 6 bulan tidak perlu diisi*</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_l" value="Ya, ASI eksklusif"><span class="text-sm">Ya, ASI eksklusif</span></label><label class="flex gap-2 items-center"><input type="radio" name="asi_eksklusif_l" value="Tidak ASI eksklusif"><span class="text-sm">Tidak ASI eksklusif</span></label></div></div><div class="border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-2">2. Khusus usia &ge;6 bulan: Dalam 24 jam terakhir, balita mendapat makanan dengan komposisi dari kelompok makanan sebagai berikut:</label><p class="text-xs text-slate-500 mb-3">(Pilih kelompok makanan sesuai yang dikonsumsi balita dengan memberikan tanda centang (v) pada pilihan ya atau tidak!)</p><div class="overflow-x-auto"><table class="w-full text-sm border border-slate-300"><thead class="bg-slate-100 text-left"><tr><th class="p-3 border-b border-slate-300">Kelompok bahan makanan</th><th class="p-3 w-16 text-center border-l border-b border-slate-300">Ya</th><th class="p-3 w-16 text-center border-l border-b border-slate-300">Tidak</th></tr></thead><tbody class="divide-y divide-slate-200"><tr><td class="p-3">ASI</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_asi_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_asi_l" value="Tidak"></td></tr><tr><td class="p-3">Makanan pokok (serealia (misalnya nasi, mie, jagung, roti, bubur bayi, dll), umbi-umbian (misalnya kentang, ubi, dll))</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_makanan_pokok_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_makanan_pokok_l" value="Tidak"></td></tr><tr><td class="p-3">Kacang-kacangan (tempe, tahu, kacang hijau, kacang tanah, kacang kedelai, kacang polong, atau kacang lainnya, dan produk olahannya)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_kacang_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_kacang_l" value="Tidak"></td></tr><tr><td class="p-3">Produk susu hewani (susu cair, susu bubuk, susu formula, yogurt, keju)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_susu_hewani_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_susu_hewani_l" value="Tidak"></td></tr><tr><td class="p-3">Daging-dagingan (ayam (termasuk ceker), ikan, daging merah, makanan laut, jeroan, daging/ikan olahan, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_daging_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_daging_l" value="Tidak"></td></tr><tr><td class="p-3">Telur (ayam, puyuh, bebek, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_telur_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_telur_l" value="Tidak"></td></tr><tr><td class="p-3">Buah dan sayuran kaya vitamin A (pepaya, mangga, wortel, dan sayuran berdaun hijau gelap seperti bayam, kangkung, daun katuk, daun singkong, daun kelor, brokoli, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_vitA_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_vitA_l" value="Tidak"></td></tr><tr><td class="p-3">Buah dan sayuran lainnya (pisang, jeruk, semangka, kol, kembang kol, buncis, kacang panjang, terong, kecambah, dll)</td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_lain_l" value="Ya"></td><td class="text-center border-l border-slate-300"><input type="radio" name="gizi_sayur_lain_l" value="Tidak"></td></tr></tbody></table></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4"><div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah balita mendapatkan PMT/MBG?</label><div class="flex gap-6"><label class="flex gap-2 items-center"><input type="radio" name="dapat_pmt_l" value="Ya"><span class="text-sm">Ya</span></label><label class="flex gap-2 items-center"><input type="radio" name="dapat_pmt_l" value="Tidak"><span class="text-sm">Tidak</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">4. Jika mendapatkan PMT/MBG apakah setiap hari dimakan oleh balita?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Rutin dimakan"><span class="text-sm">Rutin dimakan</span></label><label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Kadang-kadang dimakan"><span class="text-sm">Kadang-kadang dimakan</span></label><label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Tidak dimakan balita"><span class="text-sm">Tidak dimakan balita</span></label><label class="flex gap-2 items-center"><input type="radio" name="konsumsi_pmt_l" value="Dimakan anggota keluarga lainnya"><span class="text-sm">Dimakan anggota keluarga lainnya</span></label></div></div></div></div></div>
 
-                        <!-- D. Evaluasi Tindak Lanjut (Lanjutan) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex items-center gap-3">
-                                <div class="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">D</div>
-                                <h3 class="text-lg font-bold text-indigo-900">D. EVALUASI TINDAK LANJUT FAKTOR RISIKO</h3>
-                            </div>
-                            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">1. Bagaimana ketersediaan air bersih di rumah saat ini?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-start"><input type="radio" name="air_bersih_l" value="Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia" class="mt-1"><span class="text-sm">Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="air_bersih_l" value="Belum tersedia sampai saat ini"><span class="text-sm">Belum tersedia sampai saat ini</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="air_bersih_l" value="Sudah tersedia sejak awal"><span class="text-sm">Sudah tersedia sejak awal</span></label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">2. Bagaimana ketersediaan jamban sehat di rumah saat ini?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-start"><input type="radio" name="jamban_l" value="Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia" class="mt-1"><span class="text-sm">Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="jamban_l" value="Belum tersedia sampai saat ini"><span class="text-sm">Belum tersedia sampai saat ini</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="jamban_l" value="Sudah tersedia sejak awal"><span class="text-sm">Sudah tersedia sejak awal</span></label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah keluhan cacingan sudah ditangani</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Sudah tuntas/sembuh"><span class="text-sm">Sudah tuntas/sembuh</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Masih dalam pengobatan"><span class="text-sm">Masih dalam pengobatan</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Belum ditangani"><span class="text-sm">Belum ditangani</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Tidak ada riwayat kecacingan sebelumnya"><span class="text-sm">Tidak ada riwayat kecacingan sebelumnya</span></label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">4. Apakah penyakit penyerta (jika ada) sudah ditangani?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Sudah membaik"><span class="text-sm">Sudah membaik</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Masih dalam perawatan"><span class="text-sm">Masih dalam perawatan</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Belum ditangani"><span class="text-sm">Belum ditangani</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Tidak ada riwayat penyakit penyerta"><span class="text-sm">Tidak ada riwayat penyakit penyerta</span></label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana perilaku anggota keluarga yang merokok?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Sudah berhenti merokok"><span class="text-sm">Sudah berhenti merokok</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Merokok di dalam rumah saat bersama balita"><span class="text-sm">Merokok di dalam rumah saat bersama balita</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Merokok di luar rumah jauh dari balita"><span class="text-sm">Merokok di luar rumah jauh dari balita</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Tidak ada anggota keluarga yang merokok"><span class="text-sm">Tidak ada anggota keluarga yang merokok</span></label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">6. Apakah anjuran/edukasi dari kunjungan bulan lalu sudah dijalankan?</label>
-                                    <div class="flex flex-col gap-2">
-                                        <label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Sudah dijalankan"><span class="text-sm">Sudah dijalankan</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Sebagian dijalankan"><span class="text-sm">Sebagian dijalankan</span></label>
-                                        <label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Belum dijalankan"><span class="text-sm">Belum dijalankan</span></label>
-                                    </div>
-                                </div>
-                                <div class="md:col-span-2 border-t pt-4">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">7. Jelaskan jika ada kendala yang dihadapi keluarga bulan ini</label>
-                                    <textarea name="kendala_keluarga_l" rows="2" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex items-center gap-3"><div class="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">D</div><h3 class="text-lg font-bold text-indigo-900">D. EVALUASI TINDAK LANJUT FAKTOR RISIKO</h3></div><div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block text-sm font-semibold text-slate-700 mb-2">1. Bagaimana ketersediaan air bersih di rumah saat ini?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-start"><input type="radio" name="air_bersih_l" value="Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia" class="mt-1"><span class="text-sm">Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia</span></label><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_l" value="Belum tersedia sampai saat ini"><span class="text-sm">Belum tersedia sampai saat ini</span></label><label class="flex gap-2 items-center"><input type="radio" name="air_bersih_l" value="Sudah tersedia sejak awal"><span class="text-sm">Sudah tersedia sejak awal</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">2. Bagaimana ketersediaan jamban sehat di rumah saat ini?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-start"><input type="radio" name="jamban_l" value="Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia" class="mt-1"><span class="text-sm">Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia</span></label><label class="flex gap-2 items-center"><input type="radio" name="jamban_l" value="Belum tersedia sampai saat ini"><span class="text-sm">Belum tersedia sampai saat ini</span></label><label class="flex gap-2 items-center"><input type="radio" name="jamban_l" value="Sudah tersedia sejak awal"><span class="text-sm">Sudah tersedia sejak awal</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">3. Apakah keluhan cacingan sudah ditangani</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Sudah tuntas/sembuh"><span class="text-sm">Sudah tuntas/sembuh</span></label><label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Masih dalam pengobatan"><span class="text-sm">Masih dalam pengobatan</span></label><label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Belum ditangani"><span class="text-sm">Belum ditangani</span></label><label class="flex gap-2 items-center"><input type="radio" name="cacingan_l" value="Tidak ada riwayat kecacingan sebelumnya"><span class="text-sm">Tidak ada riwayat kecacingan sebelumnya</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">4. Apakah penyakit penyerta (jika ada) sudah ditangani?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Sudah membaik"><span class="text-sm">Sudah membaik</span></label><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Masih dalam perawatan"><span class="text-sm">Masih dalam perawatan</span></label><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Belum ditangani"><span class="text-sm">Belum ditangani</span></label><label class="flex gap-2 items-center"><input type="radio" name="penyakit_penyerta_l" value="Tidak ada riwayat penyakit penyerta"><span class="text-sm">Tidak ada riwayat penyakit penyerta</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">5. Bagaimana perilaku anggota keluarga yang merokok?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Sudah berhenti merokok"><span class="text-sm">Sudah berhenti merokok</span></label><label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Merokok di dalam rumah saat bersama balita"><span class="text-sm">Merokok di dalam rumah saat bersama balita</span></label><label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Merokok di luar rumah jauh dari balita"><span class="text-sm">Merokok di luar rumah jauh dari balita</span></label><label class="flex gap-2 items-center"><input type="radio" name="merokok_l" value="Tidak ada anggota keluarga yang merokok"><span class="text-sm">Tidak ada anggota keluarga yang merokok</span></label></div></div><div><label class="block text-sm font-semibold text-slate-700 mb-2">6. Apakah anjuran/edukasi dari kunjungan bulan lalu sudah dijalankan?</label><div class="flex flex-col gap-2"><label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Sudah dijalankan"><span class="text-sm">Sudah dijalankan</span></label><label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Sebagian dijalankan"><span class="text-sm">Sebagian dijalankan</span></label><label class="flex gap-2 items-center"><input type="radio" name="edukasi_dijalankan_l" value="Belum dijalankan"><span class="text-sm">Belum dijalankan</span></label></div></div><div class="md:col-span-2 border-t pt-4"><label class="block text-sm font-semibold text-slate-700 mb-1">7. Jelaskan jika ada kendala yang dihadapi keluarga bulan ini</label><textarea name="kendala_keluarga_l" rows="2" class="w-full border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none"></textarea></div></div></div>
 
-                        <!-- E. Tindakan ASN (Lanjutan) -->
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                            <div class="bg-blue-50 px-6 py-4 border-b border-blue-100 flex items-center gap-3">
-                                <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">E</div>
-                                <h3 class="text-lg font-bold text-blue-900">E. TINDAKAN YANG DILAKUKAN OLEH ASN PENDAMPING</h3>
-                            </div>
-                            <div class="p-6">
-                                <label class="block text-sm font-semibold text-slate-700 mb-3">Berikan tanda centang pada pilihan tindakan yang dilakukan (dapat dipilih lebih dari satu)!</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6">
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang ASI dan MPASI bergizi seimbang" class="mt-1"><span class="text-sm">Edukasi tentang ASI dan MPASI bergizi seimbang</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang pemantauan perkembangan sesuai usia balita" class="mt-1"><span class="text-sm">Edukasi tentang pemantauan perkembangan sesuai usia balita</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang imunisasi" class="mt-1"><span class="text-sm">Edukasi tentang imunisasi</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun" class="mt-1"><span class="text-sm">Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang etika merokok dan bahaya asap rokok bagi balita" class="mt-1"><span class="text-sm">Edukasi tentang etika merokok dan bahaya asap rokok bagi balita</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Menghimbau rutin datang ke Posyandu (setiap bulan)" class="mt-1"><span class="text-sm">Menghimbau rutin datang ke Posyandu (setiap bulan)</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit" class="mt-1"><span class="text-sm">Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit</span></label>
-                                    <label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Dukungan gizi berupa bantuan makanan atau lainnya" class="mt-1"><span class="text-sm">Dukungan gizi berupa bantuan makanan atau lainnya</span></label>
-                                </div>
-                                <div class="mt-4 pt-4 border-t flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                                    <label class="flex gap-2 items-center"><input type="checkbox" name="tindakan_asn_l" value="Lainnya" id="chkLainnya_l"><span class="text-sm whitespace-nowrap">Lainnya, sebutkan:</span></label>
-                                    <input type="text" name="tindakan_lainnya_l" id="inputLainnya_l" class="w-full sm:flex-1 border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none" disabled>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid"><div class="bg-blue-50 px-6 py-4 border-b border-blue-100 flex items-center gap-3"><div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">E</div><h3 class="text-lg font-bold text-blue-900">E. TINDAKAN YANG DILAKUKAN OLEH ASN PENDAMPING</h3></div><div class="p-6"><label class="block text-sm font-semibold text-slate-700 mb-3">Berikan tanda centang pada pilihan tindakan yang dilakukan (dapat dipilih lebih dari satu)!</label><div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6"><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang ASI dan MPASI bergizi seimbang" class="mt-1"><span class="text-sm">Edukasi tentang ASI dan MPASI bergizi seimbang</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang pemantauan perkembangan sesuai usia balita" class="mt-1"><span class="text-sm">Edukasi tentang pemantauan perkembangan sesuai usia balita</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang imunisasi" class="mt-1"><span class="text-sm">Edukasi tentang imunisasi</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun" class="mt-1"><span class="text-sm">Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Edukasi tentang etika merokok dan bahaya asap rokok bagi balita" class="mt-1"><span class="text-sm">Edukasi tentang etika merokok dan bahaya asap rokok bagi balita</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Menghimbau rutin datang ke Posyandu (setiap bulan)" class="mt-1"><span class="text-sm">Menghimbau rutin datang ke Posyandu (setiap bulan)</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit" class="mt-1"><span class="text-sm">Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit</span></label><label class="flex gap-3 items-start"><input type="checkbox" name="tindakan_asn_l" value="Dukungan gizi berupa bantuan makanan atau lainnya" class="mt-1"><span class="text-sm">Dukungan gizi berupa bantuan makanan atau lainnya</span></label></div><div class="mt-4 pt-4 border-t flex flex-col sm:flex-row items-start sm:items-center gap-2"><label class="flex gap-2 items-center"><input type="checkbox" name="tindakan_asn_l" value="Lainnya" id="chkLainnya_l"><span class="text-sm whitespace-nowrap">Lainnya, sebutkan:</span></label><input type="text" name="tindakan_lainnya_l" id="inputLainnya_l" class="w-full sm:flex-1 border p-2.5 rounded-lg text-sm border-slate-300 focus:border-teal-500 outline-none" disabled></div></div></div>
                     </div>
 
                     <!-- ========================================== -->
                     <!-- BAGIAN F (GLOBAL - KEDUA FORM SAMA)        -->
                     <!-- ========================================== -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
-                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                            <div id="labelF" class="bg-slate-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">D</div> <!-- Berubah sesuai js -->
-                            <h3 id="labelFTitle" class="text-lg font-bold text-slate-800">D. BUKTI KUNJUNGAN</h3>
-                        </div>
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center gap-3"><div id="labelF" class="bg-slate-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">D</div><h3 id="labelFTitle" class="text-lg font-bold text-slate-800">D. BUKTI KUNJUNGAN</h3></div>
                         <div class="p-6">
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Ambil Foto Saat Kunjungan (Kamera HP)</label>
                             <input type="file" accept="image/*" capture="environment" id="inputFoto" class="w-full text-sm mb-4 border border-slate-300 p-2 rounded-lg bg-white no-print">
@@ -603,7 +284,7 @@
                             <h4 class="text-sm font-semibold text-slate-500 uppercase mb-3">Manajemen Sasaran Balita (Master Data Dinamis)</h4>
                             <div class="bg-slate-50 border rounded-xl p-5">
                                 <form id="formTambahSasaran" class="flex flex-col sm:flex-row gap-3 mb-2"><input type="text" id="sasaranNama" required placeholder="Nama Balita Baru" class="flex-1 rounded-lg border border-slate-300 p-2 text-sm outline-none focus:border-teal-500"><select id="sasaranDesa" required class="w-full sm:w-48 rounded-lg border border-slate-300 p-2 text-sm bg-white outline-none focus:border-teal-500"><option value="" disabled selected>Pilih Desa...</option><option value="Ambal">Ambal</option><option value="Binangun">Binangun</option><option value="Gumelar">Gumelar</option><option value="Jlegong">Jlegong</option><option value="Karanggondang">Karanggondang</option><option value="Karangkobar">Karangkobar</option><option value="Leksana">Leksana</option><option value="Pagerpelah">Pagerpelah</option><option value="Pasuruhan">Pasuruhan</option><option value="Paweden">Paweden</option><option value="Purwodadi">Purwodadi</option><option value="Sampang">Sampang</option><option value="Slatri">Slatri</option></select><button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg text-sm whitespace-nowrap shadow-sm">+ Tambah Sasaran</button></form>
-                                <div class="mt-4 pt-4 border-t border-slate-200"><label class="block text-sm font-semibold text-slate-700 mb-2">Atau Upload Data Sekaligus (Excel/CSV)</label><div class="flex flex-col sm:flex-row gap-3"><input type="file" id="uploadSasaranExcel" accept=".xlsx, .xls, .csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-slate-300 rounded-lg cursor-pointer bg-white"><button type="button" onclick="window.triggerUploadExcel()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors text-sm whitespace-nowrap shadow-sm">Upload & Proses</button></div><p class="text-xs text-slate-500 mt-1">Format Excel: Buat tabel biasa dengan kolom <b>Nama</b> dan <b>Desa</b> di baris teratas.</p></div>
+                                <div class="mt-4 pt-4 border-t border-slate-200"><label class="block text-sm font-semibold text-slate-700 mb-2">Atau Upload Data Sekaligus (Excel/CSV)</label><div class="flex flex-col sm:flex-row gap-3"><input type="file" id="uploadSasaranExcel" accept=".xlsx, .xls, .csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-slate-300 rounded-lg cursor-pointer bg-white"><button type="button" onclick="window.triggerUploadExcel()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors text-sm whitespace-nowrap shadow-sm">Upload & Proses</button></div><p class="text-xs text-slate-500 mt-1">Sistem otomatis mendeteksi kolom: <b>Nama, Desa, NIK, Jenis Kelamin, Tanggal Lahir, Posyandu</b>.</p></div>
                                 <div class="mt-5 max-h-60 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-inner"><table class="w-full text-left text-sm"><thead class="bg-slate-100 sticky top-0"><tr><th class="p-2.5">No</th><th class="p-2.5">Nama Balita (Master)</th><th class="p-2.5">Desa</th><th class="p-2.5 text-center">Aksi</th></tr></thead><tbody id="listSasaranBody" class="divide-y divide-slate-100"></tbody></table></div>
                             </div>
                         </div>
@@ -626,63 +307,87 @@
         const kunjunganCol = collection(db, 'kunjungan_balita'); const sasaranCol = collection(db, 'master_sasaran_balita');
         const asnCol = collection(db, 'master_asn_pendamping');
 
-        function showAlert(msg) { document.getElementById('alertMessage').textContent = msg; const m = document.getElementById('customAlertModal'); m.classList.replace('hidden','flex'); return new Promise(r => { document.getElementById('closeAlertBtn').onclick = () => { m.classList.replace('flex','hidden'); r(); }; }); }
-        function showConfirm(msg) { document.getElementById('confirmMessage').textContent = msg; const m = document.getElementById('customConfirmModal'); m.classList.replace('hidden','flex'); return new Promise(r => { document.getElementById('cancelConfirmBtn').onclick = () => { m.classList.replace('flex','hidden'); r(false); }; document.getElementById('okConfirmBtn').onclick = () => { m.classList.replace('flex','hidden'); r(true); }; }); }
+        function showAlert(msg) { const el = document.getElementById('alertMessage'); if(el) el.textContent = msg; const m = document.getElementById('customAlertModal'); if(m) m.classList.replace('hidden','flex'); return new Promise(r => { const btn = document.getElementById('closeAlertBtn'); if(btn) btn.onclick = () => { m.classList.replace('flex','hidden'); r(); }; else r(); }); }
+        function showConfirm(msg) { const el = document.getElementById('confirmMessage'); if(el) el.textContent = msg; const m = document.getElementById('customConfirmModal'); if(m) m.classList.replace('hidden','flex'); return new Promise(r => { const cBtn = document.getElementById('cancelConfirmBtn'); if(cBtn) cBtn.onclick = () => { m.classList.replace('flex','hidden'); r(false); }; const oBtn = document.getElementById('okConfirmBtn'); if(oBtn) oBtn.onclick = () => { m.classList.replace('flex','hidden'); r(true); }; }); }
 
         // --- AUTH ---
         setPersistence(auth, browserLocalPersistence).catch(() => {});
-        document.getElementById('togglePasswordBtn').onclick = () => { const lp = document.getElementById('loginPassword'); lp.type = lp.type === 'password' ? 'text' : 'password'; document.getElementById('eyeIcon').classList.toggle('hidden'); document.getElementById('eyeSlashIcon').classList.toggle('hidden'); };
-        document.getElementById('loginForm').onsubmit = async (e) => { e.preventDefault(); const btn = document.getElementById('loginBtn'); btn.disabled = true; btn.textContent = 'Memproses...'; try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value.trim(), document.getElementById('loginPassword').value); } catch(err) { document.getElementById('loginError').textContent = 'Kredensial salah!'; document.getElementById('loginError').classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Masuk'; } };
-        onAuthStateChanged(auth, user => { document.getElementById('loginScreen').style.display = user ? 'none' : 'flex'; document.getElementById('appShell').style.display = user ? 'flex' : 'none'; });
+        const toggleBtn = document.getElementById('togglePasswordBtn'); if(toggleBtn) toggleBtn.onclick = () => { const lp = document.getElementById('loginPassword'); lp.type = lp.type === 'password' ? 'text' : 'password'; document.getElementById('eyeIcon').classList.toggle('hidden'); document.getElementById('eyeSlashIcon').classList.toggle('hidden'); };
+        const lForm = document.getElementById('loginForm'); if(lForm) lForm.onsubmit = async (e) => { e.preventDefault(); const btn = document.getElementById('loginBtn'); btn.disabled = true; btn.textContent = 'Memproses...'; try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value.trim(), document.getElementById('loginPassword').value); } catch(err) { document.getElementById('loginError').textContent = 'Kredensial salah!'; document.getElementById('loginError').classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Masuk'; } };
+        onAuthStateChanged(auth, user => { const s = document.getElementById('loginScreen'); if(s) s.style.display = user ? 'none' : 'flex'; const a = document.getElementById('appShell'); if(a) a.style.display = user ? 'flex' : 'none'; });
         window.triggerLogout = async () => { if (await showConfirm('Yakin ingin keluar?')) signOut(auth); };
         enableIndexedDbPersistence(db).catch(() => {});
 
         // --- GLOBAL & UI SETUP ---
         let editingId = null; let cachedData = JSON.parse(localStorage.getItem('asnDataLokal') || '[]'); let lastSearchTerm = '';
-        const localDate = new Date(new Date().getTime() - (new Date().getTimezoneOffset()*60000)).toISOString().split('T')[0]; document.getElementById('tgl_kunjungan_p1').value = localDate; document.getElementById('tgl_kunjungan_l').value = localDate;
-        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]; document.getElementById('currentMonthStr').textContent = monthNames[new Date().getMonth()] + " " + new Date().getFullYear();
+        const localDate = new Date(new Date().getTime() - (new Date().getTimezoneOffset()*60000)).toISOString().split('T')[0]; 
+        const tglP1 = document.getElementById('tgl_kunjungan_p1'); if(tglP1) tglP1.value = localDate; 
+        const tglL = document.getElementById('tgl_kunjungan_l'); if(tglL) tglL.value = localDate;
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]; 
+        const cMonth = document.getElementById('currentMonthStr'); if(cMonth) cMonth.textContent = monthNames[new Date().getMonth()] + " " + new Date().getFullYear();
         
         function calculateAge(dateStr) {
             if(!dateStr) return 0; const t = new Date(dateStr), today = new Date();
             let b = (today.getFullYear()-t.getFullYear())*12 - t.getMonth() + today.getMonth(); if(today.getDate() < t.getDate()) b--; return b >= 0 ? b : 0;
         }
         
-        document.getElementById('tgl_lahir_p1').onchange = (e) => {
-            const b = calculateAge(e.target.value);
-            document.getElementById('usia_bulan').value = b;
-            if(b >= 0 && b <= 5) document.getElementById('usia_a_p1').checked = true;
-            else if(b >= 6 && b <= 11) document.getElementById('usia_b_p1').checked = true;
-            else if(b >= 12 && b <= 23) document.getElementById('usia_c_p1').checked = true;
-        };
-        document.getElementById('tgl_lahir_l').onchange = (e) => { document.getElementById('usia_bulan_l').value = calculateAge(e.target.value); };
+        const tglLahirP1 = document.getElementById('tgl_lahir_p1');
+        if(tglLahirP1) {
+            tglLahirP1.onchange = (e) => {
+                const b = calculateAge(e.target.value);
+                const ub = document.getElementById('usia_bulan'); if(ub) ub.value = b;
+                if(b >= 0 && b <= 5) { const a = document.getElementById('usia_a_p1'); if(a) a.checked = true; }
+                else if(b >= 6 && b <= 11) { const a = document.getElementById('usia_b_p1'); if(a) a.checked = true; }
+                else if(b >= 12 && b <= 23) { const a = document.getElementById('usia_c_p1'); if(a) a.checked = true; }
+            };
+        }
+        const tglLahirL = document.getElementById('tgl_lahir_l');
+        if(tglLahirL) tglLahirL.onchange = (e) => { const ub = document.getElementById('usia_bulan_l'); if(ub) ub.value = calculateAge(e.target.value); };
         
         function updateUI() { 
-            const isP1 = document.getElementById('jenisPertama').checked; 
-            document.getElementById('wrapperFormPertama').hidden = !isP1; 
-            document.getElementById('lanjutanSections').hidden = isP1; 
+            const isP1 = document.getElementById('jenisPertama')?.checked; 
+            const wP1 = document.getElementById('wrapperFormPertama'); if(wP1) wP1.hidden = !isP1; 
+            const lSec = document.getElementById('lanjutanSections'); if(lSec) lSec.hidden = isP1; 
+            const wBL = document.getElementById('bulanLanjutanWrapper'); if(wBL) wBL.hidden = isP1; 
+            const bPI = document.getElementById('bulanPertamaIndicator'); if(bPI) bPI.hidden = !isP1; 
+            const nOW = document.getElementById('namaOrtuWrapper'); if(nOW) nOW.hidden = !isP1; 
             
-            document.getElementById('labelF').textContent = isP1 ? 'D' : 'F';
-            document.getElementById('labelFTitle').textContent = isP1 ? 'D. BUKTI KUNJUNGAN' : 'F. BUKTI KUNJUNGAN';
+            const lF = document.getElementById('labelF'); if(lF) lF.textContent = isP1 ? 'D' : 'F';
+            const lFT = document.getElementById('labelFTitle'); if(lFT) lFT.textContent = isP1 ? 'D. BUKTI KUNJUNGAN' : 'F. BUKTI KUNJUNGAN';
             
-            // Atur properti Required agar form yang tersembunyi tidak memblokir submit
-            document.getElementById('wrapperFormPertama').querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
-            document.getElementById('lanjutanSections').querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(!isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
+            if(isP1) { const bS = document.getElementById('bulanPemantauanSatu'); if(bS) bS.checked = true; }
+            
+            if(wP1) wP1.querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
+            if(lSec) lSec.querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(!isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
         }
         document.querySelectorAll('[name="jenis_kunjungan"]').forEach(r=>r.onchange=updateUI); 
-        document.getElementById('chkLainnya_p1').onchange=e=>document.getElementById('inputLainnya_p1').disabled=!e.target.checked; 
-        document.getElementById('chkLainnya_l').onchange=e=>document.getElementById('inputLainnya_l').disabled=!e.target.checked; 
+        const chkL_p1 = document.getElementById('chkLainnya_p1'); if(chkL_p1) chkL_p1.onchange=e=>{ const i = document.getElementById('inputLainnya_p1'); if(i) i.disabled=!e.target.checked; }; 
+        const chkL_l = document.getElementById('chkLainnya_l'); if(chkL_l) chkL_l.onchange=e=>{ const i = document.getElementById('inputLainnya_l'); if(i) i.disabled=!e.target.checked; }; 
         updateUI();
 
         // --- FOTO LOGIC ---
-        document.getElementById('inputFoto').onchange = e => {
-            const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
-            reader.onload = ev => { const img = new Image(); img.onload = () => {
-                const canvas = document.createElement('canvas'); const scale = 800 / img.width; canvas.width = 800; canvas.height = img.height * scale;
-                canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6);
-                document.getElementById('previewFoto').src = b64; document.getElementById('fotoPreviewContainer').classList.remove('hidden'); document.getElementById('fotoBase64').value = b64;
-            }; img.src = ev.target.result; }; reader.readAsDataURL(file);
-        };
-        document.getElementById('hapusFotoBtn').onclick = () => { document.getElementById('inputFoto').value=""; document.getElementById('fotoBase64').value=""; document.getElementById('previewFoto').src=""; document.getElementById('fotoPreviewContainer').classList.add('hidden'); };
+        const inFoto = document.getElementById('inputFoto');
+        if(inFoto) {
+            inFoto.onchange = e => {
+                const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
+                reader.onload = ev => { const img = new Image(); img.onload = () => {
+                    const canvas = document.createElement('canvas'); const scale = 800 / img.width; canvas.width = 800; canvas.height = img.height * scale;
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6);
+                    const pF = document.getElementById('previewFoto'); if(pF) pF.src = b64; 
+                    const pC = document.getElementById('fotoPreviewContainer'); if(pC) pC.classList.remove('hidden'); 
+                    const fB = document.getElementById('fotoBase64'); if(fB) fB.value = b64;
+                }; img.src = ev.target.result; }; reader.readAsDataURL(file);
+            };
+        }
+        const hBtn = document.getElementById('hapusFotoBtn');
+        if(hBtn) {
+            hBtn.onclick = () => { 
+                const iF = document.getElementById('inputFoto'); if(iF) iF.value=""; 
+                const fB = document.getElementById('fotoBase64'); if(fB) fB.value=""; 
+                const pF = document.getElementById('previewFoto'); if(pF) pF.src=""; 
+                const pC = document.getElementById('fotoPreviewContainer'); if(pC) pC.classList.add('hidden'); 
+            };
+        }
 
         // --- MASTER DATA ASN PENDAMPING ---
         const defaultASN = [{nama: "Anas Hamdani, S. Kep.", nip: "199511292020121014"}];
@@ -690,33 +395,44 @@
 
         function renderAsnList() {
             const all = new Set(defaultASN.map(b=>b.nama.toUpperCase())); const fDyn = dynamicAsn.filter(b=>!all.has(b.nama.toUpperCase())); combinedAsn = [...defaultASN, ...fDyn];
-            const dl = document.getElementById('asnListDatalist'); dl.innerHTML = ''; combinedAsn.forEach(b => dl.innerHTML += `<option value="${b.nama}">`);
-            const dl2 = document.getElementById('asnListDatalist_l'); dl2.innerHTML = ''; combinedAsn.forEach(b => dl2.innerHTML += `<option value="${b.nama}">`);
+            const dl = document.getElementById('asnListDatalist'); if(dl) { dl.innerHTML = ''; combinedAsn.forEach(b => dl.innerHTML += `<option value="${b.nama}">`); }
+            const dl2 = document.getElementById('asnListDatalist_l'); if(dl2) { dl2.innerHTML = ''; combinedAsn.forEach(b => dl2.innerHTML += `<option value="${b.nama}">`); }
             
-            const tbody = document.getElementById('listAsnBody'); tbody.innerHTML = ''; combinedAsn.forEach((b,i) => { const isDef = defaultASN.some(x=>x.nama===b.nama); tbody.innerHTML += `<tr><td class="p-2.5">${i+1}</td><td class="p-2.5 font-medium text-slate-800">${b.nama}</td><td class="p-2.5 text-slate-600">${b.nip||'-'}</td><td class="p-2.5 text-center">${isDef?'<span class="text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded">Bawaan</span>':`<button type="button" onclick="window.triggerDeleteAsn('${b.id}')" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded font-bold hover:bg-rose-200 transition-colors">Hapus</button>`}</td></tr>`; });
+            const tbody = document.getElementById('listAsnBody'); 
+            if(tbody) {
+                tbody.innerHTML = ''; combinedAsn.forEach((b,i) => { const isDef = defaultASN.some(x=>x.nama===b.nama); tbody.innerHTML += `<tr><td class="p-2.5">${i+1}</td><td class="p-2.5 font-medium text-slate-800">${b.nama}</td><td class="p-2.5 text-slate-600">${b.nip||'-'}</td><td class="p-2.5 text-center">${isDef?'<span class="text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded">Bawaan</span>':`<button type="button" onclick="window.triggerDeleteAsn('${b.id}')" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded font-bold hover:bg-rose-200 transition-colors">Hapus</button>`}</td></tr>`; });
+            }
         }
-        const autocompleteAsn = (e, prefix) => { const m = combinedAsn.find(b=>b.nama.toLowerCase()===e.target.value.trim().toLowerCase()); if(m && m.nip) document.getElementById(`nip_asn_${prefix}`).value = m.nip; };
-        document.getElementById('nama_asn_p1').oninput = e => autocompleteAsn(e, 'p1');
-        document.getElementById('nama_asn_l').oninput = e => autocompleteAsn(e, 'l');
+        const autocompleteAsn = (e, prefix) => { const m = combinedAsn.find(b=>b.nama.toLowerCase()===e.target.value.trim().toLowerCase()); if(m && m.nip) { const n = document.getElementById(`nip_asn_${prefix}`); if(n) n.value = m.nip; } };
+        const nAsnP1 = document.getElementById('nama_asn_p1'); if(nAsnP1) nAsnP1.oninput = e => autocompleteAsn(e, 'p1');
+        const nAsnL = document.getElementById('nama_asn_l'); if(nAsnL) nAsnL.oninput = e => autocompleteAsn(e, 'l');
         
         onSnapshot(asnCol, snap => { dynamicAsn = snap.docs.map(d => ({ id: d.id, ...d.data() })); localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); });
 
-        document.getElementById('formTambahASN').onsubmit = async e => { e.preventDefault(); const nama = document.getElementById('asnNamaBaru').value.trim(); const nip = document.getElementById('asnNipBaru').value.trim(); if(!nama) return; try{ await addDoc(asnCol, {nama, nip, createdAt:Date.now()}); document.getElementById('asnNamaBaru').value=''; document.getElementById('asnNipBaru').value=''; }catch(er){ dynamicAsn.push({id:'temp-'+Date.now(),nama,nip}); localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); document.getElementById('asnNamaBaru').value=''; document.getElementById('asnNipBaru').value='';} };
+        const fTA = document.getElementById('formTambahASN');
+        if(fTA) {
+            fTA.onsubmit = async e => { e.preventDefault(); const nama = document.getElementById('asnNamaBaru').value.trim(); const nip = document.getElementById('asnNipBaru').value.trim(); if(!nama) return; try{ await addDoc(asnCol, {nama, nip, createdAt:Date.now()}); document.getElementById('asnNamaBaru').value=''; document.getElementById('asnNipBaru').value=''; }catch(er){ dynamicAsn.push({id:'temp-'+Date.now(),nama,nip}); localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); document.getElementById('asnNamaBaru').value=''; document.getElementById('asnNipBaru').value='';} };
+        }
         window.triggerDeleteAsn = async id => { if(await showConfirm('Hapus ASN ini dari master?')){ if(id.startsWith('temp-')){ dynamicAsn = dynamicAsn.filter(d=>d.id!==id); localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); }else await deleteDoc(doc(db, 'master_asn_pendamping', id)); } };
 
         window.triggerUploadAsnExcel = () => {
             const fileInput = document.getElementById('uploadAsnExcel'); const file = fileInput.files[0];
             if(!file) return showAlert('Pilih file Excel (.xlsx / .csv) terlebih dahulu!');
             const reader = new FileReader();
+            let count = 0;
             reader.onload = async (e) => {
                 try {
                     const workbook = XLSX.read(new Uint8Array(e.target.result), {type: 'array'}); const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-                    if(json.length === 0) return showAlert('File Excel kosong atau format tidak sesuai!'); let count = 0;
+                    if(json.length === 0) return showAlert('File Excel kosong atau format tidak sesuai!'); 
                     for(let row of json) {
                         let nama = row['Nama'] || row['nama'] || row['NAMA'] || row['Nama ASN'] || row['Nama Pendamping ASN']; let nip = row['NIP'] || row['nip'] || row['NIP ASN'];
                         if(nama) { try { await addDoc(asnCol, { nama: String(nama).trim(), nip: nip?String(nip).trim():'', createdAt: Date.now() }); count++; } catch(err) { dynamicAsn.push({id:'temp-'+Date.now()+Math.random(), nama: String(nama).trim(), nip: nip?String(nip).trim():''}); count++; } }
-                    } localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); fileInput.value = ""; showAlert(`Berhasil memproses ${count} data ASN dari Excel.`);
-                } catch(err) { showAlert('Gagal membaca file Excel.'); }
+                    } 
+                } catch(err) { console.error(err); return showAlert('Gagal membaca format file Excel.'); }
+                
+                try {
+                    localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); fileInput.value = ""; showAlert(`Berhasil memproses ${count} data ASN dari Excel.`);
+                } catch(uiErr) { console.error(uiErr); }
             }; reader.readAsArrayBuffer(file);
         };
 
@@ -726,51 +442,58 @@
         
         function renderSasaranList() {
             const all = new Set(defaultBalita.map(b=>b.nama.toUpperCase())); const fDyn = dynamicSasaran.filter(b=>!all.has(b.nama.toUpperCase())); combinedMaster = [...defaultBalita, ...fDyn];
-            const dl = document.getElementById('balitaListDatalist'); dl.innerHTML = ''; combinedMaster.forEach(b => dl.innerHTML += `<option value="${b.nama}">`);
-            const dl_l = document.getElementById('balitaListDatalist_l'); dl_l.innerHTML = ''; combinedMaster.forEach(b => dl_l.innerHTML += `<option value="${b.nama}">`);
+            const dl = document.getElementById('balitaListDatalist'); if(dl) { dl.innerHTML = ''; combinedMaster.forEach(b => dl.innerHTML += `<option value="${b.nama}">`); }
+            const dl_l = document.getElementById('balitaListDatalist_l'); if(dl_l) { dl_l.innerHTML = ''; combinedMaster.forEach(b => dl_l.innerHTML += `<option value="${b.nama}">`); }
             
-            const tbody = document.getElementById('listSasaranBody'); tbody.innerHTML = ''; combinedMaster.forEach((b,i) => { const isDef = defaultBalita.some(x=>x.nama===b.nama); tbody.innerHTML += `<tr><td class="p-2.5">${i+1}</td><td class="p-2.5 font-medium text-slate-800">${b.nama}</td><td class="p-2.5 text-slate-600">${b.desa||'-'}</td><td class="p-2.5 text-center">${isDef?'<span class="text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded">Bawaan</span>':`<button type="button" onclick="window.triggerDeleteSasaran('${b.id}')" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded font-bold hover:bg-rose-200 transition-colors">Hapus</button>`}</td></tr>`; });
+            const tbody = document.getElementById('listSasaranBody'); 
+            if(tbody) {
+                tbody.innerHTML = ''; combinedMaster.forEach((b,i) => { const isDef = defaultBalita.some(x=>x.nama===b.nama); tbody.innerHTML += `<tr><td class="p-2.5">${i+1}</td><td class="p-2.5 font-medium text-slate-800">${b.nama}</td><td class="p-2.5 text-slate-600">${b.desa||'-'}</td><td class="p-2.5 text-center">${isDef?'<span class="text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded">Bawaan</span>':`<button type="button" onclick="window.triggerDeleteSasaran('${b.id}')" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded font-bold hover:bg-rose-200 transition-colors">Hapus</button>`}</td></tr>`; });
+            }
             updateDashboardCards();
         }
         
         const autocompleteBalita = (e, prefix) => {
             const m = combinedMaster.find(b=>b.nama.toLowerCase()===e.target.value.trim().toLowerCase()); 
             if(m){ 
-                document.getElementById(`desa_${prefix}`)?document.getElementById(`desa_${prefix}`).value = m.desa : document.querySelector(`[name="desa_${prefix}"]`).value = m.desa; 
-                if(m.nik) document.getElementById(`nik_balita_${prefix}`).value = m.nik; 
+                const dSelect = document.querySelector(`[name="desa_${prefix}"]`); if(dSelect) dSelect.value = m.desa; 
+                const nInput = document.getElementById(`nik_balita_${prefix}`); if(nInput && m.nik) nInput.value = m.nik; 
                 
                 if(prefix === 'l' && m.jk) {
                     const rbL = document.getElementById('jk_l_L'); const rbP = document.getElementById('jk_l_P');
-                    if(m.jk.toUpperCase() === 'L' || m.jk.toUpperCase() === 'LAKI-LAKI') rbL.checked = true;
-                    if(m.jk.toUpperCase() === 'P' || m.jk.toUpperCase() === 'PEREMPUAN') rbP.checked = true;
+                    if(rbL && rbP) {
+                        if(m.jk.toUpperCase() === 'L' || m.jk.toUpperCase() === 'LAKI-LAKI') rbL.checked = true;
+                        if(m.jk.toUpperCase() === 'P' || m.jk.toUpperCase() === 'PEREMPUAN') rbP.checked = true;
+                    }
                 }
                 
                 if(m.tglLahir) {
                     const tglInput = document.getElementById(`tgl_lahir_${prefix}`);
-                    tglInput.value = m.tglLahir;
-                    tglInput.dispatchEvent(new Event('change'));
+                    if(tglInput) { tglInput.value = m.tglLahir; tglInput.dispatchEvent(new Event('change')); }
                 }
-                if(m.posyandu) document.getElementById(`posyandu_${prefix}`)?document.getElementById(`posyandu_${prefix}`).value = m.posyandu : document.getElementById(`inputPosyandu_${prefix}`).value = m.posyandu; 
+                const pInput = document.querySelector(`[name="posyandu_${prefix}"]`); if(pInput && m.posyandu) pInput.value = m.posyandu; 
             }
         };
-        document.getElementById('nama_balita_p1').oninput = e => autocompleteBalita(e, 'p1');
-        document.getElementById('nama_balita_l').oninput = e => autocompleteBalita(e, 'l');
+        const nbP1 = document.getElementById('nama_balita_p1'); if(nbP1) nbP1.oninput = e => autocompleteBalita(e, 'p1');
+        const nbL = document.getElementById('nama_balita_l'); if(nbL) nbL.oninput = e => autocompleteBalita(e, 'l');
         
         onSnapshot(sasaranCol, snap => { dynamicSasaran = snap.docs.map(d => ({ id: d.id, ...d.data() })); localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); });
         
-        document.getElementById('formTambahSasaran').onsubmit = async e => { e.preventDefault(); const nama = document.getElementById('sasaranNama').value.trim(), desa = document.getElementById('sasaranDesa').value; if(!nama||!desa)return; try{ await addDoc(sasaranCol, {nama,desa,createdAt:Date.now()}); document.getElementById('sasaranNama').value=''; }catch(er){ dynamicSasaran.push({id:'temp-'+Date.now(),nama,desa}); localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); document.getElementById('sasaranNama').value=''; } };
+        const fTS = document.getElementById('formTambahSasaran');
+        if(fTS) {
+            fTS.onsubmit = async e => { e.preventDefault(); const nama = document.getElementById('sasaranNama').value.trim(), desa = document.getElementById('sasaranDesa').value; if(!nama||!desa)return; try{ await addDoc(sasaranCol, {nama,desa,createdAt:Date.now()}); document.getElementById('sasaranNama').value=''; }catch(er){ dynamicSasaran.push({id:'temp-'+Date.now(),nama,desa}); localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); document.getElementById('sasaranNama').value=''; } };
+        }
         window.triggerDeleteSasaran = async id => { if(await showConfirm('Hapus balita ini dari master sasaran?')){ if(id.startsWith('temp-')){ dynamicSasaran=dynamicSasaran.filter(d=>d.id!==id); localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); }else await deleteDoc(doc(db, 'master_sasaran_balita', id)); } };
 
         window.triggerUploadExcel = () => {
             const fileInput = document.getElementById('uploadSasaranExcel'); const file = fileInput.files[0];
             if(!file) return showAlert('Pilih file Excel (.xlsx / .csv) terlebih dahulu!');
             const reader = new FileReader();
+            let count = 0;
             reader.onload = async (e) => {
                 try {
                     const workbook = XLSX.read(new Uint8Array(e.target.result), {type: 'array', cellDates: true});
                     const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
                     if(json.length === 0) return showAlert('File Excel kosong atau format tidak sesuai!'); 
-                    let count = 0;
 
                     for(let row of json) {
                         let nama = row['Nama'] || row['nama'] || row['NAMA'] || row['Nama Balita'] || ''; let desa = row['Desa'] || row['desa'] || row['DESA'] || '';
@@ -783,166 +506,181 @@
                             try { await addDoc(sasaranCol, newData); count++; } catch(err) { newData.id = 'temp-'+Date.now()+Math.random(); dynamicSasaran.push(newData); count++; } 
                         }
                     } 
+                } catch(err) { console.error(err); return showAlert('Gagal membaca format file Excel. Pastikan formatnya benar.'); }
+                
+                try {
                     localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); fileInput.value = ""; showAlert(`Berhasil memproses ${count} data sasaran dari Excel.`);
-                } catch(err) { showAlert('Gagal membaca file Excel. Pastikan formatnya benar.'); }
+                } catch(uiErr) { console.error(uiErr); }
             }; reader.readAsArrayBuffer(file);
         };
 
         // --- NAVIGATION & CANCEL EDIT ---
         const pageTitles = {'sec-dashboard':'Dashboard Utama','sec-form':'Entry Kunjungan','sec-history':'Riwayat Kunjungan','sec-charts':'Laporan Statistik','sec-settings':'Pengaturan Aplikasi'};
-        document.querySelectorAll('.nav-link').forEach(l => l.onclick = e => { document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('nav-active')); e.currentTarget.classList.add('nav-active'); const tid = e.currentTarget.getAttribute('data-target'); document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active')); document.getElementById(tid).classList.add('active'); document.getElementById('pageTitle').textContent = pageTitles[tid]; document.getElementById('pageTitleMobile').textContent = pageTitles[tid]; if(window.innerWidth<768){document.getElementById('sidebar').classList.add('-translate-x-full');document.getElementById('sidebarOverlay').classList.add('hidden');} if(tid==='sec-history') renderTable(); if(tid==='sec-charts') renderCharts(); });
-        document.getElementById('openSidebarBtn').onclick = () => { document.getElementById('sidebar').classList.remove('-translate-x-full'); document.getElementById('sidebarOverlay').classList.remove('hidden'); }; document.getElementById('closeSidebarBtn').onclick = () => { document.getElementById('sidebar').classList.add('-translate-x-full'); document.getElementById('sidebarOverlay').classList.add('hidden'); };
+        document.querySelectorAll('.nav-link').forEach(l => l.onclick = e => { document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('nav-active')); e.currentTarget.classList.add('nav-active'); const tid = e.currentTarget.getAttribute('data-target'); document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active')); const sT = document.getElementById(tid); if(sT) sT.classList.add('active'); const pT = document.getElementById('pageTitle'); if(pT) pT.textContent = pageTitles[tid]; const pTM = document.getElementById('pageTitleMobile'); if(pTM) pTM.textContent = pageTitles[tid]; if(window.innerWidth<768){ const sB = document.getElementById('sidebar'); if(sB) sB.classList.add('-translate-x-full'); const sO = document.getElementById('sidebarOverlay'); if(sO) sO.classList.add('hidden');} if(tid==='sec-history') renderTable(); if(tid==='sec-charts') renderCharts(); });
+        const oSB = document.getElementById('openSidebarBtn'); if(oSB) oSB.onclick = () => { const sB = document.getElementById('sidebar'); if(sB) sB.classList.remove('-translate-x-full'); const sO = document.getElementById('sidebarOverlay'); if(sO) sO.classList.remove('hidden'); }; 
+        const cSB = document.getElementById('closeSidebarBtn'); if(cSB) cSB.onclick = () => { const sB = document.getElementById('sidebar'); if(sB) sB.classList.add('-translate-x-full'); const sO = document.getElementById('sidebarOverlay'); if(sO) sO.classList.add('hidden'); };
         
-        document.getElementById('cancelEditBtn').onclick = () => { 
-            editingId = null; 
-            document.getElementById('monitoringForm').reset(); 
-            document.getElementById('tgl_kunjungan_p1').value = localDate; document.getElementById('tgl_kunjungan_l').value = localDate;
-            document.getElementById('inputLainnya_p1').disabled = true; document.getElementById('inputLainnya_l').disabled = true;
-            document.getElementById('hapusFotoBtn').click(); 
-            document.getElementById('editModeBanner').classList.add('hidden'); 
-            document.getElementById('simpanBtnText').textContent = 'Simpan Data Kunjungan'; 
-            updateUI(); 
-        };
+        const cEB = document.getElementById('cancelEditBtn');
+        if(cEB) {
+            cEB.onclick = () => { 
+                editingId = null; const mF = document.getElementById('monitoringForm'); if(mF) mF.reset(); 
+                const tP1 = document.getElementById('tgl_kunjungan_p1'); if(tP1) tP1.value = localDate; 
+                const tL = document.getElementById('tgl_kunjungan_l'); if(tL) tL.value = localDate;
+                const iL1 = document.getElementById('inputLainnya_p1'); if(iL1) iL1.disabled = true; 
+                const iLL = document.getElementById('inputLainnya_l'); if(iLL) iLL.disabled = true;
+                const hFB = document.getElementById('hapusFotoBtn'); if(hFB) hFB.click(); 
+                const eMB = document.getElementById('editModeBanner'); if(eMB) eMB.classList.add('hidden'); 
+                const sBT = document.getElementById('simpanBtnText'); if(sBT) sBT.textContent = 'Simpan Data Kunjungan'; 
+                updateUI(); 
+            };
+        }
 
         // --- FIRESTORE KUNJUNGAN ---
-        onSnapshot(kunjunganCol, snap => { const sData = snap.docs.map(d => ({ id: d.id, ...d.data() })); const tData = cachedData.filter(d => d.id.startsWith('temp-')); cachedData = [...sData, ...tData]; localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); document.getElementById('syncStatusText').textContent = "Terhubung ke Cloud"; document.getElementById('settingConnIndicator').classList.replace('bg-amber-500', 'bg-emerald-500'); updateDashboardCards(); renderTable(); renderCharts(); populateChartDropdown(); });
+        onSnapshot(kunjunganCol, snap => { const sData = snap.docs.map(d => ({ id: d.id, ...d.data() })); const tData = cachedData.filter(d => d.id.startsWith('temp-')); cachedData = [...sData, ...tData]; localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); const sST = document.getElementById('syncStatusText'); if(sST) sST.textContent = "Terhubung ke Cloud"; const sCI = document.getElementById('settingConnIndicator'); if(sCI) sCI.classList.replace('bg-amber-500', 'bg-emerald-500'); updateDashboardCards(); renderTable(); renderCharts(); populateChartDropdown(); });
 
-        document.getElementById('monitoringForm').onsubmit = async e => {
-            e.preventDefault(); const fd = new FormData(e.target); const obj = editingId ? { id: editingId } : { createdAt: Date.now() };
-            fd.forEach((v, k) => obj[k] = obj[k] ? `${obj[k]}, ${v}` : v); 
-            
-            const isP1 = document.getElementById('jenisPertama').checked;
-            
-            // MAP DATA (Menyatukan key yang terpisah p1 dan l agar masuk DB rapi)
-            const finalObj = {
-                id: obj.id, createdAt: obj.createdAt, foto_base64: obj.foto_base64,
-                jenis_kunjungan: obj.jenis_kunjungan,
-                nama_asn: isP1 ? obj.nama_asn_p1 : obj.nama_asn_l,
-                nip_asn: isP1 ? obj.nip_asn_p1 : obj.nip_asn_l,
-                asal_opd: isP1 ? obj.asal_opd_p1 : obj.asal_opd_l,
-                tanggal_kunjungan: isP1 ? obj.tanggal_kunjungan_p1 : obj.tanggal_kunjungan_l,
-                bulan_pemantauan: isP1 ? '1' : obj.bulan_pemantauan_l,
-                nama_balita: isP1 ? obj.nama_balita_p1 : obj.nama_balita_l,
-                nik_balita: isP1 ? obj.nik_balita_p1 : obj.nik_balita_l,
-                tanggal_lahir_balita: isP1 ? obj.tanggal_lahir_balita_p1 : obj.tanggal_lahir_balita_l,
-                usia_balita_bulan: isP1 ? obj.usia_balita_bulan : obj.usia_balita_bulan_l,
-                kecamatan: isP1 ? obj.kecamatan_p1 : obj.kecamatan_l,
-                desa: isP1 ? obj.desa_p1 : obj.desa_l,
-                puskesmas: isP1 ? obj.puskesmas_p1 : obj.puskesmas_l,
-                posyandu: isP1 ? obj.posyandu_p1 : obj.posyandu_l,
+        const mForm = document.getElementById('monitoringForm');
+        if(mForm) {
+            mForm.onsubmit = async e => {
+                e.preventDefault(); const fd = new FormData(e.target); const obj = editingId ? { id: editingId } : { createdAt: Date.now() };
+                fd.forEach((v, k) => obj[k] = obj[k] ? `${obj[k]}, ${v}` : v); 
                 
-                // Fields Khusus Pertama
-                nama_ortu: obj.nama_ortu || '',
-                usia_kategori_p1: obj.usia_kategori_p1 || '',
+                const jP = document.getElementById('jenisPertama');
+                const isP1 = jP && jP.checked;
                 
-                // Fields Khusus Lanjutan
-                jenis_kelamin_balita: obj.jenis_kelamin_l || '',
-                
-                // Fields Resiko / Pemeriksaan
-                jkn_bpjs: isP1 ? obj.jkn_bpjs_p1 : '',
-                air_bersih: isP1 ? obj.air_bersih_p1 : obj.air_bersih_l,
-                jamban: isP1 ? obj.jamban_p1 : obj.jamban_l,
-                merokok: isP1 ? obj.merokok_p1 : obj.merokok_l,
-                cacingan: isP1 ? obj.kecacingan_p1 : obj.cacingan_l,
-                kek_ibu: isP1 ? obj.kek_ibu_p1 : '',
-                status_imunisasi: isP1 ? obj.imunisasi_status_p1 : obj.status_imunisasi_l,
-                imunisasi_kurang: isP1 ? obj.imunisasi_kurang_p1 : obj.imunisasi_kurang_l,
-                
-                kondisi_balita: isP1 ? (obj.penyakit_penyerta_p1 === 'Ya' ? 'Sakit' : 'Sehat') : obj.kondisi_balita_l,
-                penyakit_balita: isP1 ? obj.penyakit_penyerta_sebutkan_p1 : obj.penyakit_balita_l,
-                
-                kunjung_posyandu: isP1 ? obj.kunjung_posyandu_p1 : obj.kunjung_posyandu_l,
-                terakhir_posyandu: isP1 ? obj.terakhir_posyandu_p1 : '',
-                
-                bb: parseFloat(isP1 ? obj.berat_badan_kg_p1 : obj.berat_badan_kg_l) || 0,
-                tb: parseFloat(isP1 ? obj.tinggi_badan_cm_p1 : obj.tinggi_badan_cm_l) || 0,
-                
-                vitamin_a: isP1 ? obj.vitamin_a_p1 : '',
-                perkembangan: isP1 ? obj.perkembangan_p1 : obj.perkembangan_l,
-                
-                dapat_asi: isP1 ? obj.dapat_asi_p1 : '',
-                asi_eksklusif: isP1 ? obj.asi_eksklusif_p1 : obj.asi_eksklusif_l,
-                komposisi_makanan: isP1 ? obj.komposisi_makanan_p1 : '',
-                
-                // Gizi Lanjutan
-                gizi_asi: isP1 ? '' : obj.gizi_asi_l,
-                gizi_makanan_pokok: isP1 ? '' : obj.gizi_makanan_pokok_l,
-                gizi_kacang: isP1 ? '' : obj.gizi_kacang_l,
-                gizi_susu_hewani: isP1 ? '' : obj.gizi_susu_hewani_l,
-                gizi_daging: isP1 ? '' : obj.gizi_daging_l,
-                gizi_telur: isP1 ? '' : obj.gizi_telur_l,
-                gizi_sayur_vitA: isP1 ? '' : obj.gizi_sayur_vitA_l,
-                gizi_sayur_lain: isP1 ? '' : obj.gizi_sayur_lain_l,
-                
-                dapat_pmt: isP1 ? '' : obj.dapat_pmt_l,
-                konsumsi_pmt: isP1 ? '' : obj.konsumsi_pmt_l,
-                perbandingan_bb: isP1 ? '' : obj.perbandingan_bb_l,
-                perbandingan_tb: isP1 ? '' : obj.perbandingan_tb_l,
-                edukasi_dijalankan: isP1 ? '' : obj.edukasi_dijalankan_l,
-                kendala_keluarga: isP1 ? '' : obj.kendala_keluarga_l,
-                
-                // Tindakan
-                tindakan_asn: isP1 ? obj.tindakan_asn_p1 : obj.tindakan_asn_l,
-                tindakan_lainnya: isP1 ? obj.tindakan_lainnya_p1 : obj.tindakan_lainnya_l,
-                keterangan_tambahan: isP1 ? obj.keterangan_tambahan_p1 : ''
-            };
+                // MAP DATA (Menyatukan key yang terpisah p1 dan l agar masuk DB rapi)
+                const finalObj = {
+                    id: obj.id, createdAt: obj.createdAt, foto_base64: obj.foto_base64,
+                    jenis_kunjungan: obj.jenis_kunjungan,
+                    nama_asn: isP1 ? obj.nama_asn_p1 : obj.nama_asn_l,
+                    nip_asn: isP1 ? obj.nip_asn_p1 : obj.nip_asn_l,
+                    asal_opd: isP1 ? obj.asal_opd_p1 : obj.asal_opd_l,
+                    tanggal_kunjungan: isP1 ? obj.tanggal_kunjungan_p1 : obj.tanggal_kunjungan_l,
+                    bulan_pemantauan: isP1 ? '1' : obj.bulan_pemantauan_l,
+                    nama_balita: isP1 ? obj.nama_balita_p1 : obj.nama_balita_l,
+                    nik_balita: isP1 ? obj.nik_balita_p1 : obj.nik_balita_l,
+                    tanggal_lahir_balita: isP1 ? obj.tanggal_lahir_balita_p1 : obj.tanggal_lahir_balita_l,
+                    usia_balita_bulan: isP1 ? obj.usia_balita_bulan : obj.usia_balita_bulan_l,
+                    kecamatan: isP1 ? obj.kecamatan_p1 : obj.kecamatan_l,
+                    desa: isP1 ? obj.desa_p1 : obj.desa_l,
+                    puskesmas: isP1 ? obj.puskesmas_p1 : obj.puskesmas_l,
+                    posyandu: isP1 ? obj.posyandu_p1 : obj.posyandu_l,
+                    
+                    nama_ortu: obj.nama_ortu || '',
+                    usia_kategori_p1: obj.usia_kategori_p1 || '',
+                    jenis_kelamin_balita: obj.jenis_kelamin_l || '',
+                    
+                    jkn_bpjs: isP1 ? obj.jkn_bpjs_p1 : '',
+                    air_bersih: isP1 ? obj.air_bersih_p1 : obj.air_bersih_l,
+                    jamban: isP1 ? obj.jamban_p1 : obj.jamban_l,
+                    merokok: isP1 ? obj.merokok_p1 : obj.merokok_l,
+                    cacingan: isP1 ? obj.kecacingan_p1 : obj.cacingan_l,
+                    kek_ibu: isP1 ? obj.kek_ibu_p1 : '',
+                    status_imunisasi: isP1 ? obj.imunisasi_status_p1 : obj.status_imunisasi_l,
+                    imunisasi_kurang: isP1 ? obj.imunisasi_kurang_p1 : obj.imunisasi_kurang_l,
+                    
+                    kondisi_balita: isP1 ? (obj.penyakit_penyerta_p1 === 'Ya' ? 'Sakit' : 'Sehat') : obj.kondisi_balita_l,
+                    penyakit_balita: isP1 ? obj.penyakit_penyerta_sebutkan_p1 : obj.penyakit_balita_l,
+                    
+                    kunjung_posyandu: isP1 ? obj.kunjung_posyandu_p1 : obj.kunjung_posyandu_l,
+                    terakhir_posyandu: isP1 ? obj.terakhir_posyandu_p1 : '',
+                    
+                    bb: parseFloat(isP1 ? obj.berat_badan_kg_p1 : obj.berat_badan_kg_l) || 0,
+                    tb: parseFloat(isP1 ? obj.tinggi_badan_cm_p1 : obj.tinggi_badan_cm_l) || 0,
+                    
+                    vitamin_a: isP1 ? obj.vitamin_a_p1 : '',
+                    perkembangan: isP1 ? obj.perkembangan_p1 : obj.perkembangan_l,
+                    
+                    dapat_asi: isP1 ? obj.dapat_asi_p1 : '',
+                    asi_eksklusif: isP1 ? obj.asi_eksklusif_p1 : obj.asi_eksklusif_l,
+                    komposisi_makanan: isP1 ? obj.komposisi_makanan_p1 : '',
+                    
+                    gizi_asi: isP1 ? '' : obj.gizi_asi_l,
+                    gizi_makanan_pokok: isP1 ? '' : obj.gizi_makanan_pokok_l,
+                    gizi_kacang: isP1 ? '' : obj.gizi_kacang_l,
+                    gizi_susu_hewani: isP1 ? '' : obj.gizi_susu_hewani_l,
+                    gizi_daging: isP1 ? '' : obj.gizi_daging_l,
+                    gizi_telur: isP1 ? '' : obj.gizi_telur_l,
+                    gizi_sayur_vitA: isP1 ? '' : obj.gizi_sayur_vitA_l,
+                    gizi_sayur_lain: isP1 ? '' : obj.gizi_sayur_lain_l,
+                    
+                    dapat_pmt: isP1 ? '' : obj.dapat_pmt_l,
+                    konsumsi_pmt: isP1 ? '' : obj.konsumsi_pmt_l,
+                    perbandingan_bb: isP1 ? '' : obj.perbandingan_bb_l,
+                    perbandingan_tb: isP1 ? '' : obj.perbandingan_tb_l,
+                    edukasi_dijalankan: isP1 ? '' : obj.edukasi_dijalankan_l,
+                    kendala_keluarga: isP1 ? '' : obj.kendala_keluarga_l,
+                    
+                    tindakan_asn: isP1 ? obj.tindakan_asn_p1 : obj.tindakan_asn_l,
+                    tindakan_lainnya: isP1 ? obj.tindakan_lainnya_p1 : obj.tindakan_lainnya_l,
+                    keterangan_tambahan: isP1 ? obj.keterangan_tambahan_p1 : ''
+                };
 
-            // Hitung IMT
-            finalObj.imt = finalObj.tb > 0 ? (finalObj.bb / Math.pow(finalObj.tb / 100, 2)).toFixed(2) : 0;
+                finalObj.imt = finalObj.tb > 0 ? (finalObj.bb / Math.pow(finalObj.tb / 100, 2)).toFixed(2) : 0;
 
-            // REVISI PERINGATAN DUPLIKAT
-            const ymObj = String(finalObj.tanggal_kunjungan).substring(0,7);
-            const isDup = cachedData.some(d => {
-                const isBlnSama = String(d.tanggal_kunjungan).substring(0,7) === ymObj;
-                const isAnakSama = d.nama_balita === finalObj.nama_balita;
-                const isJenisSama = d.jenis_kunjungan === finalObj.jenis_kunjungan;
-                const isBulanKeSama = d.bulan_pemantauan === finalObj.bulan_pemantauan;
-                return isAnakSama && isBlnSama && isJenisSama && isBulanKeSama && d.id !== editingId;
-            });
-            
-            if(isDup) return showAlert(`Gagal: Balita ${finalObj.nama_balita} sudah di-entry untuk Kunjungan ${isP1 ? 'Pertama' : 'Lanjutan (Bulan ke-'+finalObj.bulan_pemantauan+')'} pada bulan ini! Anda tidak bisa mengentri jenis & bulan kunjungan yang sama dua kali.`);
-
-            document.getElementById('simpan-btn').disabled = true; document.getElementById('simpanBtnText').textContent = 'Menyimpan...';
-            
-            try {
-                const savePromise = new Promise(async (resolve, reject) => {
-                    try { if(editingId) { if(editingId.startsWith('temp-')){ Object.assign(cachedData.find(d=>d.id===editingId), finalObj); resolve(); } else { await setDoc(doc(db, 'kunjungan_balita', editingId), finalObj, {merge:true}); resolve(); } } else { await addDoc(kunjunganCol, finalObj); resolve(); } } catch(err) { reject(err); }
+                // REVISI PERINGATAN DUPLIKAT
+                const ymObj = String(finalObj.tanggal_kunjungan).substring(0,7);
+                const isDup = cachedData.some(d => {
+                    const isBlnSama = String(d.tanggal_kunjungan).substring(0,7) === ymObj;
+                    const isAnakSama = d.nama_balita === finalObj.nama_balita;
+                    const isJenisSama = d.jenis_kunjungan === finalObj.jenis_kunjungan;
+                    const isBulanKeSama = d.bulan_pemantauan === finalObj.bulan_pemantauan;
+                    return isAnakSama && isBlnSama && isJenisSama && isBulanKeSama && d.id !== editingId;
                 });
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
                 
-                await Promise.race([savePromise, timeoutPromise]);
-                document.getElementById('cancelEditBtn').click(); document.getElementById('successModal').classList.replace('hidden', 'flex');
-            } catch(er) { 
-                if(er.message === 'timeout' || er.message.includes('permission')) {
-                    if(!editingId) { finalObj.id='temp-'+Date.now(); cachedData.push(finalObj); localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); updateDashboardCards(); renderTable(); populateChartDropdown(); renderCharts(); document.getElementById('cancelEditBtn').click(); document.getElementById('successModal').classList.replace('hidden', 'flex'); document.getElementById('syncStatusText').textContent = "Offline / Akses Ditolak (Disimpan Lokal)"; document.getElementById('settingConnIndicator').classList.replace('bg-emerald-500', 'bg-amber-500'); }
-                    else { showAlert('Gagal update ke server. Silakan periksa koneksi atau izin.'); }
-                } else { showAlert(er.message); }
-            } finally { document.getElementById('simpan-btn').disabled = false; document.getElementById('simpanBtnText').textContent = 'Simpan Data Kunjungan'; }
-        };
+                if(isDup) return showAlert(`Gagal: Balita ${finalObj.nama_balita} sudah di-entry untuk Kunjungan ${isP1 ? 'Pertama' : 'Lanjutan (Bulan ke-'+finalObj.bulan_pemantauan+')'} pada bulan ini! Anda tidak bisa mengentri jenis & bulan kunjungan yang sama dua kali.`);
+
+                const sBtn = document.getElementById('simpan-btn'); if(sBtn) sBtn.disabled = true; 
+                const sBT = document.getElementById('simpanBtnText'); if(sBT) sBT.textContent = 'Menyimpan...';
+                
+                try {
+                    const savePromise = new Promise(async (resolve, reject) => {
+                        try { if(editingId) { if(editingId.startsWith('temp-')){ Object.assign(cachedData.find(d=>d.id===editingId), finalObj); resolve(); } else { await setDoc(doc(db, 'kunjungan_balita', editingId), finalObj, {merge:true}); resolve(); } } else { await addDoc(kunjunganCol, finalObj); resolve(); } } catch(err) { reject(err); }
+                    });
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
+                    
+                    await Promise.race([savePromise, timeoutPromise]);
+                    const cEB = document.getElementById('cancelEditBtn'); if(cEB) cEB.click(); 
+                    const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('hidden', 'flex');
+                } catch(er) { 
+                    if(er.message === 'timeout' || er.message.includes('permission')) {
+                        if(!editingId) { 
+                            finalObj.id='temp-'+Date.now(); cachedData.push(finalObj); localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); updateDashboardCards(); renderTable(); populateChartDropdown(); renderCharts(); 
+                            const cEB = document.getElementById('cancelEditBtn'); if(cEB) cEB.click(); 
+                            const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('hidden', 'flex'); 
+                            const sST = document.getElementById('syncStatusText'); if(sST) sST.textContent = "Offline / Akses Ditolak (Disimpan Lokal)"; 
+                            const sCI = document.getElementById('settingConnIndicator'); if(sCI) sCI.classList.replace('bg-emerald-500', 'bg-amber-500'); 
+                        } else { showAlert('Gagal update ke server. Silakan periksa koneksi atau izin.'); }
+                    } else { showAlert(er.message); }
+                } finally { 
+                    const sBtn = document.getElementById('simpan-btn'); if(sBtn) sBtn.disabled = false; 
+                    const sBT = document.getElementById('simpanBtnText'); if(sBT) sBT.textContent = 'Simpan Data Kunjungan'; 
+                }
+            };
+        }
         
-        document.getElementById('closeModalBtn').onclick = () => { document.getElementById('successModal').classList.replace('flex', 'hidden'); document.querySelector('[data-target="sec-history"]').click(); };
+        const cMB = document.getElementById('closeModalBtn');
+        if(cMB) cMB.onclick = () => { const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('flex', 'hidden'); const t = document.querySelector('[data-target="sec-history"]'); if(t) t.click(); };
 
         window.triggerEditData = id => {
             const item = cachedData.find(d => d.id === id); if(!item) return; editingId = id;
             
             const isP1 = item.jenis_kunjungan === 'pertama';
-            document.getElementById(isP1 ? 'jenisPertama' : 'jenisLanjutan').checked = true;
-            updateUI(); // Buka wrapper yg sesuai dulu
+            const jp = document.getElementById('jenisPertama'); if(jp && isP1) jp.checked = true;
+            const jl = document.getElementById('jenisLanjutan'); if(jl && !isP1) jl.checked = true;
+            updateUI();
             
-            // Fungsi helper untuk nge-set radio & checkbox
             const setVal = (name, val) => {
-                const els = document.getElementsByName(name);
-                if(!els || els.length===0) return;
+                const els = document.getElementsByName(name); if(!els || els.length===0) return;
                 if(els[0].type === 'radio') { Array.from(els).forEach(e => { if(e.value === val) e.checked = true; }); }
                 else if(els[0].type === 'checkbox') { Array.from(els).forEach(e => { if(String(val).includes(e.value)) e.checked = true; }); }
                 else { els[0].value = val; }
             };
 
-            // Mapping mundur ke form (Super Manual Isolation)
             if(isP1) {
                 setVal('nama_asn_p1', item.nama_asn); setVal('nip_asn_p1', item.nip_asn); setVal('asal_opd_p1', item.asal_opd); setVal('tanggal_kunjungan_p1', item.tanggal_kunjungan);
                 setVal('nama_balita_p1', item.nama_balita); setVal('nik_balita_p1', item.nik_balita); setVal('tanggal_lahir_balita_p1', item.tanggal_lahir_balita);
-                document.getElementById('usia_bulan').value = item.usia_balita_bulan; setVal('usia_kategori_p1', item.usia_kategori_p1);
+                const ub = document.getElementById('usia_bulan'); if(ub) ub.value = item.usia_balita_bulan; 
+                setVal('usia_kategori_p1', item.usia_kategori_p1);
                 setVal('nama_ortu', item.nama_ortu); setVal('kecamatan_p1', item.kecamatan); setVal('desa_p1', item.desa); setVal('puskesmas_p1', item.puskesmas); setVal('posyandu_p1', item.posyandu);
                 
                 setVal('jkn_bpjs_p1', item.jkn_bpjs); setVal('air_bersih_p1', item.air_bersih); setVal('jamban_p1', item.jamban); setVal('merokok_p1', item.merokok); setVal('kecacingan_p1', item.cacingan); setVal('kek_ibu_p1', item.kek_ibu);
@@ -953,14 +691,13 @@
                 setVal('vitamin_a_p1', item.vitamin_a); setVal('perkembangan_p1', item.perkembangan);
                 setVal('dapat_asi_p1', item.dapat_asi); setVal('asi_eksklusif_p1', item.asi_eksklusif); setVal('komposisi_makanan_p1', item.komposisi_makanan);
                 
-                setVal('keterangan_tambahan_p1', item.keterangan_tambahan);
-                setVal('tindakan_asn_p1', item.tindakan_asn);
-                if(item.tindakan_lainnya) { document.getElementById('chkLainnya_p1').checked = true; document.getElementById('inputLainnya_p1').disabled = false; document.getElementById('inputLainnya_p1').value = item.tindakan_lainnya; }
+                setVal('keterangan_tambahan_p1', item.keterangan_tambahan); setVal('tindakan_asn_p1', item.tindakan_asn);
+                if(item.tindakan_lainnya) { const cL = document.getElementById('chkLainnya_p1'); if(cL) cL.checked = true; const iL = document.getElementById('inputLainnya_p1'); if(iL) { iL.disabled = false; iL.value = item.tindakan_lainnya; } }
             } else {
                 setVal('nama_asn_l', item.nama_asn); setVal('nip_asn_l', item.nip_asn); setVal('asal_opd_l', item.asal_opd); setVal('tanggal_kunjungan_l', item.tanggal_kunjungan);
                 setVal('bulan_pemantauan_l', item.bulan_pemantauan);
                 setVal('nama_balita_l', item.nama_balita); setVal('nik_balita_l', item.nik_balita); setVal('jenis_kelamin_l', item.jenis_kelamin_balita);
-                setVal('tanggal_lahir_balita_l', item.tanggal_lahir_balita); document.getElementById('usia_bulan_l').value = item.usia_balita_bulan;
+                setVal('tanggal_lahir_balita_l', item.tanggal_lahir_balita); const ubl = document.getElementById('usia_bulan_l'); if(ubl) ubl.value = item.usia_balita_bulan;
                 setVal('kecamatan_l', item.kecamatan); setVal('desa_l', item.desa); setVal('puskesmas_l', item.puskesmas); setVal('posyandu_l', item.posyandu);
                 
                 setVal('kunjung_posyandu_l', item.kunjung_posyandu); setVal('berat_badan_kg_l', item.bb); setVal('tinggi_badan_cm_l', item.tb);
@@ -975,36 +712,55 @@
                 setVal('air_bersih_l', item.air_bersih); setVal('jamban_l', item.jamban); setVal('cacingan_l', item.cacingan); setVal('penyakit_penyerta_l', item.penyakit_penyerta); setVal('merokok_l', item.merokok); setVal('edukasi_dijalankan_l', item.edukasi_dijalankan); setVal('kendala_keluarga_l', item.kendala_keluarga);
                 
                 setVal('tindakan_asn_l', item.tindakan_asn);
-                if(item.tindakan_lainnya) { document.getElementById('chkLainnya_l').checked = true; document.getElementById('inputLainnya_l').disabled = false; document.getElementById('inputLainnya_l').value = item.tindakan_lainnya; }
+                if(item.tindakan_lainnya) { const cLL = document.getElementById('chkLainnya_l'); if(cLL) cLL.checked = true; const iLL = document.getElementById('inputLainnya_l'); if(iLL) { iLL.disabled = false; iLL.value = item.tindakan_lainnya; } }
             }
 
-            if(item.foto_base64) { document.getElementById('previewFoto').src = item.foto_base64; document.getElementById('fotoPreviewContainer').classList.remove('hidden'); document.getElementById('fotoBase64').value = item.foto_base64; } else { document.getElementById('hapusFotoBtn').click(); }
-            document.getElementById('editModeBanner').classList.remove('hidden'); document.querySelector('[data-target="sec-form"]').click();
+            if(item.foto_base64) { const pF = document.getElementById('previewFoto'); if(pF) pF.src = item.foto_base64; const fPC = document.getElementById('fotoPreviewContainer'); if(fPC) fPC.classList.remove('hidden'); const fB = document.getElementById('fotoBase64'); if(fB) fB.value = item.foto_base64; } else { const hFB = document.getElementById('hapusFotoBtn'); if(hFB) hFB.click(); }
+            const eMB = document.getElementById('editModeBanner'); if(eMB) eMB.classList.remove('hidden'); 
+            const tF = document.querySelector('[data-target="sec-form"]'); if(tF) tF.click();
         };
         
         window.triggerDeleteData = async id => { if(await showConfirm('Hapus data ini?')){ if(id.startsWith('temp-')){ cachedData = cachedData.filter(d=>d.id!==id); localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); renderTable(); updateDashboardCards(); } else await deleteDoc(doc(db, 'kunjungan_balita', id)); } };
 
         // --- DASHBOARD & TABLE ---
         function updateDashboardCards() {
-            document.getElementById('dash-total').textContent = cachedData.length; 
+            const dT = document.getElementById('dash-total'); if(dT) dT.textContent = cachedData.length; 
             const ym = localDate.substring(0, 7); 
             const bulanIni = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ym));
-            document.getElementById('dash-sehat').textContent = bulanIni.filter(d => d.kondisi_balita === 'Sehat').length; 
-            document.getElementById('dash-sakit').textContent = bulanIni.filter(d => d.kondisi_balita === 'Sakit').length;
+            
+            const dSehat = document.getElementById('dash-sehat'); if(dSehat) dSehat.textContent = bulanIni.filter(d => d.kondisi_balita === 'Sehat').length; 
+            const dSakit = document.getElementById('dash-sakit'); if(dSakit) dSakit.textContent = bulanIni.filter(d => d.kondisi_balita === 'Sakit').length;
             
             const visited = new Set(bulanIni.map(d => d.nama_balita));
             const total = combinedMaster.length; const pct = total > 0 ? Math.round((visited.size / total) * 100) : 0;
-            document.getElementById('progress-text').textContent = pct + '%'; document.getElementById('progress-bar').style.width = pct + '%'; document.getElementById('progress-count').textContent = visited.size; document.getElementById('progress-total').textContent = total;
-            const unv = combinedMaster.filter(b => !visited.has(b.nama)); document.getElementById('dash-unvisited-count').textContent = unv.length; const ul = document.getElementById('dash-unvisited-list'); ul.innerHTML = '';
-            if(unv.length === 0) ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-3 rounded font-medium shadow-sm border border-emerald-100">Semua sasaran balita sudah dikunjungi bulan ini! 🎉</li>'; else { unv.slice(0,5).forEach(b => ul.innerHTML += `<li class="flex justify-between items-center py-2.5 text-sm border-b border-slate-100"><span class="text-slate-700 font-medium">${b.nama}</span><span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded uppercase tracking-wider">${b.desa||'-'}</span></li>`); if(unv.length>5) ul.innerHTML += `<li class="text-xs text-center text-slate-400 mt-3 font-medium">...dan ${unv.length-5} balita lainnya</li>`; }
+            
+            const pT = document.getElementById('progress-text'); if(pT) pT.textContent = pct + '%'; 
+            const pB = document.getElementById('progress-bar'); if(pB) pB.style.width = pct + '%'; 
+            const pC = document.getElementById('progress-count'); if(pC) pC.textContent = visited.size; 
+            const pTot = document.getElementById('progress-total'); if(pTot) pTot.textContent = total;
+            
+            const unv = combinedMaster.filter(b => !visited.has(b.nama)); 
+            const dUC = document.getElementById('dash-unvisited-count'); if(dUC) dUC.textContent = unv.length; 
+            const ul = document.getElementById('dash-unvisited-list'); 
+            if(ul) {
+                ul.innerHTML = '';
+                if(unv.length === 0) ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-3 rounded font-medium shadow-sm border border-emerald-100">Semua sasaran balita sudah dikunjungi bulan ini! 🎉</li>'; 
+                else { unv.slice(0,5).forEach(b => ul.innerHTML += `<li class="flex justify-between items-center py-2.5 text-sm border-b border-slate-100"><span class="text-slate-700 font-medium">${b.nama}</span><span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded uppercase tracking-wider">${b.desa||'-'}</span></li>`); if(unv.length>5) ul.innerHTML += `<li class="text-xs text-center text-slate-400 mt-3 font-medium">...dan ${unv.length-5} balita lainnya</li>`; }
+            }
         }
 
-        document.getElementById('searchHistory').oninput = e => { lastSearchTerm = e.target.value; renderTable(); }; document.getElementById('filterDesaHistory').onchange = renderTable; document.getElementById('filterBulanHistory').onchange = renderTable;
+        const sH = document.getElementById('searchHistory'); if(sH) sH.oninput = e => { lastSearchTerm = e.target.value; renderTable(); }; 
+        const fDH = document.getElementById('filterDesaHistory'); if(fDH) fDH.onchange = renderTable; 
+        const fBH = document.getElementById('filterBulanHistory'); if(fBH) fBH.onchange = renderTable;
+        
         function renderTable() {
-            const fd = document.getElementById('filterDesaHistory').value, fb = document.getElementById('filterBulanHistory').value, q = lastSearchTerm.toLowerCase();
+            const fd = document.getElementById('filterDesaHistory')?.value || ''; const fb = document.getElementById('filterBulanHistory')?.value || ''; const q = lastSearchTerm.toLowerCase();
             let d = cachedData.filter(x => (!fd || x.desa===fd) && (!fb || (fb==='pertama' ? x.jenis_kunjungan==='pertama' : x.bulan_pemantauan==fb)) && (!q || (x.nama_balita||'').toLowerCase().includes(q)));
-            const tbody = document.getElementById('historyTableBody'); tbody.innerHTML = ''; document.getElementById('emptyHistory').classList.toggle('hidden', d.length > 0);
-            d.sort((a,b) => b.createdAt - a.createdAt).forEach((i, idx) => { tbody.innerHTML += `<tr class="border-b border-slate-100 hover:bg-teal-50 transition-colors"><td class="p-3 text-center">${idx+1}</td><td class="p-3 whitespace-nowrap text-slate-600">${i.tanggal_kunjungan}</td><td class="p-3">${i.jenis_kunjungan==='pertama'?'<span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded font-bold text-xs">Pertama</span>':'Bln-'+i.bulan_pemantauan}</td><td class="p-3 font-semibold text-slate-800">${i.nama_balita}</td><td class="p-3 text-slate-600">${i.desa||'-'}</td><td class="p-3 text-center font-bold bg-slate-50">${i.bb}</td><td class="p-3 text-center font-bold bg-slate-50">${i.tb}</td><td class="p-3 text-center"><button onclick="window.triggerEditData('${i.id}')" class="bg-teal-100 hover:bg-teal-200 text-teal-700 p-1.5 rounded mr-1 transition-colors">✏️</button><button onclick="window.triggerDeleteData('${i.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 p-1.5 rounded mr-1 transition-colors">🗑️</button><button onclick="window.printSingle('${i.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 p-1.5 rounded transition-colors">🖨️</button></td></tr>`; });
+            const tbody = document.getElementById('historyTableBody'); 
+            if(tbody) {
+                tbody.innerHTML = ''; const eH = document.getElementById('emptyHistory'); if(eH) eH.classList.toggle('hidden', d.length > 0);
+                d.sort((a,b) => b.createdAt - a.createdAt).forEach((i, idx) => { tbody.innerHTML += `<tr class="border-b border-slate-100 hover:bg-teal-50 transition-colors"><td class="p-3 text-center">${idx+1}</td><td class="p-3 whitespace-nowrap text-slate-600">${i.tanggal_kunjungan}</td><td class="p-3">${i.jenis_kunjungan==='pertama'?'<span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded font-bold text-xs">Pertama</span>':'Bln-'+i.bulan_pemantauan}</td><td class="p-3 font-semibold text-slate-800">${i.nama_balita}</td><td class="p-3 text-slate-600">${i.desa||'-'}</td><td class="p-3 text-center font-bold bg-slate-50">${i.bb}</td><td class="p-3 text-center font-bold bg-slate-50">${i.tb}</td><td class="p-3 text-center"><button onclick="window.triggerEditData('${i.id}')" class="bg-teal-100 hover:bg-teal-200 text-teal-700 p-1.5 rounded mr-1 transition-colors">✏️</button><button onclick="window.triggerDeleteData('${i.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 p-1.5 rounded mr-1 transition-colors">🗑️</button><button onclick="window.printSingle('${i.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 p-1.5 rounded transition-colors">🖨️</button></td></tr>`; });
+            }
         }
         window.printSingle = id => { window.triggerEditData(id); setTimeout(() => window.print(), 500); };
 
@@ -1040,29 +796,36 @@
         const FULL_DESA_LIST = ["Ambal", "Binangun", "Gumelar", "Jlegong", "Karanggondang", "Karangkobar", "Leksana", "Pagerpelah", "Pasuruhan", "Paweden", "Purwodadi", "Sampang", "Slatri"];
         
         function populateChartDropdown() {
-            const sel = document.getElementById('chartBalitaSelect'); const curr = sel.value; sel.innerHTML = '<option value="">Pilih Balita (Tampilkan Semua)...</option>';
+            const sel = document.getElementById('chartBalitaSelect'); if(!sel) return;
+            const curr = sel.value; sel.innerHTML = '<option value="">Pilih Balita (Tampilkan Semua)...</option>';
             const uniqueNames = [...new Set(cachedData.map(d=>d.nama_balita))].sort(); uniqueNames.forEach(n => sel.innerHTML += `<option value="${n}">${n}</option>`);
             if(uniqueNames.includes(curr)) sel.value = curr;
         }
-        document.getElementById('chartBalitaSelect').onchange = () => renderCharts();
+        const cBS = document.getElementById('chartBalitaSelect'); if(cBS) cBS.onchange = () => renderCharts();
 
         function renderCharts() {
             if(!cachedData.length) return;
             const kunjunganData = FULL_DESA_LIST.map(d => cachedData.filter(x => x.desa===d).length); 
             const bbDataAvg = FULL_DESA_LIST.map(d => { const arr = cachedData.filter(x => x.desa===d && x.bb); return arr.length ? (arr.reduce((s,x)=>s+x.bb,0)/arr.length).toFixed(1) : 0; });
             
-            if(cDesa) cDesa.destroy(); cDesa = new Chart(document.getElementById('desaKunjunganChart').getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Total Kunjungan Entry', data: kunjunganData, backgroundColor: '#0d9488' }] }, options: { responsive: true, maintainAspectRatio: false } });
-            if(cTrend) cTrend.destroy(); cTrend = new Chart(document.getElementById('desaTrendChart').getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Rata-rata BB (Kg)', data: bbDataAvg, backgroundColor: '#f59e0b' }] }, options: { responsive: true, maintainAspectRatio: false }});
+            const cDK = document.getElementById('desaKunjunganChart');
+            if(cDK) { if(cDesa) cDesa.destroy(); cDesa = new Chart(cDK.getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Total Kunjungan Entry', data: kunjunganData, backgroundColor: '#0d9488' }] }, options: { responsive: true, maintainAspectRatio: false } }); }
             
-            const selBalita = document.getElementById('chartBalitaSelect').value;
+            const cDT = document.getElementById('desaTrendChart');
+            if(cDT) { if(cTrend) cTrend.destroy(); cTrend = new Chart(cDT.getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Rata-rata BB (Kg)', data: bbDataAvg, backgroundColor: '#f59e0b' }] }, options: { responsive: true, maintainAspectRatio: false }}); }
+            
+            const selBalita = document.getElementById('chartBalitaSelect')?.value || '';
             let filtered = [...cachedData].sort((a,b) => a.createdAt - b.createdAt); // Urut dari terlama ke terbaru untuk grafik garis
             if(selBalita) filtered = filtered.filter(d => d.nama_balita === selBalita); else filtered = filtered.slice(-20);
             
             const lbls = filtered.map(x => (x.nama_balita ? x.nama_balita.split(' ')[0] : 'N/A') + ` (Bln ${x.jenis_kunjungan === 'pertama' ? '1' : (x.bulan_pemantauan || '1')})`);
             const chartOptions = { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { autoSkip: false, maxRotation: 45, minRotation: 45 } } } };
             
-            if(cBB) cBB.destroy(); cBB = new Chart(document.getElementById('pertumbuhanChart').getContext('2d'), { type: 'line', data: { labels: lbls, datasets: [{ label: 'BB (Kg)', data: filtered.map(x=>x.bb), borderColor: '#0d9488', tension:0.3, pointBackgroundColor:'#0d9488' }, { label: 'TB (cm)', data: filtered.map(x=>x.tb), borderColor: '#3b82f6', tension:0.3, pointBackgroundColor:'#3b82f6' }] }, options: chartOptions });
-            if(cIMT) cIMT.destroy(); cIMT = new Chart(document.getElementById('imtChart').getContext('2d'), { type: 'bar', data: { labels: lbls, datasets: [{ label: 'IMT', data: filtered.map(x=>x.imt), backgroundColor: '#10b981' }] }, options: chartOptions });
+            const pC = document.getElementById('pertumbuhanChart');
+            if(pC) { if(cBB) cBB.destroy(); cBB = new Chart(pC.getContext('2d'), { type: 'line', data: { labels: lbls, datasets: [{ label: 'BB (Kg)', data: filtered.map(x=>x.bb), borderColor: '#0d9488', tension:0.3, pointBackgroundColor:'#0d9488' }, { label: 'TB (cm)', data: filtered.map(x=>x.tb), borderColor: '#3b82f6', tension:0.3, pointBackgroundColor:'#3b82f6' }] }, options: chartOptions }); }
+            
+            const iC = document.getElementById('imtChart');
+            if(iC) { if(cIMT) cIMT.destroy(); cIMT = new Chart(iC.getContext('2d'), { type: 'bar', data: { labels: lbls, datasets: [{ label: 'IMT', data: filtered.map(x=>x.imt), backgroundColor: '#10b981' }] }, options: chartOptions }); }
         }
     </script>
 </body>
