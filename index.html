@@ -348,14 +348,9 @@
             const isP1 = document.getElementById('jenisPertama')?.checked; 
             const wP1 = document.getElementById('wrapperFormPertama'); if(wP1) wP1.hidden = !isP1; 
             const lSec = document.getElementById('lanjutanSections'); if(lSec) lSec.hidden = isP1; 
-            const wBL = document.getElementById('bulanLanjutanWrapper'); if(wBL) wBL.hidden = isP1; 
-            const bPI = document.getElementById('bulanPertamaIndicator'); if(bPI) bPI.hidden = !isP1; 
-            const nOW = document.getElementById('namaOrtuWrapper'); if(nOW) nOW.hidden = !isP1; 
             
             const lF = document.getElementById('labelF'); if(lF) lF.textContent = isP1 ? 'D' : 'F';
             const lFT = document.getElementById('labelFTitle'); if(lFT) lFT.textContent = isP1 ? 'D. BUKTI KUNJUNGAN' : 'F. BUKTI KUNJUNGAN';
-            
-            if(isP1) { const bS = document.getElementById('bulanPemantauanSatu'); if(bS) bS.checked = true; }
             
             if(wP1) wP1.querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
             if(lSec) lSec.querySelectorAll('input, select, textarea').forEach(e => { if(e.hasAttribute('required') || e.hasAttribute('data-req')) { if(!isP1) { e.setAttribute('required', ''); e.disabled = false; } else { e.removeAttribute('required'); e.setAttribute('data-req', 'true'); e.disabled = true; }}});
@@ -426,7 +421,11 @@
                     if(json.length === 0) return showAlert('File Excel kosong atau format tidak sesuai!'); 
                     for(let row of json) {
                         let nama = row['Nama'] || row['nama'] || row['NAMA'] || row['Nama ASN'] || row['Nama Pendamping ASN']; let nip = row['NIP'] || row['nip'] || row['NIP ASN'];
-                        if(nama) { try { await addDoc(asnCol, { nama: String(nama).trim(), nip: nip?String(nip).trim():'', createdAt: Date.now() }); count++; } catch(err) { dynamicAsn.push({id:'temp-'+Date.now()+Math.random(), nama: String(nama).trim(), nip: nip?String(nip).trim():''}); count++; } }
+                        if(nama) { 
+                            let bersihNama = String(nama).trim().replace(/\s+/g, ' '); // Hapus spasi ekstra agar tidak duplikat
+                            try { await addDoc(asnCol, { nama: bersihNama, nip: nip?String(nip).trim():'', createdAt: Date.now() }); count++; } 
+                            catch(err) { dynamicAsn.push({id:'temp-'+Date.now()+Math.random(), nama: bersihNama, nip: nip?String(nip).trim():''}); count++; } 
+                        }
                     } 
                 } catch(err) { console.error(err); return showAlert('Gagal membaca format file Excel.'); }
                 
@@ -502,7 +501,7 @@
                         if (rawTgl) { if (rawTgl instanceof Date) { tglLahir = rawTgl.toISOString().split('T')[0]; } else { tglLahir = String(rawTgl).trim(); } }
 
                         if(nama && desa) { 
-                            const newData = { nama: String(nama).trim(), desa: String(desa).trim(), nik: nik ? String(nik).trim() : '', jk: jk ? String(jk).trim() : '', tglLahir: tglLahir, posyandu: row['Posyandu']||'', createdAt: Date.now() };
+                            const newData = { nama: String(nama).trim().replace(/\s+/g, ' '), desa: String(desa).trim(), nik: nik ? String(nik).trim() : '', jk: jk ? String(jk).trim() : '', tglLahir: tglLahir, posyandu: row['Posyandu']||'', createdAt: Date.now() };
                             try { await addDoc(sasaranCol, newData); count++; } catch(err) { newData.id = 'temp-'+Date.now()+Math.random(); dynamicSasaran.push(newData); count++; } 
                         }
                     } 
@@ -547,72 +546,75 @@
                 const jP = document.getElementById('jenisPertama');
                 const isP1 = jP && jP.checked;
                 
-                // MAP DATA (Menyatukan key yang terpisah p1 dan l agar masuk DB rapi)
+                // Helper untuk memastikan tidak ada nilai undefined yang dikirim ke Firebase
+                const safeStr = (val) => val === undefined || val === null ? "" : String(val).trim();
+                
+                // MAP DATA (Menyatukan key yang terpisah p1 dan l agar masuk DB rapi, dengan pengaman safeStr)
                 const finalObj = {
-                    id: obj.id, createdAt: obj.createdAt, foto_base64: obj.foto_base64,
-                    jenis_kunjungan: obj.jenis_kunjungan,
-                    nama_asn: isP1 ? obj.nama_asn_p1 : obj.nama_asn_l,
-                    nip_asn: isP1 ? obj.nip_asn_p1 : obj.nip_asn_l,
-                    asal_opd: isP1 ? obj.asal_opd_p1 : obj.asal_opd_l,
-                    tanggal_kunjungan: isP1 ? obj.tanggal_kunjungan_p1 : obj.tanggal_kunjungan_l,
-                    bulan_pemantauan: isP1 ? '1' : obj.bulan_pemantauan_l,
-                    nama_balita: isP1 ? obj.nama_balita_p1 : obj.nama_balita_l,
-                    nik_balita: isP1 ? obj.nik_balita_p1 : obj.nik_balita_l,
-                    tanggal_lahir_balita: isP1 ? obj.tanggal_lahir_balita_p1 : obj.tanggal_lahir_balita_l,
-                    usia_balita_bulan: isP1 ? obj.usia_balita_bulan : obj.usia_balita_bulan_l,
-                    kecamatan: isP1 ? obj.kecamatan_p1 : obj.kecamatan_l,
-                    desa: isP1 ? obj.desa_p1 : obj.desa_l,
-                    puskesmas: isP1 ? obj.puskesmas_p1 : obj.puskesmas_l,
-                    posyandu: isP1 ? obj.posyandu_p1 : obj.posyandu_l,
+                    id: safeStr(obj.id), createdAt: obj.createdAt, foto_base64: safeStr(obj.foto_base64),
+                    jenis_kunjungan: safeStr(obj.jenis_kunjungan),
+                    nama_asn: isP1 ? safeStr(obj.nama_asn_p1) : safeStr(obj.nama_asn_l),
+                    nip_asn: isP1 ? safeStr(obj.nip_asn_p1) : safeStr(obj.nip_asn_l),
+                    asal_opd: isP1 ? safeStr(obj.asal_opd_p1) : safeStr(obj.asal_opd_l),
+                    tanggal_kunjungan: isP1 ? safeStr(obj.tanggal_kunjungan_p1) : safeStr(obj.tanggal_kunjungan_l),
+                    bulan_pemantauan: isP1 ? '1' : safeStr(obj.bulan_pemantauan_l),
+                    nama_balita: isP1 ? safeStr(obj.nama_balita_p1) : safeStr(obj.nama_balita_l),
+                    nik_balita: isP1 ? safeStr(obj.nik_balita_p1) : safeStr(obj.nik_balita_l),
+                    tanggal_lahir_balita: isP1 ? safeStr(obj.tanggal_lahir_balita_p1) : safeStr(obj.tanggal_lahir_balita_l),
+                    usia_balita_bulan: isP1 ? safeStr(obj.usia_balita_bulan) : safeStr(obj.usia_balita_bulan_l),
+                    kecamatan: isP1 ? safeStr(obj.kecamatan_p1) : safeStr(obj.kecamatan_l),
+                    desa: isP1 ? safeStr(obj.desa_p1) : safeStr(obj.desa_l),
+                    puskesmas: isP1 ? safeStr(obj.puskesmas_p1) : safeStr(obj.puskesmas_l),
+                    posyandu: isP1 ? safeStr(obj.posyandu_p1) : safeStr(obj.posyandu_l),
                     
-                    nama_ortu: obj.nama_ortu || '',
-                    usia_kategori_p1: obj.usia_kategori_p1 || '',
-                    jenis_kelamin_balita: obj.jenis_kelamin_l || '',
+                    nama_ortu: safeStr(obj.nama_ortu),
+                    usia_kategori_p1: safeStr(obj.usia_kategori_p1),
+                    jenis_kelamin_balita: safeStr(obj.jenis_kelamin_l),
                     
-                    jkn_bpjs: isP1 ? obj.jkn_bpjs_p1 : '',
-                    air_bersih: isP1 ? obj.air_bersih_p1 : obj.air_bersih_l,
-                    jamban: isP1 ? obj.jamban_p1 : obj.jamban_l,
-                    merokok: isP1 ? obj.merokok_p1 : obj.merokok_l,
-                    cacingan: isP1 ? obj.kecacingan_p1 : obj.cacingan_l,
-                    kek_ibu: isP1 ? obj.kek_ibu_p1 : '',
-                    status_imunisasi: isP1 ? obj.imunisasi_status_p1 : obj.status_imunisasi_l,
-                    imunisasi_kurang: isP1 ? obj.imunisasi_kurang_p1 : obj.imunisasi_kurang_l,
+                    jkn_bpjs: isP1 ? safeStr(obj.jkn_bpjs_p1) : '',
+                    air_bersih: isP1 ? safeStr(obj.air_bersih_p1) : safeStr(obj.air_bersih_l),
+                    jamban: isP1 ? safeStr(obj.jamban_p1) : safeStr(obj.jamban_l),
+                    merokok: isP1 ? safeStr(obj.merokok_p1) : safeStr(obj.merokok_l),
+                    cacingan: isP1 ? safeStr(obj.kecacingan_p1) : safeStr(obj.cacingan_l),
+                    kek_ibu: isP1 ? safeStr(obj.kek_ibu_p1) : '',
+                    status_imunisasi: isP1 ? safeStr(obj.imunisasi_status_p1) : safeStr(obj.status_imunisasi_l),
+                    imunisasi_kurang: isP1 ? safeStr(obj.imunisasi_kurang_p1) : safeStr(obj.imunisasi_kurang_l),
                     
-                    kondisi_balita: isP1 ? (obj.penyakit_penyerta_p1 === 'Ya' ? 'Sakit' : 'Sehat') : obj.kondisi_balita_l,
-                    penyakit_balita: isP1 ? obj.penyakit_penyerta_sebutkan_p1 : obj.penyakit_balita_l,
+                    kondisi_balita: isP1 ? (obj.penyakit_penyerta_p1 === 'Ya' ? 'Sakit' : 'Sehat') : safeStr(obj.kondisi_balita_l),
+                    penyakit_balita: isP1 ? safeStr(obj.penyakit_penyerta_sebutkan_p1) : safeStr(obj.penyakit_balita_l),
                     
-                    kunjung_posyandu: isP1 ? obj.kunjung_posyandu_p1 : obj.kunjung_posyandu_l,
-                    terakhir_posyandu: isP1 ? obj.terakhir_posyandu_p1 : '',
+                    kunjung_posyandu: isP1 ? safeStr(obj.kunjung_posyandu_p1) : safeStr(obj.kunjung_posyandu_l),
+                    terakhir_posyandu: isP1 ? safeStr(obj.terakhir_posyandu_p1) : '',
                     
                     bb: parseFloat(isP1 ? obj.berat_badan_kg_p1 : obj.berat_badan_kg_l) || 0,
                     tb: parseFloat(isP1 ? obj.tinggi_badan_cm_p1 : obj.tinggi_badan_cm_l) || 0,
                     
-                    vitamin_a: isP1 ? obj.vitamin_a_p1 : '',
-                    perkembangan: isP1 ? obj.perkembangan_p1 : obj.perkembangan_l,
+                    vitamin_a: isP1 ? safeStr(obj.vitamin_a_p1) : '',
+                    perkembangan: isP1 ? safeStr(obj.perkembangan_p1) : safeStr(obj.perkembangan_l),
                     
-                    dapat_asi: isP1 ? obj.dapat_asi_p1 : '',
-                    asi_eksklusif: isP1 ? obj.asi_eksklusif_p1 : obj.asi_eksklusif_l,
-                    komposisi_makanan: isP1 ? obj.komposisi_makanan_p1 : '',
+                    dapat_asi: isP1 ? safeStr(obj.dapat_asi_p1) : '',
+                    asi_eksklusif: isP1 ? safeStr(obj.asi_eksklusif_p1) : safeStr(obj.asi_eksklusif_l),
+                    komposisi_makanan: isP1 ? safeStr(obj.komposisi_makanan_p1) : '',
                     
-                    gizi_asi: isP1 ? '' : obj.gizi_asi_l,
-                    gizi_makanan_pokok: isP1 ? '' : obj.gizi_makanan_pokok_l,
-                    gizi_kacang: isP1 ? '' : obj.gizi_kacang_l,
-                    gizi_susu_hewani: isP1 ? '' : obj.gizi_susu_hewani_l,
-                    gizi_daging: isP1 ? '' : obj.gizi_daging_l,
-                    gizi_telur: isP1 ? '' : obj.gizi_telur_l,
-                    gizi_sayur_vitA: isP1 ? '' : obj.gizi_sayur_vitA_l,
-                    gizi_sayur_lain: isP1 ? '' : obj.gizi_sayur_lain_l,
+                    gizi_asi: isP1 ? '' : safeStr(obj.gizi_asi_l),
+                    gizi_makanan_pokok: isP1 ? '' : safeStr(obj.gizi_makanan_pokok_l),
+                    gizi_kacang: isP1 ? '' : safeStr(obj.gizi_kacang_l),
+                    gizi_susu_hewani: isP1 ? '' : safeStr(obj.gizi_susu_hewani_l),
+                    gizi_daging: isP1 ? '' : safeStr(obj.gizi_daging_l),
+                    gizi_telur: isP1 ? '' : safeStr(obj.gizi_telur_l),
+                    gizi_sayur_vitA: isP1 ? '' : safeStr(obj.gizi_sayur_vitA_l),
+                    gizi_sayur_lain: isP1 ? '' : safeStr(obj.gizi_sayur_lain_l),
                     
-                    dapat_pmt: isP1 ? '' : obj.dapat_pmt_l,
-                    konsumsi_pmt: isP1 ? '' : obj.konsumsi_pmt_l,
-                    perbandingan_bb: isP1 ? '' : obj.perbandingan_bb_l,
-                    perbandingan_tb: isP1 ? '' : obj.perbandingan_tb_l,
-                    edukasi_dijalankan: isP1 ? '' : obj.edukasi_dijalankan_l,
-                    kendala_keluarga: isP1 ? '' : obj.kendala_keluarga_l,
+                    dapat_pmt: isP1 ? '' : safeStr(obj.dapat_pmt_l),
+                    konsumsi_pmt: isP1 ? '' : safeStr(obj.konsumsi_pmt_l),
+                    perbandingan_bb: isP1 ? '' : safeStr(obj.perbandingan_bb_l),
+                    perbandingan_tb: isP1 ? '' : safeStr(obj.perbandingan_tb_l),
+                    edukasi_dijalankan: isP1 ? '' : safeStr(obj.edukasi_dijalankan_l),
+                    kendala_keluarga: isP1 ? '' : safeStr(obj.kendala_keluarga_l),
                     
-                    tindakan_asn: isP1 ? obj.tindakan_asn_p1 : obj.tindakan_asn_l,
-                    tindakan_lainnya: isP1 ? obj.tindakan_lainnya_p1 : obj.tindakan_lainnya_l,
-                    keterangan_tambahan: isP1 ? obj.keterangan_tambahan_p1 : ''
+                    tindakan_asn: isP1 ? safeStr(obj.tindakan_asn_p1) : safeStr(obj.tindakan_asn_l),
+                    tindakan_lainnya: isP1 ? safeStr(obj.tindakan_lainnya_p1) : safeStr(obj.tindakan_lainnya_l),
+                    keterangan_tambahan: isP1 ? safeStr(obj.keterangan_tambahan_p1) : ''
                 };
 
                 finalObj.imt = finalObj.tb > 0 ? (finalObj.bb / Math.pow(finalObj.tb / 100, 2)).toFixed(2) : 0;
