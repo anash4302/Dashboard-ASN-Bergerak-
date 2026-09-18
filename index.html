@@ -113,18 +113,19 @@
                         <label class="block text-sm font-bold text-teal-900 mb-3">Jenis Kunjungan</label>
                         <div class="flex flex-col sm:flex-row gap-3">
                             <label class="flex-1 flex items-center gap-3 p-3 rounded-lg border-2 border-teal-200 bg-white cursor-pointer has-[:checked]:border-teal-600 has-[:checked]:bg-teal-50 has-[:checked]:ring-2 has-[:checked]:ring-teal-300">
-                                <input type="radio" name="jenis_kunjungan" id="jenisPertama" value="pertama" required>
+                                <!-- BUG FIX: Kunjungan Pertama dijadikan DEFAULT (checked) -->
+                                <input type="radio" name="jenis_kunjungan" id="jenisPertama" value="pertama" required checked>
                                 <div><span class="font-semibold text-slate-800 block">Kunjungan Pertama</span><span class="text-xs text-slate-500">Bulan 1 &ndash; pendataan awal</span></div>
                             </label>
                             <label class="flex-1 flex items-center gap-3 p-3 rounded-lg border-2 border-teal-200 bg-white cursor-pointer has-[:checked]:border-teal-600 has-[:checked]:bg-teal-50 has-[:checked]:ring-2 has-[:checked]:ring-teal-300">
-                                <input type="radio" name="jenis_kunjungan" id="jenisLanjutan" value="lanjutan" checked>
+                                <input type="radio" name="jenis_kunjungan" id="jenisLanjutan" value="lanjutan">
                                 <div><span class="font-semibold text-slate-800 block">Kunjungan Lanjutan</span><span class="text-xs text-slate-500">Bulan 2 &ndash; 6</span></div>
                             </label>
                         </div>
                     </div>
 
                     <!-- BLOK 1: FORM KUNJUNGAN PERTAMA -->
-                    <div id="wrapperFormPertama" hidden class="space-y-6">
+                    <div id="wrapperFormPertama" class="space-y-6">
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
                             <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3"><div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div><h3 class="text-lg font-bold text-teal-900">A. Identitas</h3></div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
@@ -170,7 +171,7 @@
 
 
                     <!-- BLOK 2: FORM KUNJUNGAN LANJUTAN -->
-                    <div id="lanjutanSections" class="space-y-6">
+                    <div id="lanjutanSections" hidden class="space-y-6">
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden break-inside-avoid">
                             <div class="bg-teal-50 px-6 py-4 border-b border-teal-100 flex items-center gap-3"><div class="bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-sm">A</div><h3 class="text-lg font-bold text-teal-900">A. IDENTITAS</h3></div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
@@ -460,7 +461,6 @@
         const nAsnP1 = document.getElementById('nama_asn_p1'); if(nAsnP1) nAsnP1.oninput = e => autocompleteAsn(e, 'p1');
         const nAsnL = document.getElementById('nama_asn_l'); if(nAsnL) nAsnL.oninput = e => autocompleteAsn(e, 'l');
         
-        // BUG FIX: ID tidak tertimpa!
         onSnapshot(asnCol, snap => { dynamicAsn = snap.docs.map(d => ({ ...d.data(), id: d.id })); localStorage.setItem('asnDataPendampingLokal', JSON.stringify(dynamicAsn)); renderAsnList(); });
 
         const fTA = document.getElementById('formTambahASN');
@@ -534,7 +534,6 @@
         const nbP1 = document.getElementById('nama_balita_p1'); if(nbP1) nbP1.oninput = e => autocompleteBalita(e, 'p1');
         const nbL = document.getElementById('nama_balita_l'); if(nbL) nbL.oninput = e => autocompleteBalita(e, 'l');
         
-        // BUG FIX: ID tidak tertimpa!
         onSnapshot(sasaranCol, snap => { dynamicSasaran = snap.docs.map(d => ({ ...d.data(), id: d.id })); localStorage.setItem('asnSasaranLokal', JSON.stringify(dynamicSasaran)); renderSasaranList(); });
         
         const fTS = document.getElementById('formTambahSasaran');
@@ -574,7 +573,7 @@
         };
 
         // --- NAVIGATION & AUTO RESET ---
-        // Fungsi sapu bersih (Auto-Reset form ke kondisi pabrik)
+        // Fungsi sapu bersih ke mode default (Kunjungan Pertama)
         function resetMainForm() {
             editingId = null; 
             const mF = document.getElementById('monitoringForm'); if(mF) mF.reset(); 
@@ -588,14 +587,12 @@
             updateUI();
         }
 
-        const pageTitles = {'sec-dashboard':'Dashboard Utama','sec-form':'Entry Kunjungan','sec-history':'Riwayat Kunjungan','sec-charts':'Laporan Statistik','sec-edukasi':'Kamus Edukasi ASN','sec-settings':'Pengaturan Aplikasi'};
-        document.querySelectorAll('.nav-link').forEach(l => l.onclick = e => { 
-            // SAPU BERSIH: Pindah menu = form kembali kosong!
-            resetMainForm(); 
-            
-            document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('nav-active')); 
-            e.currentTarget.classList.add('nav-active'); 
-            const tid = e.currentTarget.getAttribute('data-target'); 
+        // Fungsi khusus pindah tab tanpa me-reset form (untuk fitur Edit & Print)
+        function switchTab(tid) {
+            document.querySelectorAll('.nav-link').forEach(nl => {
+                nl.classList.remove('nav-active');
+                if(nl.getAttribute('data-target') === tid) nl.classList.add('nav-active');
+            });
             document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active')); 
             const sT = document.getElementById(tid); if(sT) sT.classList.add('active'); 
             const pT = document.getElementById('pageTitle'); if(pT) pT.textContent = pageTitles[tid]; 
@@ -603,6 +600,22 @@
             if(window.innerWidth<768){ const sB = document.getElementById('sidebar'); if(sB) sB.classList.add('-translate-x-full'); const sO = document.getElementById('sidebarOverlay'); if(sO) sO.classList.add('hidden');} 
             if(tid==='sec-history') renderTable(); 
             if(tid==='sec-charts') renderCharts(); 
+        }
+
+        const pageTitles = {'sec-dashboard':'Dashboard Utama','sec-form':'Entry Kunjungan','sec-history':'Riwayat Kunjungan','sec-charts':'Laporan Statistik','sec-edukasi':'Kamus Edukasi ASN','sec-settings':'Pengaturan Aplikasi'};
+        
+        // BUG FIX: Event click menu tidak saling tabrak
+        document.querySelectorAll('.nav-link').forEach(l => l.onclick = e => { 
+            const tid = e.currentTarget.getAttribute('data-target'); 
+            // Aturan Reset Form:
+            // 1. Jika keluar dari form ke menu lain, otomatis sapu bersih.
+            // 2. Jika masuk ke menu form untuk mengisi data baru (!editingId), sapu bersih.
+            if (tid !== 'sec-form') {
+                resetMainForm();
+            } else if (tid === 'sec-form' && !editingId) {
+                resetMainForm(); 
+            }
+            switchTab(tid);
         });
         
         const oSB = document.getElementById('openSidebarBtn'); if(oSB) oSB.onclick = () => { const sB = document.getElementById('sidebar'); if(sB) sB.classList.remove('-translate-x-full'); const sO = document.getElementById('sidebarOverlay'); if(sO) sO.classList.remove('hidden'); }; 
@@ -612,7 +625,6 @@
         if(cEB) { cEB.onclick = resetMainForm; }
 
         // --- FIRESTORE KUNJUNGAN ---
-        // BUG FIX: Membalik posisi ID agar Firestore ID yang menang dan tidak tertimpa string kosong!
         onSnapshot(kunjunganCol, snap => { const sData = snap.docs.map(d => ({ ...d.data(), id: d.id })); const tData = cachedData.filter(d => d.id && d.id.startsWith('temp-')); cachedData = [...sData, ...tData]; localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); const sST = document.getElementById('syncStatusText'); if(sST) sST.textContent = "Terhubung ke Cloud"; const sCI = document.getElementById('settingConnIndicator'); if(sCI) sCI.classList.replace('bg-amber-500', 'bg-emerald-500'); updateDashboardCards(); renderTable(); renderCharts(); populateChartDropdown(); });
 
         const mForm = document.getElementById('monitoringForm');
@@ -626,7 +638,6 @@
                 
                 const safeStr = (val) => val === undefined || val === null ? "" : String(val).trim();
                 
-                // BUG FIX: Tidak ada object ID explicitly defined di sini agar tidak error saat disimpan pertama kali.
                 const finalObj = {
                     createdAt: obj.createdAt, foto_base64: safeStr(obj.foto_base64),
                     jenis_kunjungan: safeStr(obj.jenis_kunjungan),
@@ -717,15 +728,15 @@
                     const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
                     
                     await Promise.race([savePromise, timeoutPromise]);
-                    lastSavedData = finalObj; // Menyimpan untuk tombol DKK
-                    resetMainForm(); // Auto Reset Form
+                    lastSavedData = finalObj; 
+                    resetMainForm(); 
                     const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('hidden', 'flex');
                 } catch(er) { 
                     if(er.message === 'timeout' || er.message.includes('permission')) {
                         if(!editingId) { 
                             finalObj.id='temp-'+Date.now(); cachedData.push(finalObj); localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); updateDashboardCards(); renderTable(); populateChartDropdown(); renderCharts(); 
                             lastSavedData = finalObj;
-                            resetMainForm(); // Auto Reset Form
+                            resetMainForm(); 
                             const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('hidden', 'flex'); 
                             const sST = document.getElementById('syncStatusText'); if(sST) sST.textContent = "Offline / Akses Ditolak (Disimpan Lokal)"; 
                             const sCI = document.getElementById('settingConnIndicator'); if(sCI) sCI.classList.replace('bg-emerald-500', 'bg-amber-500'); 
@@ -751,7 +762,6 @@
                 const tglLahir = d.tanggal_lahir_balita ? new Date(d.tanggal_lahir_balita).toISOString().split('T')[0] : '';
                 
                 if (isP1) {
-                    // MAPPING KHUSUS FORM KUNJUNGAN PERTAMA
                     params.append("entry.996951028", d.nama_asn || "");
                     params.append("entry.1026958389", d.nip_asn || "");
                     params.append("entry.1542418049", d.asal_opd || "");
@@ -763,7 +773,7 @@
                     params.append("entry.722549314", d.usia_kategori_p1 || "");
                     params.append("entry.2054382722", d.nama_ortu || "");
                     params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Karangkobar Form P1
+                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : "");
                     params.append("entry.255953080", "KARANGKOBAR 1"); 
                     params.append("entry.298513540", d.posyandu || "");
                     
@@ -811,41 +821,39 @@
                     window.open("https://docs.google.com/forms/d/e/1FAIpQLSd80viRN-wLg8K-UFptMxekkwvU-L6lojllnQXT6dzveL_JwA/viewform?" + params.toString(), "_blank");
                 } 
                 else {
-                    // MAPPING KHUSUS FORM KUNJUNGAN LANJUTAN (BULAN 2-6)
-                    params.append("entry.996951028", d.nama_asn || "");
-                    params.append("entry.1026958389", d.nip_asn || "");
-                    params.append("entry.1542418049", d.asal_opd || "");
-                    params.append("entry.616283948", tglKunjungan);
-                    params.append("entry.1986604375", d.bulan_pemantauan || "");
-                    params.append("entry.1490379613", d.nama_balita || "");
-                    params.append("entry.1196937779", d.nik_balita || "");
-                    params.append("entry.939162288", d.jenis_kelamin_balita === 'L' ? 'Laki - laki' : (d.jenis_kelamin_balita === 'P' ? 'Perempuan' : ''));
-                    params.append("entry.317168236", tglLahir);
-                    params.append("entry.722549314", d.usia_balita_bulan || "");
-                    params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Karangkobar Form Lanjutan
-                    params.append("entry.255953080", "KARANGKOBAR 1");
-                    params.append("entry.298513540", d.posyandu || "");
+                    params.append("entry.1515778847", d.nama_asn || "");
+                    params.append("entry.582585513", d.nip_asn || "");
+                    params.append("entry.1281100", d.asal_opd || "");
+                    params.append("entry.622708241", tglKunjungan);
+                    params.append("entry.1447368990", d.bulan_pemantauan || "");
+                    params.append("entry.1727468572", d.nama_balita || "");
+                    params.append("entry.1480384165", d.nik_balita || "");
+                    params.append("entry.1911910180", d.jenis_kelamin_balita === 'L' ? 'Laki - laki' : (d.jenis_kelamin_balita === 'P' ? 'Perempuan' : ''));
+                    params.append("entry.212146817", tglLahir);
+                    params.append("entry.113410198", d.usia_balita_bulan || "");
+                    params.append("entry.1639192655", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
+                    params.append("entry.510995638", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Lanjutan
+                    params.append("entry.280101243", "KARANGKOBAR 1");
+                    params.append("entry.938857879", d.posyandu || "");
                     
-                    params.append("entry.1874326508", d.kunjung_posyandu || "");
-                    params.append("entry.1027047609", d.bb || "");
+                    params.append("entry.137632947", d.kunjung_posyandu || "");
+                    params.append("entry.2146032517", d.bb || "");
                     
                     let pbb = d.perbandingan_bb || "";
                     if(pbb.includes("sesuai kenaikan")) pbb = "Naik sesuai standard kenaikan berat minimal (KBM)";
                     else if(pbb.includes("tidak sesuai")) pbb = "Naik tapi tidak sesuai KBM";
-                    params.append("entry.1551580231", pbb);
+                    params.append("entry.2106448563", pbb);
                     
-                    params.append("entry.2128385911", d.tb || "");
-                    params.append("entry.627729621", d.perbandingan_tb || "");
-                    params.append("entry.566823580", d.kondisi_balita || "");
-                    params.append("entry.1973610477", d.penyakit_balita || "");
-                    params.append("entry.2112729332", d.perkembangan || "");
-                    params.append("entry.365018921", d.status_imunisasi || "");
-                    params.append("entry.131095658", d.imunisasi_kurang || "");
-                    params.append("entry.167391198", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
+                    params.append("entry.2001367278", d.tb || "");
+                    params.append("entry.361694830", d.perbandingan_tb || "");
+                    params.append("entry.609281556", d.kondisi_balita || "");
+                    params.append("entry.297426972", d.penyakit_balita || "");
+                    params.append("entry.2092366348", d.perkembangan || "");
+                    params.append("entry.1096272088", d.status_imunisasi || "");
+                    params.append("entry.1967558665", d.imunisasi_kurang || "");
+                    params.append("entry.1290328493", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
                     
-                    // Matriks Gizi Lanjutan
-                    if(d.gizi_asi) params.append("entry.1096759611", d.gizi_asi);
+                    if(d.gizi_asi) params.append("entry.1716639834", d.gizi_asi);
                     if(d.gizi_makanan_pokok) params.append("entry.253764079", d.gizi_makanan_pokok);
                     if(d.gizi_kacang) params.append("entry.860630514", d.gizi_kacang);
                     if(d.gizi_susu_hewani) params.append("entry.171637811", d.gizi_susu_hewani);
@@ -854,39 +862,39 @@
                     if(d.gizi_sayur_vitA) params.append("entry.93992666", d.gizi_sayur_vitA);
                     if(d.gizi_sayur_lain) params.append("entry.981093190", d.gizi_sayur_lain);
                     
-                    params.append("entry.501888116", d.dapat_pmt || "");
+                    params.append("entry.1709522972", d.dapat_pmt || "");
                     let kpmt = d.konsumsi_pmt || "";
                     if(kpmt.includes("Kadang")) kpmt = "Kadang - kadang dimakan";
                     else if(kpmt.includes("Tidak")) kpmt = "Tidak dimakan balita";
                     else if(kpmt.includes("keluarga")) kpmt = "Dimakan oleh anggota keluarga lainnya";
-                    params.append("entry.1899137181", kpmt);
+                    params.append("entry.2076509936", kpmt);
                     
                     let ab = d.air_bersih || "";
                     if(ab.includes("perbaikan")) ab = "Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia";
-                    params.append("entry.666430219", ab);
+                    params.append("entry.1863749179", ab);
                     
                     let js = d.jamban || "";
                     if(js.includes("perbaikan")) js = "Sudah tersedia, perbaikan kondisi bulan lalu yang belum tersedia";
                     else if(js.includes("Belum")) js = "Belum tersedia";
-                    params.append("entry.915245282", js);
+                    params.append("entry.1192712902", js);
                     
-                    params.append("entry.924592181", d.cacingan || "");
-                    params.append("entry.1410070825", d.penyakit_penyerta || "");
-                    params.append("entry.1948039113", d.merokok || "");
-                    params.append("entry.246319011", d.edukasi_dijalankan || "");
-                    params.append("entry.1257952693", d.kendala_keluarga || "");
+                    params.append("entry.1221156462", d.cacingan || "");
+                    params.append("entry.1267191288", d.penyakit_penyerta || "");
+                    params.append("entry.1776141245", d.merokok || "");
+                    params.append("entry.1016714052", d.edukasi_dijalankan || "");
+                    params.append("entry.1681137208", d.kendala_keluarga || "");
                     
                     if (d.tindakan_asn) {
                         const arr = d.tindakan_asn.split(', ');
                         arr.forEach(val => {
-                            if (val.includes('etika merokok')) params.append("entry.1413850197", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
-                            else if (val.includes('datang ke Posyandu')) params.append("entry.1413850197", "Menghimbau untuk rutin datang ke Posyandu");
-                            else if (val.includes('pemeriksaan ke Puskesmas')) params.append("entry.1413850197", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
-                            else if (val.includes('Dukungan gizi')) params.append("entry.1413850197", "Dukungan gizi berupa bantuan makanan");
+                            if (val.includes('etika merokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                            else if (val.includes('datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu");
+                            else if (val.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
+                            else if (val.includes('Dukungan gizi')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan");
                             else if (val === 'Lainnya') {
-                                 params.append("entry.1413850197", "__other_option__");
-                                 params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
-                            } else params.append("entry.1413850197", val);
+                                 params.append("entry.1069795319", "__other_option__");
+                                 params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
+                            } else params.append("entry.1069795319", val);
                         });
                     }
                     
@@ -898,16 +906,19 @@
         const cMB = document.getElementById('closeModalBtn');
         if(cMB) cMB.onclick = () => { const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('flex', 'hidden'); const t = document.querySelector('[data-target="sec-history"]'); if(t) t.click(); };
 
+        // BUG FIX: Buka Tab DULU, baru isi form. BUKAN terbalik!
         window.triggerEditData = id => {
             const item = cachedData.find(d => d.id === id); if(!item) return; editingId = id;
             
-            // SUPER RESET SEBELUM EDIT MENCEGAH SALAH KAMAR
-            resetMainForm(); editingId = id; // resetMainForm membersihkan ID, jadi kita panggil lagi
+            // 1. Pindah tab diam-diam tanpa memicu fungsi Auto-Reset
+            switchTab('sec-form'); 
+            editingId = id; // Pastikan ID terkunci di memori
             
+            // 2. Set jenis kunjungan yang benar
             const isP1 = item.jenis_kunjungan === 'pertama';
             const jp = document.getElementById('jenisPertama'); if(jp && isP1) jp.checked = true;
             const jl = document.getElementById('jenisLanjutan'); if(jl && !isP1) jl.checked = true;
-            updateUI(); // Pastikan kamar form terbuka sesuai tipe
+            updateUI(); // Buka kamar yang benar
             
             const setVal = (name, val) => {
                 const els = document.getElementsByName(name); if(!els || els.length===0) return;
@@ -916,7 +927,7 @@
                 else { els[0].value = val; }
             };
 
-            // MAPPING KHUSUS HANYA KE ELEMEN YANG DIBUKA
+            // 3. Suntik Data
             if(isP1) {
                 setVal('nama_asn_p1', item.nama_asn); setVal('nip_asn_p1', item.nip_asn); setVal('asal_opd_p1', item.asal_opd); setVal('tanggal_kunjungan_p1', item.tanggal_kunjungan);
                 setVal('nama_balita_p1', item.nama_balita); setVal('nik_balita_p1', item.nik_balita); setVal('tanggal_lahir_balita_p1', item.tanggal_lahir_balita);
@@ -959,7 +970,7 @@
 
             if(item.foto_base64) { const pF = document.getElementById('previewFoto'); if(pF) pF.src = item.foto_base64; const fPC = document.getElementById('fotoPreviewContainer'); if(fPC) fPC.classList.remove('hidden'); const fB = document.getElementById('fotoBase64'); if(fB) fB.value = item.foto_base64; } else { const hFB = document.getElementById('hapusFotoBtn'); if(hFB) hFB.click(); }
             const eMB = document.getElementById('editModeBanner'); if(eMB) eMB.classList.remove('hidden'); 
-            const tF = document.querySelector('[data-target="sec-form"]'); if(tF) tF.click();
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll ke paling atas otomatis
         };
         
         window.triggerDeleteData = async id => { if(await showConfirm('Hapus data ini?')){ if(id.startsWith('temp-')){ cachedData = cachedData.filter(d=>d.id!==id); localStorage.setItem('asnDataLokal', JSON.stringify(cachedData)); renderTable(); updateDashboardCards(); } else await deleteDoc(doc(db, 'kunjungan_balita', id)); } };
