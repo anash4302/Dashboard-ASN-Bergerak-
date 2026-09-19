@@ -748,7 +748,7 @@
                 }
             };
         }
-        // --- SMART LINK DKK (GABUNGAN P1 & LANJUTAN) ---
+       // --- SMART LINK DKK (GABUNGAN P1 & LANJUTAN) ---
         const btnDkk = document.getElementById('btnKirimDKK');
         if (btnDkk) {
             btnDkk.onclick = () => {
@@ -757,8 +757,8 @@
                 const isP1 = d.jenis_kunjungan === 'pertama';
                 const params = new URLSearchParams();
                 
-                // BUG FIX: Bypass "Draft Popup" Google Forms agar auto-fill tidak terblokir
-                params.append("usp", "pp_url");
+                // Bypass "Draft Popup" Google Forms
+                params.append("usp", "pp_url"); 
                 
                 const tglKunjungan = d.tanggal_kunjungan ? new Date(d.tanggal_kunjungan).toISOString().split('T')[0] : '';
                 const tglLahir = d.tanggal_lahir_balita ? new Date(d.tanggal_lahir_balita).toISOString().split('T')[0] : '';
@@ -776,7 +776,7 @@
                     params.append("entry.722549314", d.usia_kategori_p1 || "");
                     params.append("entry.2054382722", d.nama_ortu || "");
                     params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Karangkobar Form P1
+                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); 
                     params.append("entry.255953080", "KARANGKOBAR 1"); 
                     params.append("entry.298513540", d.posyandu || "");
                     
@@ -795,34 +795,40 @@
                     params.append("entry.2125997950", d.bb || "");
                     params.append("entry.1011078476", d.tb || "");
                     params.append("entry.1869371515", d.vitamin_a || "");
-                    params.append("entry.2112729332", String(d.perkembangan).includes("Belum") ? "Belum sesuai (jika ada satu atau lebih item pertanyaan belum dapat dilakukan balita)" : "Sesuai (jika semua item pertanyaan dapat dilakukan balita)");
+                    params.append("entry.2112729332", String(d.perkembangan).includes("Belum") ? "Belum sesuai (jika ada salah satu item pertanyaan belum dapat dilakukan balita)" : "Sesuai (jika semua item pertanyaan dapat dilakukan balita)");
                     params.append("entry.167391198", d.dapat_asi || "");
                     params.append("entry.713280142", d.asi_eksklusif || "");
                     
+                    // MPASI (Deteksi Kata Kunci)
                     if (d.komposisi_makanan) {
-                        const arr = d.komposisi_makanan.split(', ');
-                        arr.forEach(val => {
-                            if (val === 'Makanan pokok') params.append("entry.1096759611", "Makanan pokok (nasi, kentang, ubi, singkong, macaroni, roti, dll)");
-                            if (val === 'Lauk hewani') params.append("entry.1096759611", "Lauk hewani (telur, ikan, daging sapi, ayam, susu, dll)");
-                            if (val === 'Lauk nabati') params.append("entry.1096759611", "Lauk nabati (kacang-kacangan, tempe, tahu, kedelai, dll)");
-                            if (val === 'Sayuran') params.append("entry.1096759611", "Sayuran (wortel, brokoli, bayam, buncis, kembang kol, daun singkong, dll)");
-                            if (val === 'Buah-buahan') params.append("entry.1096759611", "Buah-buahan (pisang, papaya, melon, mangga, jeruk, dll)");
-                        });
+                        const str = d.komposisi_makanan;
+                        if (str.includes('Makanan pokok')) params.append("entry.1096759611", "Makanan pokok (nasi, kentang, ubi, singkong, dll)");
+                        if (str.includes('Lauk hewani')) params.append("entry.1096759611", "Lauk hewani (telur, ikan, daging, susu)");
+                        if (str.includes('Lauk nabati')) params.append("entry.1096759611", "Lauk nabati (kacang-kacangan, tempe, tahu, kedelai)");
+                        if (str.includes('Sayuran')) params.append("entry.1096759611", "Sayuran (wortel, brokoli, bayam, buncis, kembang kol, daun singkong, dll)");
+                        if (str.includes('Buah-buahan') || str.includes('Buah - buahan')) params.append("entry.1096759611", "Buah - buahan (pisang, pepaya, melon, mangga, jeruk, dll)");
                     }
 
+                    // Tindakan ASN (Deteksi Kata Kunci)
                     if (d.tindakan_asn) {
-                        const arr = d.tindakan_asn.split(', ');
-                        arr.forEach(val => {
-                            if (val === 'Lainnya') {
-                                 params.append("entry.1413850197", "__other_option__");
-                                 params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
-                            } else { params.append("entry.1413850197", val); }
-                        });
+                        const str = d.tindakan_asn;
+                        if (str.includes('ASI dan MPASI')) params.append("entry.1413850197", "Edukasi tentang ASI dan MPASI bergizi seimbang");
+                        if (str.includes('pemantauan perkembangan')) params.append("entry.1413850197", "Edukasi tentang pemantauan perkembangan sesuai usia balita");
+                        if (str.includes('imunisasi')) params.append("entry.1413850197", "Edukasi tentang imunisasi");
+                        if (str.includes('kebersihan lingkungan')) params.append("entry.1413850197", "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
+                        if (str.includes('etika merokok')) params.append("entry.1413850197", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                        if (str.includes('rutin datang ke Posyandu')) params.append("entry.1413850197", "Menghimbau untuk rutin datang ke Posyandu");
+                        if (str.includes('pemeriksaan ke Puskesmas')) params.append("entry.1413850197", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
+                        if (str.includes('Dukungan gizi')) params.append("entry.1413850197", "Dukungan gizi berupa bantuan makanan");
+                        if (str.includes('Lainnya')) {
+                             params.append("entry.1413850197", "__other_option__");
+                             params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
+                        }
                     }
                     params.append("entry.1756477592", d.keterangan_tambahan || "");
-                } 
-                else {
-                    // BUG FIX: MAPPING KUNJUNGAN LANJUTAN MENGGUNAKAN ENTRY ID YANG BENAR
+                    
+                } else {
+                    // MAPPING KHUSUS FORM KUNJUNGAN LANJUTAN (BULAN 2-6)
                     params.append("entry.996951028", d.nama_asn || "");
                     params.append("entry.1026958389", d.nip_asn || "");
                     params.append("entry.1542418049", d.asal_opd || "");
@@ -834,7 +840,7 @@
                     params.append("entry.317168236", tglLahir);
                     params.append("entry.722549314", d.usia_balita_bulan || "");
                     params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Lanjutan
+                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); 
                     params.append("entry.255953080", "KARANGKOBAR 1");
                     params.append("entry.298513540", d.posyandu || "");
                     
@@ -886,22 +892,25 @@
                     params.append("entry.246319011", d.edukasi_dijalankan || "");
                     params.append("entry.1257952693", d.kendala_keluarga || "");
                     
+                    // Tindakan ASN Lanjutan (Deteksi Kata Kunci)
                     if (d.tindakan_asn) {
-                        const arr = d.tindakan_asn.split(', ');
-                        arr.forEach(val => {
-                            if (val.includes('etika merokok')) params.append("entry.1413850197", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
-                            else if (val.includes('datang ke Posyandu')) params.append("entry.1413850197", "Menghimbau untuk rutin datang ke Posyandu");
-                            else if (val.includes('pemeriksaan ke Puskesmas')) params.append("entry.1413850197", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
-                            else if (val.includes('Dukungan gizi')) params.append("entry.1413850197", "Dukungan gizi berupa bantuan makanan");
-                            else if (val === 'Lainnya') {
-                                 params.append("entry.1413850197", "__other_option__");
-                                 params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
-                            } else params.append("entry.1413850197", val);
-                        });
+                        const str = d.tindakan_asn;
+                        if (str.includes('ASI dan MPASI')) params.append("entry.1069795319", "Edukasi tentang ASI dan MPASI bergizi seimbang");
+                        if (str.includes('pemantauan perkembangan')) params.append("entry.1069795319", "Edukasi tentang pemantauan perkembangan sesuai usia balita");
+                        if (str.includes('imunisasi')) params.append("entry.1069795319", "Edukasi tentang imunisasi");
+                        if (str.includes('kebersihan lingkungan')) params.append("entry.1069795319", "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
+                        if (str.includes('etika merokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                        if (str.includes('rutin datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu");
+                        if (str.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
+                        if (str.includes('Dukungan gizi')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan");
+                        if (str.includes('Lainnya')) {
+                             params.append("entry.1069795319", "__other_option__");
+                             params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
+                        }
                     }
                 }
                 
-                // Buka link yang sesuai (P1 atau Lanjutan)
+                // Buka link yang sesuai (P1 atau Lanjutan) dengan struktur yang bersih
                 const formBaseUrl = isP1 
                     ? "https://docs.google.com/forms/d/e/1FAIpQLSd80viRN-wLg8K-UFptMxekkwvU-L6lojllnQXT6dzveL_JwA/viewform?" 
                     : "https://docs.google.com/forms/d/e/1FAIpQLSf8TBFaJkGwEzfLUPtkmxdF6R1hftmfVY4EH9eU4e97e7W8pg/viewform?";
