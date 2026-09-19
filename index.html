@@ -748,7 +748,6 @@
                 }
             };
         }
-        
         // --- SMART LINK DKK (GABUNGAN P1 & LANJUTAN) ---
         const btnDkk = document.getElementById('btnKirimDKK');
         if (btnDkk) {
@@ -758,10 +757,14 @@
                 const isP1 = d.jenis_kunjungan === 'pertama';
                 const params = new URLSearchParams();
                 
+                // BUG FIX: Bypass "Draft Popup" Google Forms agar auto-fill tidak terblokir
+                params.append("usp", "pp_url");
+                
                 const tglKunjungan = d.tanggal_kunjungan ? new Date(d.tanggal_kunjungan).toISOString().split('T')[0] : '';
                 const tglLahir = d.tanggal_lahir_balita ? new Date(d.tanggal_lahir_balita).toISOString().split('T')[0] : '';
                 
                 if (isP1) {
+                    // MAPPING KHUSUS FORM KUNJUNGAN PERTAMA
                     params.append("entry.996951028", d.nama_asn || "");
                     params.append("entry.1026958389", d.nip_asn || "");
                     params.append("entry.1542418049", d.asal_opd || "");
@@ -773,7 +776,7 @@
                     params.append("entry.722549314", d.usia_kategori_p1 || "");
                     params.append("entry.2054382722", d.nama_ortu || "");
                     params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : "");
+                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Karangkobar Form P1
                     params.append("entry.255953080", "KARANGKOBAR 1"); 
                     params.append("entry.298513540", d.posyandu || "");
                     
@@ -817,43 +820,42 @@
                         });
                     }
                     params.append("entry.1756477592", d.keterangan_tambahan || "");
-                    
-                    window.open("https://docs.google.com/forms/d/e/1FAIpQLSd80viRN-wLg8K-UFptMxekkwvU-L6lojllnQXT6dzveL_JwA/viewform?" + params.toString(), "_blank");
                 } 
                 else {
-                    params.append("entry.1515778847", d.nama_asn || "");
-                    params.append("entry.582585513", d.nip_asn || "");
-                    params.append("entry.1281100", d.asal_opd || "");
-                    params.append("entry.622708241", tglKunjungan);
-                    params.append("entry.1447368990", d.bulan_pemantauan || "");
-                    params.append("entry.1727468572", d.nama_balita || "");
-                    params.append("entry.1480384165", d.nik_balita || "");
-                    params.append("entry.1911910180", d.jenis_kelamin_balita === 'L' ? 'Laki - laki' : (d.jenis_kelamin_balita === 'P' ? 'Perempuan' : ''));
-                    params.append("entry.212146817", tglLahir);
-                    params.append("entry.113410198", d.usia_balita_bulan || "");
-                    params.append("entry.1639192655", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
-                    params.append("entry.510995638", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Lanjutan
-                    params.append("entry.280101243", "KARANGKOBAR 1");
-                    params.append("entry.938857879", d.posyandu || "");
+                    // BUG FIX: MAPPING KUNJUNGAN LANJUTAN MENGGUNAKAN ENTRY ID YANG BENAR
+                    params.append("entry.996951028", d.nama_asn || "");
+                    params.append("entry.1026958389", d.nip_asn || "");
+                    params.append("entry.1542418049", d.asal_opd || "");
+                    params.append("entry.616283948", tglKunjungan);
+                    params.append("entry.1986604375", d.bulan_pemantauan || "");
+                    params.append("entry.1490379613", d.nama_balita || "");
+                    params.append("entry.1196937779", d.nik_balita || "");
+                    params.append("entry.939162288", d.jenis_kelamin_balita === 'L' ? 'Laki - laki' : (d.jenis_kelamin_balita === 'P' ? 'Perempuan' : ''));
+                    params.append("entry.317168236", tglLahir);
+                    params.append("entry.722549314", d.usia_balita_bulan || "");
+                    params.append("entry.333275669", d.kecamatan ? d.kecamatan.toUpperCase() : "KARANGKOBAR");
+                    params.append("entry.1332897314", d.desa ? d.desa.toUpperCase() : ""); // ID Desa Lanjutan
+                    params.append("entry.255953080", "KARANGKOBAR 1");
+                    params.append("entry.298513540", d.posyandu || "");
                     
-                    params.append("entry.137632947", d.kunjung_posyandu || "");
-                    params.append("entry.2146032517", d.bb || "");
+                    params.append("entry.1874326508", d.kunjung_posyandu || "");
+                    params.append("entry.1027047609", d.bb || "");
                     
                     let pbb = d.perbandingan_bb || "";
                     if(pbb.includes("sesuai kenaikan")) pbb = "Naik sesuai standard kenaikan berat minimal (KBM)";
                     else if(pbb.includes("tidak sesuai")) pbb = "Naik tapi tidak sesuai KBM";
-                    params.append("entry.2106448563", pbb);
+                    params.append("entry.1551580231", pbb);
                     
-                    params.append("entry.2001367278", d.tb || "");
-                    params.append("entry.361694830", d.perbandingan_tb || "");
-                    params.append("entry.609281556", d.kondisi_balita || "");
-                    params.append("entry.297426972", d.penyakit_balita || "");
-                    params.append("entry.2092366348", d.perkembangan || "");
-                    params.append("entry.1096272088", d.status_imunisasi || "");
-                    params.append("entry.1967558665", d.imunisasi_kurang || "");
-                    params.append("entry.1290328493", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
+                    params.append("entry.2128385911", d.tb || "");
+                    params.append("entry.627729621", d.perbandingan_tb || "");
+                    params.append("entry.566823580", d.kondisi_balita || "");
+                    params.append("entry.1973610477", d.penyakit_balita || "");
+                    params.append("entry.2112729332", d.perkembangan || "");
+                    params.append("entry.365018921", d.status_imunisasi || "");
+                    params.append("entry.131095658", d.imunisasi_kurang || "");
+                    params.append("entry.167391198", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
                     
-                    if(d.gizi_asi) params.append("entry.1716639834", d.gizi_asi);
+                    if(d.gizi_asi) params.append("entry.1096759611", d.gizi_asi);
                     if(d.gizi_makanan_pokok) params.append("entry.253764079", d.gizi_makanan_pokok);
                     if(d.gizi_kacang) params.append("entry.860630514", d.gizi_kacang);
                     if(d.gizi_susu_hewani) params.append("entry.171637811", d.gizi_susu_hewani);
@@ -862,44 +864,49 @@
                     if(d.gizi_sayur_vitA) params.append("entry.93992666", d.gizi_sayur_vitA);
                     if(d.gizi_sayur_lain) params.append("entry.981093190", d.gizi_sayur_lain);
                     
-                    params.append("entry.1709522972", d.dapat_pmt || "");
+                    params.append("entry.501888116", d.dapat_pmt || "");
                     let kpmt = d.konsumsi_pmt || "";
                     if(kpmt.includes("Kadang")) kpmt = "Kadang - kadang dimakan";
                     else if(kpmt.includes("Tidak")) kpmt = "Tidak dimakan balita";
                     else if(kpmt.includes("keluarga")) kpmt = "Dimakan oleh anggota keluarga lainnya";
-                    params.append("entry.2076509936", kpmt);
+                    params.append("entry.1899137181", kpmt);
                     
                     let ab = d.air_bersih || "";
                     if(ab.includes("perbaikan")) ab = "Sudah tersedia, perbaikan dari kondisi bulan lalu yang belum tersedia";
-                    params.append("entry.1863749179", ab);
+                    params.append("entry.666430219", ab);
                     
                     let js = d.jamban || "";
                     if(js.includes("perbaikan")) js = "Sudah tersedia, perbaikan kondisi bulan lalu yang belum tersedia";
                     else if(js.includes("Belum")) js = "Belum tersedia";
-                    params.append("entry.1192712902", js);
+                    params.append("entry.915245282", js);
                     
-                    params.append("entry.1221156462", d.cacingan || "");
-                    params.append("entry.1267191288", d.penyakit_penyerta || "");
-                    params.append("entry.1776141245", d.merokok || "");
-                    params.append("entry.1016714052", d.edukasi_dijalankan || "");
-                    params.append("entry.1681137208", d.kendala_keluarga || "");
+                    params.append("entry.924592181", d.cacingan || "");
+                    params.append("entry.1410070825", d.penyakit_penyerta || "");
+                    params.append("entry.1948039113", d.merokok || "");
+                    params.append("entry.246319011", d.edukasi_dijalankan || "");
+                    params.append("entry.1257952693", d.kendala_keluarga || "");
                     
                     if (d.tindakan_asn) {
                         const arr = d.tindakan_asn.split(', ');
                         arr.forEach(val => {
-                            if (val.includes('etika merokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
-                            else if (val.includes('datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu");
-                            else if (val.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
-                            else if (val.includes('Dukungan gizi')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan");
+                            if (val.includes('etika merokok')) params.append("entry.1413850197", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                            else if (val.includes('datang ke Posyandu')) params.append("entry.1413850197", "Menghimbau untuk rutin datang ke Posyandu");
+                            else if (val.includes('pemeriksaan ke Puskesmas')) params.append("entry.1413850197", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
+                            else if (val.includes('Dukungan gizi')) params.append("entry.1413850197", "Dukungan gizi berupa bantuan makanan");
                             else if (val === 'Lainnya') {
-                                 params.append("entry.1069795319", "__other_option__");
-                                 params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
-                            } else params.append("entry.1069795319", val);
+                                 params.append("entry.1413850197", "__other_option__");
+                                 params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
+                            } else params.append("entry.1413850197", val);
                         });
                     }
-                    
-                    window.open("https://docs.google.com/forms/d/e/1FAIpQLSf8TBFaJkGwEzfLUPtkmxdF6R1hftmfVY4EH9eU4e97e7W8pg/viewform?" + params.toString(), "_blank");
                 }
+                
+                // Buka link yang sesuai (P1 atau Lanjutan)
+                const formBaseUrl = isP1 
+                    ? "https://docs.google.com/forms/d/e/1FAIpQLSd80viRN-wLg8K-UFptMxekkwvU-L6lojllnQXT6dzveL_JwA/viewform?" 
+                    : "https://docs.google.com/forms/d/e/1FAIpQLSf8TBFaJkGwEzfLUPtkmxdF6R1hftmfVY4EH9eU4e97e7W8pg/viewform?";
+                    
+                window.open(formBaseUrl + params.toString(), "_blank");
             };
         }
         
