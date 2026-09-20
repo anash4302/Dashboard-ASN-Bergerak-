@@ -93,16 +93,39 @@
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8 w-full bg-slate-50 relative">
             <!-- DASHBOARD -->
             <section id="sec-dashboard" class="app-section active max-w-6xl mx-auto space-y-6">
+                
+                <!-- Bumper Selamat Datang -->
                 <div class="bg-gradient-to-r from-teal-700 to-teal-500 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden"><div class="relative z-10"><h3 class="text-2xl sm:text-3xl font-bold mb-2">Selamat Datang, Anas Hamdani</h3><p class="text-teal-100 max-w-2xl">Aplikasi pencatatan dan monitoring bulanan balita untuk pencegahan stunting. Data tersinkron otomatis ke semua perangkat staf.</p></div><svg class="absolute -bottom-10 -right-10 w-64 h-64 text-white opacity-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+                
+                <!-- 3 Kotak Angka -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Total Entry Kunjungan</p><h4 class="text-3xl font-bold text-slate-800" id="dash-total">-</h4></div></div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sehat</p><h4 class="text-3xl font-bold text-emerald-600" id="dash-sehat">-</h4></div></div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl"><svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sakit (Bulan Ini)</p><h4 class="text-3xl font-bold text-rose-600" id="dash-sakit">-</h4></div></div>
                 </div>
+                
+                <!-- Kotak Progres -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mt-6"><div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-4 gap-2"><div><h4 class="font-bold text-slate-800 text-lg">Progres Kunjungan Bulan Ini</h4><p class="text-xs text-slate-500">Cakupan target balita yang sudah dikunjungi di bulan berjalan</p></div><div class="text-left sm:text-right"><span id="progress-text" class="text-3xl font-black text-teal-600">0%</span></div></div><div class="w-full bg-slate-100 rounded-full h-4 mb-3 overflow-hidden border border-slate-200"><div id="progress-bar" class="bg-teal-500 h-4 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div></div><p class="text-sm text-slate-600 font-medium"><span id="progress-count" class="text-teal-700 font-bold">0</span> dari <span id="progress-total" class="font-bold">0</span> Target Balita telah dikunjungi</p></div>
-                <div class="bg-white rounded-2xl shadow-sm border border-rose-200 overflow-hidden mt-6"><div class="bg-rose-50 px-6 py-4 flex items-center gap-3 border-b border-rose-100"><svg class="h-6 w-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><h4 class="font-bold text-rose-800">Perlu Kunjungan Bulan Ini (<span id="dash-unvisited-count">0</span> Balita)</h4></div><div class="p-6"><p class="text-sm text-slate-500 mb-4">Balita target yang belum di-entry datanya untuk bulan berjalan.</p><ul id="dash-unvisited-list" class="space-y-1"><li class="text-sm text-slate-400 italic">Memuat data...</li></ul></div></div>
-            </section>
+                
+                <!-- PANEL PERINGATAN DINI (RED FLAGS ALERT) - PENGGANTI YANG LAMA -->
+                <div class="bg-white rounded-2xl shadow-sm border border-rose-300 overflow-hidden mt-6 relative">
+                    <div class="bg-gradient-to-r from-rose-50 to-white px-6 py-5 flex items-center gap-4 border-b border-rose-100">
+                        <div class="bg-rose-500 text-white p-2.5 rounded-xl shadow-md">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-rose-900 text-lg">Panel Peringatan Dini (Red Flags)</h4>
+                            <p class="text-xs text-rose-700 font-medium mt-0.5">Prioritas balita yang butuh rujukan atau evaluasi ekstra bulan ini</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-slate-50/50">
+                        <ul id="dash-alert-list" class="space-y-3">
+                            <li class="text-sm text-slate-400 italic text-center">Memuat mesin analitik...</li>
+                        </ul>
+                    </div>
+                </div>
 
+            </section>
             <!-- FORM KUNJUNGAN -->
             <section id="sec-form" class="app-section max-w-4xl mx-auto pb-10">
                 <!-- KOP SURAT (OPSI A) -->
@@ -258,31 +281,37 @@
                 </div>
             </section>
 
-            <!-- STATISTIK (DASHBOARD ANALITIK TINGKAT EKSEKUTIF) -->
+<!-- STATISTIK-->
             <section id="sec-charts" class="app-section max-w-6xl mx-auto space-y-6">
+                <!-- BARIS 1: Grafik Kunjungan Desa & Risiko -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Grafik Determinan Stunting -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h4 class="font-bold text-slate-700 text-center mb-1">Total Kunjungan per Desa</h4>
+                        <p class="text-xs text-slate-500 text-center mb-4">Sebaran wilayah operasional pendampingan ASN</p>
+                        <div class="relative h-64 w-full"><canvas id="desaKunjunganChart"></canvas></div>
+                    </div>
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
                         <h4 class="font-bold text-slate-700 text-center mb-1">Peta Faktor Risiko (Determinan)</h4>
                         <p class="text-xs text-slate-500 text-center mb-4">Persentase keluarga dengan risiko lingkungan & perilaku</p>
                         <div class="relative h-64 w-full"><canvas id="risikoChart"></canvas></div>
                     </div>
-                    <!-- Grafik Tren Pertumbuhan -->
+                </div>
+
+                <!-- BARIS 2: Tren BB & Intervensi -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
                         <h4 class="font-bold text-slate-700 text-center mb-1">Outcome: Tren Berat Badan</h4>
                         <p class="text-xs text-slate-500 text-center mb-4">Distribusi perubahan BB balita (Kunjungan Lanjutan)</p>
                         <div class="relative h-64 w-full"><canvas id="trenBBChart"></canvas></div>
                     </div>
-                </div>
-
-                <!-- Grafik Kinerja ASN -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                    <h4 class="font-bold text-slate-700 text-center mb-1">Pemetaan Intervensi ASN (Kinerja Pendampingan)</h4>
-                    <p class="text-xs text-slate-500 text-center mb-4">Fokus edukasi dan tindakan yang paling banyak diberikan</p>
-                    <div class="relative h-72 w-full"><canvas id="intervensiChart"></canvas></div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h4 class="font-bold text-slate-700 text-center mb-1">Pemetaan Intervensi ASN</h4>
+                        <p class="text-xs text-slate-500 text-center mb-4">Tindakan edukasi yang paling banyak diberikan</p>
+                        <div class="relative h-64 w-full"><canvas id="intervensiChart"></canvas></div>
+                    </div>
                 </div>
                 
-                <!-- Grafik Pertumbuhan Individu -->
+                <!-- BARIS 3: Grafik Pertumbuhan Individu -->
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
                     <div class="flex flex-col md:flex-row justify-between items-center mb-4 border-b border-slate-100 pb-4">
                         <div>
@@ -297,7 +326,6 @@
                     </div>
                 </div>
             </section>
-
 <!-- KAMUS EDUKASI -->
             <section id="sec-edukasi" class="app-section max-w-6xl mx-auto space-y-6">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -1114,16 +1142,58 @@
             const pC = document.getElementById('progress-count'); if(pC) pC.textContent = visited.size; 
             const pTot = document.getElementById('progress-total'); if(pTot) pTot.textContent = total;
             
-            const unv = combinedMaster.filter(b => !visited.has(b.nama)); 
-            const dUC = document.getElementById('dash-unvisited-count'); if(dUC) dUC.textContent = unv.length; 
-            const ul = document.getElementById('dash-unvisited-list'); 
+            // --- MESIN DETEKTOR PERINGATAN DINI (RED FLAGS) ---
+            const ul = document.getElementById('dash-alert-list');
             if(ul) {
                 ul.innerHTML = '';
-                if(unv.length === 0) ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-3 rounded font-medium shadow-sm border border-emerald-100">Semua sasaran balita sudah dikunjungi bulan ini! 🎉</li>'; 
-                else { unv.slice(0,5).forEach(b => ul.innerHTML += `<li class="flex justify-between items-center py-2.5 text-sm border-b border-slate-100"><span class="text-slate-700 font-medium">${b.nama}</span><span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded uppercase tracking-wider">${b.desa||'-'}</span></li>`); if(unv.length>5) ul.innerHTML += `<li class="text-xs text-center text-slate-400 mt-3 font-medium">...dan ${unv.length-5} balita lainnya</li>`; }
+                let alertItems = [];
+
+                bulanIni.forEach(d => {
+                    const kondisi = String(d.kondisi_balita).toLowerCase();
+                    const pbb = String(d.perbandingan_bb).toLowerCase();
+                    let isRisikoTinggi = false;
+                    let isPerhatian = false;
+                    let alasan = [];
+
+                    // Deteksi 🔴 Risiko Tinggi
+                    if (kondisi === 'sakit') { isRisikoTinggi = true; alasan.push('Sedang Sakit'); }
+                    if (pbb.includes('turun')) { isRisikoTinggi = true; alasan.push('BB Turun'); }
+
+                    // Deteksi 🟡 Perlu Perhatian (Hanya jika tidak masuk Risiko Tinggi)
+                    if (!isRisikoTinggi) {
+                        if (pbb.includes('tetap')) { isPerhatian = true; alasan.push('BB Tetap (Weight Faltering)'); }
+                        else if (pbb.includes('tidak sesuai')) { isPerhatian = true; alasan.push('Naik Tidak Sesuai KBM'); }
+                    }
+
+                    if (isRisikoTinggi || isPerhatian) {
+                        alertItems.push({
+                            nama: d.nama_balita, desa: d.desa || '-',
+                            tingkat: isRisikoTinggi ? 'tinggi' : 'perhatian',
+                            alasan: alasan.join(', ')
+                        });
+                    }
+                });
+
+                if (alertItems.length === 0) {
+                    ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-5 rounded-xl font-medium shadow-sm border border-emerald-200 flex items-center justify-center gap-3"><span class="text-2xl">🎉</span> Hebat! Tidak ada balita dengan status peringatan kritis di bulan ini.</li>'; 
+                } else {
+                    // Tampilkan Risiko Tinggi paling atas, baru Perlu Perhatian
+                    alertItems.sort((a, b) => a.tingkat === 'tinggi' ? -1 : 1).forEach(item => {
+                        if(item.tingkat === 'tinggi') {
+                            ul.innerHTML += `<li class="flex flex-col sm:flex-row justify-between sm:items-center p-4 bg-white border-l-4 border-l-rose-500 border border-slate-200 rounded-xl gap-2 shadow-sm hover:shadow-md transition-shadow">
+                                <div><div class="flex items-center gap-2"><span class="flex h-3 w-3 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-rose-600"></span></span><span class="font-bold text-slate-800 text-base">${item.nama}</span></div><p class="text-xs font-bold text-rose-600 mt-1 pl-5">🔴 RISIKO TINGGI: ${item.alasan}</p></div>
+                                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg uppercase tracking-wider self-start sm:self-center">${item.desa}</span>
+                            </li>`;
+                        } else {
+                            ul.innerHTML += `<li class="flex flex-col sm:flex-row justify-between sm:items-center p-4 bg-white border-l-4 border-l-amber-500 border border-slate-200 rounded-xl gap-2 shadow-sm hover:shadow-md transition-shadow">
+                                <div><div class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-amber-500"></span><span class="font-bold text-slate-800 text-base">${item.nama}</span></div><p class="text-xs font-bold text-amber-600 mt-1 pl-5">🟡 PERLU PERHATIAN: ${item.alasan}</p></div>
+                                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg uppercase tracking-wider self-start sm:self-center">${item.desa}</span>
+                            </li>`;
+                        }
+                    });
+                }
             }
         }
-
         const sH = document.getElementById('searchHistory'); if(sH) sH.oninput = e => { lastSearchTerm = e.target.value; renderTable(); }; 
         const fDH = document.getElementById('filterDesaHistory'); if(fDH) fDH.onchange = renderTable; 
         const fBH = document.getElementById('filterBulanHistory'); if(fBH) fBH.onchange = renderTable;
@@ -1167,7 +1237,10 @@
         };
 
 // --- CHARTS (DASHBOARD ANALITIK EKSEKUTIF) ---
-        let cRisiko=null, cTrenBB=null, cIntervensi=null, cBB=null, cIMT=null;
+        // Kotak kosong penampung grafik agar tidak error bertumpuk
+        let cRisiko=null, cTrenBB=null, cIntervensi=null, cBB=null, cIMT=null, cDesa=null;
+        
+        const FULL_DESA_LIST = ["Ambal", "Binangun", "Gumelar", "Jlegong", "Karanggondang", "Karangkobar", "Leksana", "Pagerpelah", "Pasuruhan", "Paweden", "Purwodadi", "Sampang", "Slatri"];
         
         function populateChartDropdown() {
             const sel = document.getElementById('chartBalitaSelect'); if(!sel) return;
@@ -1180,7 +1253,19 @@
         function renderCharts() {
             if(!cachedData.length) return;
             
-            // 1. Kalkulasi Determinan Stunting (Risiko Lingkungan)
+            // 1. Kunjungan per Desa
+            const kunjunganData = FULL_DESA_LIST.map(desa => cachedData.filter(x => x.desa === desa).length);
+            const cDK = document.getElementById('desaKunjunganChart');
+            if(cDK) { 
+                if(cDesa) cDesa.destroy(); 
+                cDesa = new Chart(cDK.getContext('2d'), { 
+                    type: 'bar', 
+                    data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Total Kunjungan', data: kunjunganData, backgroundColor: '#0ea5e9', borderRadius: 4 }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+                }); 
+            }
+            
+            // 2. Kalkulasi Determinan Stunting (Risiko Lingkungan)
             const totalData = cachedData.length;
             let noJamban = 0, noAir = 0, adaPerokok = 0;
             cachedData.forEach(d => {
@@ -1200,8 +1285,8 @@
                 }); 
             }
 
-            // 2. Kalkulasi Outcome Tren BB Bulan Ini
-            const bulanIni = cachedData.filter(d => d.jenis_kunjungan !== 'pertama'); // Tren hanya relevan untuk kunjungan lanjutan
+            // 3. Kalkulasi Outcome Tren BB Bulan Ini
+            const bulanIni = cachedData.filter(d => d.jenis_kunjungan !== 'pertama');
             let naikSesuai = 0, naikTidak = 0, tetap = 0, turun = 0;
             bulanIni.forEach(d => {
                 const tren = String(d.perbandingan_bb).toLowerCase();
@@ -1222,7 +1307,7 @@
                 }); 
             }
 
-            // 3. Kalkulasi Kinerja Intervensi ASN
+            // 4. Kalkulasi Kinerja Intervensi ASN
             let cMPASI=0, cImunisasi=0, cLingkungan=0, cRokok=0, cPosyandu=0, cRujuk=0, cPMT=0;
             cachedData.forEach(d => {
                 const act = String(d.tindakan_asn).toLowerCase();
@@ -1241,14 +1326,14 @@
                 cIntervensi = new Chart(cI.getContext('2d'), { 
                     type: 'bar', 
                     data: { 
-                        labels: ['Edukasi Gizi/MPASI', 'Edukasi Imunisasi', 'Edukasi Lingkungan (PHBS)', 'Edukasi Anti-Rokok', 'Motivasi ke Posyandu', 'Rujukan Medis', 'Distribusi Bantuan PMT'], 
-                        datasets: [{ label: 'Jumlah Tindakan Dilakukan', data: [cMPASI, cImunisasi, cLingkungan, cRokok, cPosyandu, cRujuk, cPMT], backgroundColor: '#0d9488', borderRadius: 4 }] 
+                        labels: ['Gizi/MPASI', 'Imunisasi', 'Lingkungan(PHBS)', 'Anti-Rokok', 'Ke Posyandu', 'Rujukan Medis', 'Distribusi PMT'], 
+                        datasets: [{ label: 'Jumlah Tindakan', data: [cMPASI, cImunisasi, cLingkungan, cRokok, cPosyandu, cRujuk, cPMT], backgroundColor: '#0d9488', borderRadius: 4 }] 
                     }, 
                     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } 
                 }); 
             }
             
-            // 4. Grafik Histori Klinis Individu
+            // 5. Grafik Histori Klinis Individu
             const selBalita = document.getElementById('chartBalitaSelect')?.value || '';
             let filtered = [...cachedData].sort((a,b) => a.createdAt - b.createdAt);
             if(selBalita) filtered = filtered.filter(d => d.nama_balita === selBalita); else filtered = filtered.slice(-20);
@@ -1271,7 +1356,7 @@
                 if(cIMT) cIMT.destroy(); 
                 cIMT = new Chart(iC.getContext('2d'), { 
                     type: 'bar', 
-                    data: { labels: lbls, datasets: [{ label: 'Index Massa Tubuh (IMT)', data: filtered.map(x=>x.imt), backgroundColor: '#10b981', borderRadius: 4 }] }, 
+                    data: { labels: lbls, datasets: [{ label: 'IMT', data: filtered.map(x=>x.imt), backgroundColor: '#10b981', borderRadius: 4 }] }, 
                     options: chartOptions 
                 }); 
             }
