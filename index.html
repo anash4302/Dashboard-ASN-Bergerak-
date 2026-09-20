@@ -258,15 +258,38 @@
                 </div>
             </section>
 
-            <!-- STATISTIK (FITUR BARU CHART INDIVIDU) -->
+            <!-- STATISTIK (DASHBOARD ANALITIK TINGKAT EKSEKUTIF) -->
             <section id="sec-charts" class="app-section max-w-6xl mx-auto space-y-6">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4"><h4 class="font-bold text-center mb-1 text-slate-700">Jumlah Kunjungan per Desa</h4><div class="relative h-80 w-full"><canvas id="desaKunjunganChart"></canvas></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4"><h4 class="font-bold text-center mb-1 text-slate-700">Rata-rata BB per Desa (kg)</h4><div class="relative h-80 w-full"><canvas id="desaTrendChart"></canvas></div></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Grafik Determinan Stunting -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h4 class="font-bold text-slate-700 text-center mb-1">Peta Faktor Risiko (Determinan)</h4>
+                        <p class="text-xs text-slate-500 text-center mb-4">Persentase keluarga dengan risiko lingkungan & perilaku</p>
+                        <div class="relative h-64 w-full"><canvas id="risikoChart"></canvas></div>
+                    </div>
+                    <!-- Grafik Tren Pertumbuhan -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h4 class="font-bold text-slate-700 text-center mb-1">Outcome: Tren Berat Badan</h4>
+                        <p class="text-xs text-slate-500 text-center mb-4">Distribusi perubahan BB balita (Kunjungan Lanjutan)</p>
+                        <div class="relative h-64 w-full"><canvas id="trenBBChart"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Grafik Kinerja ASN -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                    <h4 class="font-bold text-slate-700 text-center mb-1">Pemetaan Intervensi ASN (Kinerja Pendampingan)</h4>
+                    <p class="text-xs text-slate-500 text-center mb-4">Fokus edukasi dan tindakan yang paling banyak diberikan</p>
+                    <div class="relative h-72 w-full"><canvas id="intervensiChart"></canvas></div>
+                </div>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mt-6">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-6 border-b pb-4">
-                        <h4 class="font-bold text-slate-700 text-lg">Grafik Pertumbuhan Per-Anak (Histori Bulanan)</h4>
-                        <select id="chartBalitaSelect" class="mt-2 md:mt-0 w-full md:w-64 rounded-lg border border-slate-300 p-2.5 text-sm bg-slate-50 focus:border-teal-500"><option value="">Pilih Balita (Keseluruhan)...</option></select>
+                <!-- Grafik Pertumbuhan Individu -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <h4 class="font-bold text-slate-700 text-lg">Grafik Histori Klinis Per-Anak</h4>
+                            <p class="text-xs text-slate-500">Pantau pergerakan kurva BB, TB, dan IMT balita spesifik</p>
+                        </div>
+                        <select id="chartBalitaSelect" class="mt-3 md:mt-0 w-full md:w-64 rounded-lg border border-slate-300 p-2.5 text-sm bg-slate-50 focus:border-teal-500"><option value="">Pilih Balita (Tampilkan Semua)...</option></select>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="relative h-72 w-full"><canvas id="pertumbuhanChart"></canvas></div>
@@ -1071,9 +1094,8 @@
             XLSX.writeFile(wb, `Laporan_Super_ASN_Kunjungan_${localDate}.xlsx`);
         };
 
-        // --- CHARTS (PERBAIKAN FILTER PER-ANAK) ---
-        let cBB=null, cIMT=null, cDesa=null, cTrend=null;
-        const FULL_DESA_LIST = ["Ambal", "Binangun", "Gumelar", "Jlegong", "Karanggondang", "Karangkobar", "Leksana", "Pagerpelah", "Pasuruhan", "Paweden", "Purwodadi", "Sampang", "Slatri"];
+// --- CHARTS (DASHBOARD ANALITIK EKSEKUTIF) ---
+        let cRisiko=null, cTrenBB=null, cIntervensi=null, cBB=null, cIMT=null;
         
         function populateChartDropdown() {
             const sel = document.getElementById('chartBalitaSelect'); if(!sel) return;
@@ -1085,27 +1107,102 @@
 
         function renderCharts() {
             if(!cachedData.length) return;
-            const kunjunganData = FULL_DESA_LIST.map(d => cachedData.filter(x => x.desa===d).length); 
-            const bbDataAvg = FULL_DESA_LIST.map(d => { const arr = cachedData.filter(x => x.desa===d && x.bb); return arr.length ? (arr.reduce((s,x)=>s+x.bb,0)/arr.length).toFixed(1) : 0; });
             
-            const cDK = document.getElementById('desaKunjunganChart');
-            if(cDK) { if(cDesa) cDesa.destroy(); cDesa = new Chart(cDK.getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Total Kunjungan Entry', data: kunjunganData, backgroundColor: '#0d9488' }] }, options: { responsive: true, maintainAspectRatio: false } }); }
+            // 1. Kalkulasi Determinan Stunting (Risiko Lingkungan)
+            const totalData = cachedData.length;
+            let noJamban = 0, noAir = 0, adaPerokok = 0;
+            cachedData.forEach(d => {
+                const j = String(d.jamban).toLowerCase(); if(j.includes('belum') || j === 'tidak') noJamban++;
+                const a = String(d.air_bersih).toLowerCase(); if(a.includes('belum') || a === 'tidak') noAir++;
+                const m = String(d.merokok).toLowerCase(); if(m.includes('dalam rumah') || m.includes('luar rumah') || m === 'ya') adaPerokok++;
+            });
+            const pctRisiko = [ (noJamban/totalData*100).toFixed(1), (noAir/totalData*100).toFixed(1), (adaPerokok/totalData*100).toFixed(1) ];
+
+            const cR = document.getElementById('risikoChart');
+            if(cR) { 
+                if(cRisiko) cRisiko.destroy(); 
+                cRisiko = new Chart(cR.getContext('2d'), { 
+                    type: 'bar', 
+                    data: { labels: ['Tidak Ada Jamban Sehat', 'Tidak Ada Air Bersih', 'Keluarga Merokok'], datasets: [{ label: '% Keluarga Berisiko', data: pctRisiko, backgroundColor: ['#f59e0b', '#3b82f6', '#64748b'], borderRadius: 4 }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: function(value){return value+"%"} } } } } 
+                }); 
+            }
+
+            // 2. Kalkulasi Outcome Tren BB Bulan Ini
+            const bulanIni = cachedData.filter(d => d.jenis_kunjungan !== 'pertama'); // Tren hanya relevan untuk kunjungan lanjutan
+            let naikSesuai = 0, naikTidak = 0, tetap = 0, turun = 0;
+            bulanIni.forEach(d => {
+                const tren = String(d.perbandingan_bb).toLowerCase();
+                if(tren.includes('sesuai')) naikSesuai++;
+                else if(tren.includes('tidak sesuai')) naikTidak++;
+                else if(tren.includes('tetap')) tetap++;
+                else if(tren.includes('turun')) turun++;
+            });
+            const dataTren = bulanIni.length > 0 ? [naikSesuai, naikTidak, tetap, turun] : [0,0,0,0];
+
+            const cT = document.getElementById('trenBBChart');
+            if(cT) { 
+                if(cTrenBB) cTrenBB.destroy(); 
+                cTrenBB = new Chart(cT.getContext('2d'), { 
+                    type: 'doughnut', 
+                    data: { labels: ['Naik Sesuai KBM', 'Naik Tidak Sesuai KBM', 'Tetap', 'Turun'], datasets: [{ data: dataTren, backgroundColor: ['#10b981', '#3b82f6', '#94a3b8', '#f43f5e'] }] }, 
+                    options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom' } } } 
+                }); 
+            }
+
+            // 3. Kalkulasi Kinerja Intervensi ASN
+            let cMPASI=0, cImunisasi=0, cLingkungan=0, cRokok=0, cPosyandu=0, cRujuk=0, cPMT=0;
+            cachedData.forEach(d => {
+                const act = String(d.tindakan_asn).toLowerCase();
+                if(act.includes('mpasi') || act.includes('gizi')) cMPASI++;
+                if(act.includes('imunisasi')) cImunisasi++;
+                if(act.includes('lingkungan') || act.includes('jamban') || act.includes('cuci tangan')) cLingkungan++;
+                if(act.includes('merokok')) cRokok++;
+                if(act.includes('posyandu')) cPosyandu++;
+                if(act.includes('puskesmas') || act.includes('rumah sakit')) cRujuk++;
+                if(act.includes('bantuan makanan')) cPMT++;
+            });
             
-            const cDT = document.getElementById('desaTrendChart');
-            if(cDT) { if(cTrend) cTrend.destroy(); cTrend = new Chart(cDT.getContext('2d'), { type: 'bar', data: { labels: FULL_DESA_LIST, datasets: [{ label: 'Rata-rata BB (Kg)', data: bbDataAvg, backgroundColor: '#f59e0b' }] }, options: { responsive: true, maintainAspectRatio: false }}); }
+            const cI = document.getElementById('intervensiChart');
+            if(cI) { 
+                if(cIntervensi) cIntervensi.destroy(); 
+                cIntervensi = new Chart(cI.getContext('2d'), { 
+                    type: 'bar', 
+                    data: { 
+                        labels: ['Edukasi Gizi/MPASI', 'Edukasi Imunisasi', 'Edukasi Lingkungan (PHBS)', 'Edukasi Anti-Rokok', 'Motivasi ke Posyandu', 'Rujukan Medis', 'Distribusi Bantuan PMT'], 
+                        datasets: [{ label: 'Jumlah Tindakan Dilakukan', data: [cMPASI, cImunisasi, cLingkungan, cRokok, cPosyandu, cRujuk, cPMT], backgroundColor: '#0d9488', borderRadius: 4 }] 
+                    }, 
+                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+                }); 
+            }
             
+            // 4. Grafik Histori Klinis Individu
             const selBalita = document.getElementById('chartBalitaSelect')?.value || '';
-            let filtered = [...cachedData].sort((a,b) => a.createdAt - b.createdAt); // Urut dari terlama ke terbaru untuk grafik garis
+            let filtered = [...cachedData].sort((a,b) => a.createdAt - b.createdAt);
             if(selBalita) filtered = filtered.filter(d => d.nama_balita === selBalita); else filtered = filtered.slice(-20);
             
             const lbls = filtered.map(x => (x.nama_balita ? x.nama_balita.split(' ')[0] : 'N/A') + ` (Bln ${x.jenis_kunjungan === 'pertama' ? '1' : (x.bulan_pemantauan || '1')})`);
             const chartOptions = { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { autoSkip: false, maxRotation: 45, minRotation: 45 } } } };
             
             const pC = document.getElementById('pertumbuhanChart');
-            if(pC) { if(cBB) cBB.destroy(); cBB = new Chart(pC.getContext('2d'), { type: 'line', data: { labels: lbls, datasets: [{ label: 'BB (Kg)', data: filtered.map(x=>x.bb), borderColor: '#0d9488', tension:0.3, pointBackgroundColor:'#0d9488' }, { label: 'TB (cm)', data: filtered.map(x=>x.tb), borderColor: '#3b82f6', tension:0.3, pointBackgroundColor:'#3b82f6' }] }, options: chartOptions }); }
+            if(pC) { 
+                if(cBB) cBB.destroy(); 
+                cBB = new Chart(pC.getContext('2d'), { 
+                    type: 'line', 
+                    data: { labels: lbls, datasets: [{ label: 'BB (Kg)', data: filtered.map(x=>x.bb), borderColor: '#0d9488', tension:0.3, pointBackgroundColor:'#0d9488', borderWidth: 3 }, { label: 'TB (cm)', data: filtered.map(x=>x.tb), borderColor: '#3b82f6', tension:0.3, pointBackgroundColor:'#3b82f6', borderWidth: 3 }] }, 
+                    options: chartOptions 
+                }); 
+            }
             
             const iC = document.getElementById('imtChart');
-            if(iC) { if(cIMT) cIMT.destroy(); cIMT = new Chart(iC.getContext('2d'), { type: 'bar', data: { labels: lbls, datasets: [{ label: 'IMT', data: filtered.map(x=>x.imt), backgroundColor: '#10b981' }] }, options: chartOptions }); }
+            if(iC) { 
+                if(cIMT) cIMT.destroy(); 
+                cIMT = new Chart(iC.getContext('2d'), { 
+                    type: 'bar', 
+                    data: { labels: lbls, datasets: [{ label: 'Index Massa Tubuh (IMT)', data: filtered.map(x=>x.imt), backgroundColor: '#10b981', borderRadius: 4 }] }, 
+                    options: chartOptions 
+                }); 
+            }
         }
     </script>
 </body>
