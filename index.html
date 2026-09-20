@@ -298,7 +298,7 @@
                 </div>
             </section>
 
-            <!-- KAMUS EDUKASI -->
+<!-- KAMUS EDUKASI -->
             <section id="sec-edukasi" class="app-section max-w-6xl mx-auto space-y-6">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-6 py-5 border-b bg-indigo-50 flex items-center gap-3">
@@ -306,31 +306,31 @@
                         <div><h3 class="font-bold text-lg text-indigo-900">Kamus Edukasi ASN</h3><p class="text-xs text-indigo-700">Pusat referensi dan panduan pendampingan balita stunting</p></div>
                     </div>
                     <div class="p-6">
-                        <p class="text-sm text-slate-500 mb-6">Pilih modul materi di bawah ini untuk dibagikan atau dibaca saat mendampingi keluarga balita. (Materi sedang disiapkan)</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors"><span class="text-2xl">🥣</span></div>
-                                <h4 class="font-bold text-slate-800 mb-2">Panduan MPASI Gizi Seimbang</h4>
-                                <p class="text-xs text-slate-500 flex-1">Panduan pemberian makan bayi dan anak (PMBA) usia 6-24 bulan.</p>
-                                <button class="mt-4 text-xs font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-lg w-full group-hover:bg-blue-600 group-hover:text-white transition-colors">Segera Hadir</button>
+                        <p class="text-sm text-slate-500 mb-6">Pilih modul materi di bawah ini untuk dibagikan atau dibaca saat mendampingi keluarga balita.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4"><span class="text-2xl">🥣</span></div>
+                                <h4 class="font-bold text-slate-800 mb-2">Panduan MPASI</h4>
+                                <p class="text-xs text-slate-500 flex-1">Panduan pemberian makan bayi (PMBA) sesuai usia Kemenkes.</p>
+                                <button onclick="window.bukaEdukasi('mpasi')" class="mt-4 text-xs font-bold text-white bg-blue-600 px-4 py-2.5 rounded-lg w-full hover:bg-blue-700 transition-colors shadow-sm">Buka Panduan</button>
                             </div>
-                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-100 transition-colors"><span class="text-2xl">💉</span></div>
-                                <h4 class="font-bold text-slate-800 mb-2">Jadwal Imunisasi Dasar</h4>
-                                <p class="text-xs text-slate-500 flex-1">Tabel lengkap jadwal imunisasi dasar Kemenkes terbaru.</p>
-                                <button class="mt-4 text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-lg w-full group-hover:bg-emerald-600 group-hover:text-white transition-colors">Segera Hadir</button>
+                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mb-4"><span class="text-2xl">💉</span></div>
+                                <h4 class="font-bold text-slate-800 mb-2">Jadwal Imunisasi</h4>
+                                <p class="text-xs text-slate-500 flex-1">Tabel Imunisasi Dasar Lengkap (IDL) anak.</p>
+                                <button onclick="window.bukaEdukasi('imunisasi')" class="mt-4 text-xs font-bold text-white bg-emerald-600 px-4 py-2.5 rounded-lg w-full hover:bg-emerald-700 transition-colors shadow-sm">Buka Tabel</button>
                             </div>
-                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-rose-100 transition-colors"><span class="text-2xl">📏</span></div>
-                                <h4 class="font-bold text-slate-800 mb-2">Standar Antropometri Anak</h4>
-                                <p class="text-xs text-slate-500 flex-1">Tabel standar Z-Score berat badan dan tinggi badan anak.</p>
-                                <button class="mt-4 text-xs font-bold text-rose-600 bg-rose-50 px-4 py-2 rounded-lg w-full group-hover:bg-rose-600 group-hover:text-white transition-colors">Segera Hadir</button>
+                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mb-4"><span class="text-2xl">📏</span></div>
+                                <h4 class="font-bold text-slate-800 mb-2">Standar Antropometri</h4>
+                                <p class="text-xs text-slate-500 flex-1">Ringkasan cara deteksi red flags pertumbuhan anak.</p>
+                                <button onclick="window.bukaEdukasi('antropometri')" class="mt-4 text-xs font-bold text-white bg-rose-600 px-4 py-2.5 rounded-lg w-full hover:bg-rose-700 transition-colors shadow-sm">Buka Ringkasan</button>
                             </div>
-                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center cursor-pointer group">
-                                <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-amber-100 transition-colors"><span class="text-2xl">📙</span></div>
+                            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow bg-white flex flex-col items-center text-center">
+                                <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4"><span class="text-2xl">📙</span></div>
                                 <h4 class="font-bold text-slate-800 mb-2">Buku KIA Digital</h4>
-                                <p class="text-xs text-slate-500 flex-1">Softcopy Buku Kesehatan Ibu dan Anak untuk referensi cepat.</p>
-                                <button class="mt-4 text-xs font-bold text-amber-600 bg-amber-50 px-4 py-2 rounded-lg w-full group-hover:bg-amber-600 group-hover:text-white transition-colors">Segera Hadir</button>
+                                <p class="text-xs text-slate-500 flex-1">Akses PDF resmi Buku KIA Kemenkes RI.</p>
+                                <button onclick="window.open('https://ayosehat.kemkes.go.id/buku-kia-kesehatan-ibu-dan-anak', '_blank')" class="mt-4 text-xs font-bold text-white bg-amber-500 px-4 py-2.5 rounded-lg w-full hover:bg-amber-600 transition-colors shadow-sm">Buka Link Kemenkes</button>
                             </div>
                         </div>
                     </div>
@@ -387,12 +387,84 @@
 
     <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 bg-slate-900/60 z-50 hidden items-center justify-center px-4 no-print"><div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full flex flex-col items-center text-center modal-animate relative"><div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-4"><div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center shadow-lg"><svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg></div></div><h3 class="text-xl font-bold mb-2 text-slate-800">Berhasil Disimpan!</h3><button type="button" id="btnKirimDKK" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg w-full transition-colors shadow-md flex items-center justify-center gap-2 mb-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>Kirim Form Resmi (DKK)</button><button type="button" id="closeModalBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-6 rounded-lg w-full transition-colors">Tutup & Lihat Riwayat</button></div></div>
-
+    <!-- Modal Kamus Edukasi -->
+    <div id="edukasiModal" class="fixed inset-0 bg-slate-900/80 z-[70] hidden items-center justify-center p-4 no-print backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden modal-animate relative">
+            <div class="p-5 border-b flex justify-between items-center bg-indigo-50">
+                <div class="flex items-center gap-3"><span id="edukasiIcon" class="text-2xl">📖</span><h3 id="edukasiModalTitle" class="font-bold text-lg text-indigo-900">Judul Materi</h3></div>
+                <button onclick="window.tutupEdukasi()" class="text-slate-400 hover:text-rose-600 font-bold text-2xl transition-colors">&times;</button>
+            </div>
+            <div id="edukasiModalBody" class="p-6 overflow-y-auto flex-1 bg-white text-sm space-y-4">
+                <!-- Konten dinamis -->
+            </div>
+            <div class="p-4 border-t bg-slate-50 flex justify-end">
+                <button onclick="window.tutupEdukasi()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-2 px-6 rounded-lg transition-colors">Tutup</button>
+            </div>
+        </div>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+        // --- DATA KAMUS EDUKASI ---
+        const materiEdukasi = {
+            'mpasi': {
+                icon: '🥣', title: 'Panduan Praktis MPASI (Gizi Seimbang)',
+                html: `
+                <div class="space-y-4 text-slate-700">
+                    <p>Sampaikan pedoman dasar <b>PMBA (Pemberian Makan Bayi dan Anak)</b> ini kepada orang tua balita:</p>
+                    <table class="w-full border-collapse border border-slate-300 mt-2">
+                        <tr class="bg-blue-50 text-blue-900"><th class="border p-2">Usia</th><th class="border p-2">Tekstur</th><th class="border p-2">Frekuensi & Porsi</th></tr>
+                        <tr><td class="border p-2 font-bold text-center">0 - 5 Bln</td><td class="border p-2">ASI Saja (Cair)</td><td class="border p-2">Sesuai keinginan bayi (on demand). Tanpa tambahan air/madu.</td></tr>
+                        <tr><td class="border p-2 font-bold text-center">6 - 8 Bln</td><td class="border p-2">Lumat / Halus (Saring tebal)</td><td class="border p-2">Makan utama: 2-3 kali/hari.<br>Cemilan: 1-2 kali/hari.<br>Porsi: 2-3 sdm (setengah mangkuk 250ml).</td></tr>
+                        <tr><td class="border p-2 font-bold text-center">9 - 11 Bln</td><td class="border p-2">Cincang Halus / Lembik (Bisa dipegang)</td><td class="border p-2">Makan utama: 3-4 kali/hari.<br>Cemilan: 1-2 kali/hari.<br>Porsi: Setengah mangkuk (125ml).</td></tr>
+                        <tr><td class="border p-2 font-bold text-center">12 - 23 Bln</td><td class="border p-2">Makanan Keluarga (Biasa)</td><td class="border p-2">Makan utama: 3-4 kali/hari.<br>Cemilan: 1-2 kali/hari.<br>Porsi: 3/4 sampai 1 mangkuk penuh (250ml).</td></tr>
+                    </table>
+                    <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mt-4 text-amber-900">
+                        <b>Ingatkan Bintang 4 MPASI:</b> Karbohidrat (Nasi/Kentang), Protein Hewani (Sangat penting untuk stunting: Telur, Ikan, Hati, Daging), Protein Nabati (Tahu/Tempe), dan Sayur/Buah secukupnya. Tambahkan lemak tambahan (minyak/margarin/santan).
+                    </div>
+                </div>`
+            },
+            'imunisasi': {
+                icon: '💉', title: 'Jadwal Imunisasi Dasar Lengkap',
+                html: `
+                <div class="space-y-4 text-slate-700">
+                    <p>Pastikan jadwal imunisasi balita tidak terlewat. Cek buku KIA halaman imunisasi:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><b>0 Bulan:</b> Hepatitis B0 (HB0)</li>
+                        <li><b>1 Bulan:</b> BCG, Polio 1</li>
+                        <li><b>2 Bulan:</b> DPT-HB-Hib 1, Polio 2, PCV 1, Rotavirus 1</li>
+                        <li><b>3 Bulan:</b> DPT-HB-Hib 2, Polio 3, PCV 2, Rotavirus 2</li>
+                        <li><b>4 Bulan:</b> DPT-HB-Hib 3, Polio 4, IPV, Rotavirus 3</li>
+                        <li><b>9 Bulan:</b> Campak-Rubella (MR)</li>
+                        <li><b>10 Bulan:</b> Japanese Encephalitis (JE) - <i>*Jika ada program</i></li>
+                        <li><b>12 Bulan:</b> PCV 3</li>
+                        <li><b>18 Bulan:</b> DPT-HB-Hib Lanjutan, Campak-Rubella (MR) Lanjutan</li>
+                    </ul>
+                </div>`
+            },
+            'antropometri': {
+                icon: '📏', title: 'Pemantauan Pertumbuhan (Red Flags)',
+                html: `
+                <div class="space-y-4 text-slate-700">
+                    <p>Ingatkan ibu balita untuk waspada jika terjadi <b>Red Flags</b> (tanda bahaya) pada kurva KMS:</p>
+                    <ul class="space-y-3">
+                        <li class="bg-rose-50 p-3 rounded border border-rose-200 text-rose-800"><b>1. Weight Faltering (Gagal Tumbuh)</b><br>Garis pertumbuhan mendatar atau menurun, atau berat badan tidak naik <b>2 bulan berturut-turut (2T)</b>. Segera rujuk ke Puskesmas!</li>
+                        <li class="bg-amber-50 p-3 rounded border border-amber-200 text-amber-800"><b>2. Gizi Kurang / Buruk</b><br>Plot titik berada di bawah garis merah pada KMS.</li>
+                        <li class="bg-blue-50 p-3 rounded border border-blue-200 text-blue-800"><b>3. Stunting</b><br>Panjang/Tinggi Badan menurut umur berada di bawah -2 SD. Edukasi bahwa mengejar TB jauh lebih sulit dari BB, butuh asupan protein hewani harian yang disiplin.</li>
+                    </ul>
+                </div>`
+            }
+        };
 
+        window.bukaEdukasi = (kunci) => {
+            const m = materiEdukasi[kunci]; if(!m) return;
+            document.getElementById('edukasiModalTitle').textContent = m.title;
+            document.getElementById('edukasiIcon').textContent = m.icon;
+            document.getElementById('edukasiModalBody').innerHTML = m.html;
+            document.getElementById('edukasiModal').classList.replace('hidden', 'flex');
+        };
+        window.tutupEdukasi = () => { document.getElementById('edukasiModal').classList.replace('flex', 'hidden'); };
         const firebaseConfig = { apiKey: "AIzaSyBe4h3Qm-wA3owJA4XDieEKaWDAxzpL07c", authDomain: "puskesmas-karangkobar-asn.firebaseapp.com", projectId: "puskesmas-karangkobar-asn", storageBucket: "puskesmas-karangkobar-asn.firebasestorage.app", messagingSenderId: "46506527118", appId: "1:46506527118:web:fa053420f51dd440c9bcdf" };
         const fbApp = initializeApp(firebaseConfig); const db = getFirestore(fbApp); const auth = getAuth(fbApp); 
         const kunjunganCol = collection(db, 'kunjungan_balita'); const sasaranCol = collection(db, 'master_sasaran_balita');
