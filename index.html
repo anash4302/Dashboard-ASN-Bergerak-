@@ -804,7 +804,7 @@
                     
                     kondisi_balita: isP1 ? (obj.penyakit_penyerta_p1 === 'Ya' ? 'Sakit' : 'Sehat') : safeStr(obj.kondisi_balita_l),
                     penyakit_balita: isP1 ? safeStr(obj.penyakit_penyerta_sebutkan_p1) : safeStr(obj.penyakit_balita_l),
-                    
+                    penyakit_penyerta: isP1 ? safeStr(obj.penyakit_penyerta_p1) : safeStr(obj.penyakit_penyerta_l),
                     kunjung_posyandu: isP1 ? safeStr(obj.kunjung_posyandu_p1) : safeStr(obj.kunjung_posyandu_l),
                     terakhir_posyandu: isP1 ? safeStr(obj.terakhir_posyandu_p1) : '',
                     
@@ -1026,23 +1026,22 @@
                     params.append("entry.246319011", d.edukasi_dijalankan || "");
                     params.append("entry.1257952693", d.kendala_keluarga || "");
                     
-                    // Tindakan ASN Lanjutan (Deteksi Kata Kunci)
+                    // Tindakan ASN Lanjutan (Deteksi Kata Kunci Anti-Koma)
                     if (d.tindakan_asn) {
                         const str = d.tindakan_asn;
-                        if (str.includes('ASI dan MPASI')) params.append("entry.1069795319", "Edukasi tentang ASI dan MPASI bergizi seimbang");
+                        if (str.includes('ASI dan MPASI') || str.includes('gizi seimbang')) params.append("entry.1069795319", "Edukasi tentang ASI dan MPASI bergizi seimbang");
                         if (str.includes('pemantauan perkembangan')) params.append("entry.1069795319", "Edukasi tentang pemantauan perkembangan sesuai usia balita");
                         if (str.includes('imunisasi')) params.append("entry.1069795319", "Edukasi tentang imunisasi");
-                        if (str.includes('kebersihan lingkungan')) params.append("entry.1069795319", "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
-                        if (str.includes('etika merokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
-                        if (str.includes('rutin datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu");
-                        if (str.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit");
-                        if (str.includes('Dukungan gizi')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan");
+                        if (str.includes('kebersihan lingkungan') || str.includes('jamban sehat')) params.append("entry.1069795319", "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
+                        if (str.includes('etika merokok') || str.includes('asap rokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                        if (str.includes('rutin datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu (setiap bulan)");
+                        if (str.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit");
+                        if (str.includes('Dukungan gizi') || str.includes('bantuan makanan')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan atau lainnya");
                         if (str.includes('Lainnya')) {
                              params.append("entry.1069795319", "__other_option__");
                              params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
                         }
                     }
-                }
                 
                 // Buka link yang sesuai (P1 atau Lanjutan) dengan struktur yang bersih
                 const formBaseUrl = isP1 
