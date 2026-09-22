@@ -1026,19 +1026,38 @@
                     params.append("entry.246319011", d.edukasi_dijalankan || "");
                     params.append("entry.1257952693", d.kendala_keluarga || "");
                     
-                    // Tindakan ASN Lanjutan (Deteksi Kata Kunci Anti-Koma)
+// PERBAIKAN BUG TINDAKAN ASN (Mode Array Checkbox)
                     if (d.tindakan_asn) {
                         const str = d.tindakan_asn;
-                        if (str.includes('ASI dan MPASI') || str.includes('gizi seimbang')) params.append("entry.1069795319", "Edukasi tentang ASI dan MPASI bergizi seimbang");
-                        if (str.includes('pemantauan perkembangan')) params.append("entry.1069795319", "Edukasi tentang pemantauan perkembangan sesuai usia balita");
-                        if (str.includes('imunisasi')) params.append("entry.1069795319", "Edukasi tentang imunisasi");
-                        if (str.includes('kebersihan lingkungan') || str.includes('jamban sehat')) params.append("entry.1069795319", "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
-                        if (str.includes('etika merokok') || str.includes('asap rokok')) params.append("entry.1069795319", "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
-                        if (str.includes('rutin datang ke Posyandu')) params.append("entry.1069795319", "Menghimbau untuk rutin datang ke Posyandu (setiap bulan)");
-                        if (str.includes('pemeriksaan ke Puskesmas')) params.append("entry.1069795319", "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau rumah sakit");
-                        if (str.includes('Dukungan gizi') || str.includes('bantuan makanan')) params.append("entry.1069795319", "Dukungan gizi berupa bantuan makanan atau lainnya");
+                        // Format kunci Google Form untuk checkbox yang dipilih lebih dari satu
+                        const keyTindakan = "entry.1069795319"; 
+                        
+                        if (str.includes('ASI dan MPASI') || str.includes('gizi seimbang')) {
+                            params.append(keyTindakan, "Edukasi tentang ASI dan MPASI bergizi seimbang");
+                        }
+                        if (str.includes('pemantauan perkembangan')) {
+                            params.append(keyTindakan, "Edukasi tentang pemantauan perkembangan sesuai usia balita");
+                        }
+                        if (str.includes('imunisasi')) {
+                            params.append(keyTindakan, "Edukasi tentang imunisasi");
+                        }
+                        if (str.includes('kebersihan lingkungan') || str.includes('jamban sehat')) {
+                            params.append(keyTindakan, "Edukasi tentang kebersihan lingkungan, jamban sehat dan cuci tangan pakai sabun");
+                        }
+                        if (str.includes('etika merokok') || str.includes('asap rokok')) {
+                            params.append(keyTindakan, "Edukasi terkait etika merokok dan bahaya asap rokok bagi balita");
+                        }
+                        if (str.includes('rutin datang ke Posyandu')) {
+                            params.append(keyTindakan, "Menghimbau untuk rutin datang ke Posyandu"); 
+                        }
+                        if (str.includes('pemeriksaan ke Puskesmas')) {
+                            params.append(keyTindakan, "Menghimbau untuk melakukan pemeriksaan ke Puskesmas atau Rumah Sakit"); 
+                        }
+                        if (str.includes('Dukungan gizi') || str.includes('bantuan makanan')) {
+                            params.append(keyTindakan, "Dukungan gizi berupa bantuan makanan"); 
+                        }
                         if (str.includes('Lainnya')) {
-                             params.append("entry.1069795319", "__other_option__");
+                             params.append(keyTindakan, "__other_option__");
                              params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
                         }
                     }
