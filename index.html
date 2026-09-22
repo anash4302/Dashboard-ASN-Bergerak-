@@ -1026,10 +1026,10 @@
                     params.append("entry.246319011", d.edukasi_dijalankan || "");
                     params.append("entry.1257952693", d.kendala_keluarga || "");
                     
-                    // PERBAIKAN BUG TINDAKAN ASN (Mode Array Checkbox + Deteksi Variabel Ganda)
+                   // PERBAIKAN BUG TINDAKAN ASN (Mode Array Checkbox + Deteksi Variabel Ganda)
                     const strTindakan = String(d.tindakan_asn_l || d.tindakan_asn || ""); 
                     if (strTindakan.trim() !== "") {
-                        const keyTindakan = "entry.1069795319"; 
+                        const keyTindakan = "entry.1413850197"; // <--- INI DIA KUNCI GEMBOK YANG BENAR!
                         
                         if (strTindakan.includes('ASI dan MPASI') || strTindakan.includes('gizi seimbang')) {
                             params.append(keyTindakan, "Edukasi tentang ASI dan MPASI bergizi seimbang");
@@ -1057,7 +1057,7 @@
                         }
                         if (strTindakan.includes('Lainnya')) {
                              params.append(keyTindakan, "__other_option__");
-                             params.append("entry.1069795319.other_option_response", d.tindakan_lainnya || "Lainnya");
+                             params.append("entry.1413850197.other_option_response", d.tindakan_lainnya || "Lainnya");
                         }
                     }
                 }
