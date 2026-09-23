@@ -1378,31 +1378,57 @@
                 }); 
             }
         }
-        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V2) ---
+        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V3 - MODE BLACKLIST) ---
         setTimeout(() => {
-            // Daftar nama asli variabel di HTML Anda
-            const p1Wajib = ['tanggal_kunjungan_p1', 'berat_badan_kg_p1', 'tinggi_badan_cm_p1', 'jkn_bpjs_p1', 'air_bersih_p1', 'jamban_p1', 'imunisasi_status_p1', 'perkembangan_p1', 'dapat_asi_p1'];
-            const lWajib = ['tanggal_kunjungan_l', 'kunjung_posyandu_l', 'berat_badan_kg_l', 'tinggi_badan_cm_l', 'air_bersih_l', 'jamban_l', 'cacingan_l', 'penyakit_penyerta_l', 'merokok_l', 'edukasi_dijalankan_l'];
+            // 1. Daftar Pengecualian (TIDAK WAJIB / BEBAS KOSONG)
+            const blacklist = [
+                'imunisasi_kurang_p1', 'imunisasi_kurang_l',
+                'penyakit_penyerta_sebutkan_p1', 'penyakit_balita_l',
+                'asi_eksklusif_p1', 'asi_eksklusif_l',
+                'keterangan_tambahan_p1', 'kendala_keluarga_l',
+                'konsumsi_pmt_l',
+                // Variabel bawaan yang tidak perlu bintang merah
+                'tindakan_lainnya_p1', 'tindakan_lainnya_l', 'foto_base64',
+                // Variabel radio MPASI/Gizi (akan ditangani terpisah karena kompleksitas checkbox matrix)
+                'komposisi_makanan_p1', 'gizi_asi_l', 'gizi_makanan_pokok_l', 'gizi_kacang_l', 
+                'gizi_susu_hewani_l', 'gizi_daging_l', 'gizi_telur_l', 'gizi_sayur_vitA_l', 'gizi_sayur_lain_l', 'dapat_pmt_l'
+            ];
 
-            // 1. Suntik Bintang Merah & Atribut Required Bawaan Browser
-            [...p1Wajib, ...lWajib].forEach(name => {
-                const els = document.getElementsByName(name);
-                if(els.length > 0) {
-                    // Pasang sensor wajib isi ke elemen HTML
-                    els.forEach(el => { el.required = true; el.setAttribute('data-req', 'true'); }); 
-                    
-                    // Lacak dan tempelkan bintang merah di teks pertanyaannya
-                    let container = els[0].closest('div').parentElement;
-                    if (container) {
-                        let label = container.querySelector('label.block');
-                        if(label && !label.innerHTML.includes('*')) {
-                            label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
+            // 2. Patroli Semua Kolom di Form
+            const form = document.getElementById('monitoringForm');
+            if (form) {
+                // Cari semua input, textarea, dan select
+                const semuaInput = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
+                
+                semuaInput.forEach(el => {
+                    const name = el.getAttribute('name');
+                    // Jika elemen punya nama, BUKAN kotak pencarian, BUKAN radio Jenis Kunjungan, dan TIDAK ADA di blacklist
+                    if (name && !name.includes('jenis_kunjungan') && !name.includes('bulan_pemantauan') && !blacklist.includes(name)) {
+                        
+                        el.required = true;
+                        el.setAttribute('data-req', 'true');
+                        
+                        // Cari label terdekat untuk ditempelkan bintang merah
+                        let labelTarget = null;
+                        
+                        // Strategi mencari label (karena struktur HTML beragam)
+                        if (el.type === 'radio') {
+                            const wrapperDiv = el.closest('div').parentElement;
+                            if (wrapperDiv) labelTarget = wrapperDiv.querySelector('label.block');
+                        } else {
+                            const wrapperDiv = el.closest('div');
+                            if (wrapperDiv) labelTarget = wrapperDiv.querySelector('label.block');
+                        }
+
+                        // Tempelkan bintang merah
+                        if (labelTarget && !labelTarget.innerHTML.includes('*')) {
+                            labelTarget.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
                         }
                     }
-                }
-            });
+                });
+            }
 
-            // Beri bintang merah khusus untuk label teks Tindakan ASN
+            // 3. Beri Bintang Merah Khusus untuk Judul "Tindakan ASN" 
             ['tindakan_asn_p1', 'tindakan_asn_l'].forEach(name => {
                  const els = document.getElementsByName(name);
                  if(els.length > 0) {
@@ -1411,14 +1437,13 @@
                  }
             });
 
-            // Sinkronkan ulang UI agar form yang disembunyikan tidak minta diisi
+            // Sinkronkan ulang UI agar elemen yang disembunyikan tidak minta diisi
             if(typeof updateUI === 'function') updateUI();
 
-            // 2. Intercept Tombol Simpan KHUSUS untuk Checkbox Tindakan (Wajib centang minimal 1)
-            const mForm = document.getElementById('monitoringForm'); // Nama ID Form sudah dibenarkan!
-            if(mForm) {
-                const fungsiSubmitAsli = mForm.onsubmit;
-                mForm.onsubmit = function(e) {
+            // 4. Intercept Tombol Simpan KHUSUS untuk Validasi Checkbox Tindakan (Min 1 centang)
+            if (form) {
+                const fungsiSubmitAsli = form.onsubmit;
+                form.onsubmit = function(e) {
                     const isP1 = document.getElementById('jenisPertama')?.checked;
                     
                     if (isP1 && document.querySelectorAll('input[name="tindakan_asn_p1"]:checked').length === 0) {
@@ -1428,7 +1453,7 @@
                         e.preventDefault(); alert('Tindakan ASN (Kunjungan Lanjutan) Wajib dipilih minimal 1 tindakan!'); return false;
                     }
                     
-                    // Jika semua aman, jalankan fungsi save utama
+                    // Jika aman, lanjut save
                     if(typeof fungsiSubmitAsli === 'function') { return fungsiSubmitAsli.apply(this, arguments); }
                 };
             }
