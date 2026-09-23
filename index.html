@@ -1002,7 +1002,9 @@
                     params.append("entry.2112729332", d.perkembangan || "");
                     params.append("entry.365018921", d.status_imunisasi || "");
                     params.append("entry.131095658", d.imunisasi_kurang || "");
-                    params.append("entry.167391198", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
+                    if (d.asi_eksklusif) {
+                        params.append("entry.167391198", String(d.asi_eksklusif).includes("Ya") ? "Ya" : "Tidak");
+                    }
                     
                     if(d.gizi_asi) params.append("entry.1096759611", d.gizi_asi);
                     if(d.gizi_makanan_pokok) params.append("entry.253764079", d.gizi_makanan_pokok);
