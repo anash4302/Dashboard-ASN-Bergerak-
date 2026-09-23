@@ -1378,76 +1378,61 @@
                 }); 
             }
         }
-        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR) ---
+        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V2) ---
         setTimeout(() => {
-            // 1. Tambahkan Bintang Merah ke Label secara visual
-            const kolomWajib = [
-                'tanggal_kunjungan', 'bb', 'tb', 
-                'jkn_p1', 'air_bersih_p1', 'jamban_p1', 'imunisasi_p1', 'perkembangan_p1', 'asi_p1',
-                'air_bersih_l', 'jamban_l', 'cacingan_l', 'penyakit_penyerta_l', 'merokok_l', 'edukasi_dijalankan'
-            ];
-            
-            kolomWajib.forEach(id => {
-                let el = document.getElementById(id) || document.querySelector(`[name="${id}"]`);
-                if(el) {
-                    let label = document.querySelector(`label[for="${el.id}"]`);
-                    if(label && !label.innerHTML.includes('*')) {
-                        label.innerHTML += ' <span class="text-rose-500 font-bold">*</span>';
+            // Daftar nama asli variabel di HTML Anda
+            const p1Wajib = ['tanggal_kunjungan_p1', 'berat_badan_kg_p1', 'tinggi_badan_cm_p1', 'jkn_bpjs_p1', 'air_bersih_p1', 'jamban_p1', 'imunisasi_status_p1', 'perkembangan_p1', 'dapat_asi_p1'];
+            const lWajib = ['tanggal_kunjungan_l', 'kunjung_posyandu_l', 'berat_badan_kg_l', 'tinggi_badan_cm_l', 'air_bersih_l', 'jamban_l', 'cacingan_l', 'penyakit_penyerta_l', 'merokok_l', 'edukasi_dijalankan_l'];
+
+            // 1. Suntik Bintang Merah & Atribut Required Bawaan Browser
+            [...p1Wajib, ...lWajib].forEach(name => {
+                const els = document.getElementsByName(name);
+                if(els.length > 0) {
+                    // Pasang sensor wajib isi ke elemen HTML
+                    els.forEach(el => { el.required = true; el.setAttribute('data-req', 'true'); }); 
+                    
+                    // Lacak dan tempelkan bintang merah di teks pertanyaannya
+                    let container = els[0].closest('div').parentElement;
+                    if (container) {
+                        let label = container.querySelector('label.block');
+                        if(label && !label.innerHTML.includes('*')) {
+                            label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
+                        }
                     }
                 }
             });
 
-            // 2. Intercept Tombol Simpan untuk Validasi Ketat
-            const mForm = document.getElementById('mainForm');
-            if(mForm) {
-                const fungsiSubmitAsli = mForm.onsubmit; // Simpan fungsi asli
-                mForm.onsubmit = function(e) {
-                    const isP1 = document.getElementById('jenis_kunjungan')?.value === 'pertama';
-                    
-                    // Cek Data Primer (Berlaku untuk P1 & Lanjutan)
-                    if(!document.getElementById('tanggal_kunjungan').value) { alert("Tanggal Kunjungan wajib diisi!"); return false; }
-                    if(!document.getElementById('bb').value) { alert("Berat Badan (BB) wajib diisi!"); return false; }
-                    if(!document.getElementById('tb').value) { alert("Tinggi Badan (TB) wajib diisi!"); return false; }
+            // Beri bintang merah khusus untuk label teks Tindakan ASN
+            ['tindakan_asn_p1', 'tindakan_asn_l'].forEach(name => {
+                 const els = document.getElementsByName(name);
+                 if(els.length > 0) {
+                     let label = els[0].closest('.p-6').querySelector('label.block');
+                     if(label && !label.innerHTML.includes('*')) label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
+                 }
+            });
 
-                    if (isP1) {
-                        // Cek Dropdown/Radio P1
-                        const wajibP1 = ['jkn_p1', 'air_bersih_p1', 'jamban_p1', 'imunisasi_p1', 'perkembangan_p1', 'asi_p1'];
-                        for (let id of wajibP1) {
-                            let val = document.getElementById(id)?.value;
-                            if(!val || val === "Pilih..." || val === "") {
-                                alert("Mohon lengkapi semua pertanyaan Identifikasi Risiko (Kunjungan Pertama) yang bertanda bintang merah!");
-                                return false;
-                            }
-                        }
-                        // Cek Checkbox Tindakan ASN P1
-                        if (document.querySelectorAll('input[name="tindakan_asn_p1"]:checked').length === 0) {
-                            alert('Tindakan ASN (Kunjungan Pertama) Wajib dipilih minimal 1 tindakan!');
-                            return false;
-                        }
-                    } else {
-                        // Cek Dropdown/Radio Lanjutan
-                        const wajibL = ['air_bersih_l', 'jamban_l', 'cacingan_l', 'penyakit_penyerta_l', 'merokok_l', 'edukasi_dijalankan'];
-                        for (let id of wajibL) {
-                            let val = document.getElementById(id)?.value;
-                            if(!val || val === "Pilih..." || val === "") {
-                                alert("Mohon lengkapi semua pertanyaan Evaluasi Risiko (Kunjungan Lanjutan) yang bertanda bintang merah!");
-                                return false;
-                            }
-                        }
-                        // Cek Checkbox Tindakan ASN Lanjutan
-                        if (document.querySelectorAll('input[name="tindakan_asn_l"]:checked').length === 0) {
-                            alert('Tindakan ASN (Kunjungan Lanjutan) Wajib dipilih minimal 1 tindakan!');
-                            return false;
-                        }
+            // Sinkronkan ulang UI agar form yang disembunyikan tidak minta diisi
+            if(typeof updateUI === 'function') updateUI();
+
+            // 2. Intercept Tombol Simpan KHUSUS untuk Checkbox Tindakan (Wajib centang minimal 1)
+            const mForm = document.getElementById('monitoringForm'); // Nama ID Form sudah dibenarkan!
+            if(mForm) {
+                const fungsiSubmitAsli = mForm.onsubmit;
+                mForm.onsubmit = function(e) {
+                    const isP1 = document.getElementById('jenisPertama')?.checked;
+                    
+                    if (isP1 && document.querySelectorAll('input[name="tindakan_asn_p1"]:checked').length === 0) {
+                        e.preventDefault(); alert('Tindakan ASN (Kunjungan Pertama) Wajib dipilih minimal 1 tindakan!'); return false;
+                    }
+                    if (!isP1 && document.querySelectorAll('input[name="tindakan_asn_l"]:checked').length === 0) {
+                        e.preventDefault(); alert('Tindakan ASN (Kunjungan Lanjutan) Wajib dipilih minimal 1 tindakan!'); return false;
                     }
                     
-                    // Jika semua lolos sensor, jalankan fungsi save ke database
-                    if(typeof fungsiSubmitAsli === 'function') {
-                        return fungsiSubmitAsli.apply(this, arguments);
-                    }
+                    // Jika semua aman, jalankan fungsi save utama
+                    if(typeof fungsiSubmitAsli === 'function') { return fungsiSubmitAsli.apply(this, arguments); }
                 };
             }
-        }, 1000); // Jeda 1 detik memastikan HTML beres dimuat
+        }, 1000);
     </script>
 </body>
 </html>
