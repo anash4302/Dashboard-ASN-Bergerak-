@@ -1235,31 +1235,52 @@
         }
         window.printSingle = id => { window.triggerEditData(id); setTimeout(() => window.print(), 500); };
 
-        // --- SUPER NATIVE EXCEL EXPORT ---
+        // --- SUPER NATIVE EXCEL EXPORT (MULTI-SHEET) ---
         window.triggerExportExcel = () => {
             if(!cachedData.length) return showAlert('Tidak ada data kunjungan untuk diekspor!');
-            const formatted = cachedData.map((d, i) => {
-                const isP1 = d.jenis_kunjungan === 'pertama';
-                return { 
-                    "No": i+1, "Nama Pendamping ASN": d.nama_asn || '-', "NIP ASN": d.nip_asn || '-', "Asal OPD": d.asal_opd || '-', "Tanggal Kunjungan": d.tanggal_kunjungan, 
-                    "Bulan Ke": isP1?'Pertama':d.bulan_pemantauan, "Nama Orang Tua": d.nama_ortu || '-', "Nama Balita": d.nama_balita, "NIK": d.nik_balita, "Jenis Kelamin": d.jenis_kelamin_balita || '-',
-                    "Tanggal Lahir": d.tanggal_lahir_balita || '-', "Usia (Bulan)": d.usia_balita_bulan || '-', "Kecamatan": d.kecamatan || '-', "Desa": d.desa, "Puskesmas": d.puskesmas || '-', "Posyandu": d.posyandu, 
-                    "BB (Kg)": d.bb, "TB (cm)": d.tb, "IMT": d.imt, "Kondisi Anak": d.kondisi_balita || '-', "Penyakit Penyerta": d.penyakit_balita || d.penyakit_penyerta_sebutkan || '-',
-                    "Kunjungan Posyandu": d.kunjung_posyandu || '-', "Terakhir Posyandu": d.terakhir_posyandu || '-', "Perbandingan BB": d.perbandingan_bb || '-',
-                    "Perbandingan TB": d.perbandingan_tb || '-', "Perkembangan": d.perkembangan || '-', "JKN/BPJS": d.jkn_bpjs || '-', "Ibu KEK": d.kek_ibu || '-',
-                    "Air Bersih": d.air_bersih || '-', "Jamban": d.jamban || '-', "Kecacingan": d.cacingan || '-', "Perilaku Merokok": d.merokok || '-',
-                    "Imunisasi": d.status_imunisasi || '-', "Ket Imunisasi Kurang": d.imunisasi_kurang || '-', "Vitamin A": d.vitamin_a || '-', "Dapat ASI": d.dapat_asi || '-', 
-                    "ASI Eksklusif (0-5bln)": d.asi_eksklusif || '-', "MPASI Pokok": d.gizi_makanan_pokok || (d.komposisi_makanan&&d.komposisi_makanan.includes('pokok')?'Ya':'Tidak'),
-                    "MPASI Kacang": d.gizi_kacang || (d.komposisi_makanan&&d.komposisi_makanan.includes('nabati')?'Ya':'Tidak'), "MPASI Susu": d.gizi_susu_hewani || '-',
-                    "MPASI Daging/Ikan": d.gizi_daging || (d.komposisi_makanan&&d.komposisi_makanan.includes('hewani')?'Ya':'Tidak'), "MPASI Telur": d.gizi_telur || '-',
-                    "MPASI Sayur Vit A": d.gizi_sayur_vitA || (d.komposisi_makanan&&d.komposisi_makanan.includes('Sayuran')?'Ya':'Tidak'), "MPASI Sayur Lain": d.gizi_sayur_lain || '-',
-                    "Dapat PMT": d.dapat_pmt || '-', "Konsumsi PMT": d.konsumsi_pmt || '-', "Edukasi Dijalankan": d.edukasi_dijalankan || '-', "Tindakan ASN": d.tindakan_asn || '-', 
-                    "Tindakan Lain": d.tindakan_lainnya || '-', "Catatan/Kendala": d.keterangan_tambahan || d.kendala_keluarga || '-' 
-                }
-            });
-            const ws = XLSX.utils.json_to_sheet(formatted); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Riwayat Lengkap"); 
-            ws['!cols'] = [{wch:5},{wch:25},{wch:20},{wch:25},{wch:12},{wch:10},{wch:20},{wch:25},{wch:18},{wch:15},{wch:15},{wch:10},{wch:15},{wch:15},{wch:20},{wch:15},{wch:8},{wch:8},{wch:8},{wch:12},{wch:20},{wch:10},{wch:20},{wch:15},{wch:20},{wch:10},{wch:15},{wch:30},{wch:20},{wch:30}];
-            XLSX.writeFile(wb, `Laporan_Super_ASN_Kunjungan_${localDate}.xlsx`);
+            
+            // Pisahkan data P1 dan Lanjutan
+            const dataP1 = cachedData.filter(d => d.jenis_kunjungan === 'pertama');
+            const dataL = cachedData.filter(d => d.jenis_kunjungan !== 'pertama');
+
+            // Mapping Sheet 1: Kunjungan Pertama
+            const formatP1 = dataP1.map((d, i) => ({ 
+                "No": i+1, "Tgl Kunjungan": d.tanggal_kunjungan, "Nama ASN": d.nama_asn, "NIP": d.nip_asn, "Asal OPD": d.asal_opd,
+                "Nama Balita": d.nama_balita, "NIK": d.nik_balita, "JK": d.jenis_kelamin_balita, "Tgl Lahir": d.tanggal_lahir_balita, "Usia (Kategori)": d.usia_kategori_p1, "Nama Ortu": d.nama_ortu, 
+                "Kecamatan": d.kecamatan, "Desa": d.desa, "Puskesmas": d.puskesmas, "Posyandu": d.posyandu, 
+                "JKN/BPJS": d.jkn_bpjs, "Air Bersih": d.air_bersih, "Jamban": d.jamban, "Anggota Merokok": d.merokok, "Kecacingan": d.cacingan, "Ibu Hamil KEK": d.kek_ibu,
+                "Status Imunisasi": d.status_imunisasi, "Imunisasi Kurang": d.imunisasi_kurang,
+                "Penyakit Penyerta": d.penyakit_penyerta, "Sebutkan Penyakit": d.penyakit_balita,
+                "Kunjungan Posyandu": d.kunjung_posyandu, "Terakhir Posyandu": d.terakhir_posyandu, 
+                "BB (kg)": d.bb, "TB (cm)": d.tb, "IMT": d.imt, "Vitamin A (Agt/Feb)": d.vitamin_a, "Perkembangan (Buku KIA)": d.perkembangan,
+                "Masih Dapat ASI": d.dapat_asi, "ASI Eksklusif (0-5bln)": d.asi_eksklusif, "Komposisi MPASI": d.komposisi_makanan,
+                "Tindakan ASN": d.tindakan_asn, "Tindakan Lain": d.tindakan_lainnya, "Keterangan": d.keterangan_tambahan 
+            }));
+
+            // Mapping Sheet 2: Kunjungan Lanjutan
+            const formatL = dataL.map((d, i) => ({ 
+                "No": i+1, "Tgl Kunjungan": d.tanggal_kunjungan, "Bulan Ke": d.bulan_pemantauan, "Nama ASN": d.nama_asn, "NIP": d.nip_asn, "Asal OPD": d.asal_opd,
+                "Nama Balita": d.nama_balita, "NIK": d.nik_balita, "JK": d.jenis_kelamin_balita, "Tgl Lahir": d.tanggal_lahir_balita, "Usia (Bulan)": d.usia_balita_bulan, 
+                "Kecamatan": d.kecamatan, "Desa": d.desa, "Puskesmas": d.puskesmas, "Posyandu": d.posyandu, 
+                "Kunjungan Posyandu": d.kunjung_posyandu, "BB (kg)": d.bb, "TB (cm)": d.tb, "IMT": d.imt, 
+                "Perbandingan BB": d.perbandingan_bb, "Perbandingan TB": d.perbandingan_tb, 
+                "Kondisi Anak": d.kondisi_balita, "Penyakit (Jika Sakit)": d.penyakit_balita, "Perkembangan (Buku KIA)": d.perkembangan,
+                "Status Imunisasi": d.status_imunisasi, "Imunisasi Kurang": d.imunisasi_kurang,
+                "ASI Eksklusif (0-5bln)": d.asi_eksklusif, "Gizi: ASI": d.gizi_asi, "Gizi: Pokok": d.gizi_makanan_pokok, "Gizi: Kacang": d.gizi_kacang, "Gizi: Susu": d.gizi_susu_hewani, "Gizi: Daging/Ikan": d.gizi_daging, "Gizi: Telur": d.gizi_telur, "Gizi: Sayur Vit A": d.gizi_sayur_vitA, "Gizi: Sayur Lain": d.gizi_sayur_lain,
+                "Dapat PMT": d.dapat_pmt, "Konsumsi PMT": d.konsumsi_pmt, 
+                "Evaluasi Air Bersih": d.air_bersih, "Evaluasi Jamban": d.jamban, "Evaluasi Cacingan": d.cacingan, "Evaluasi Penyakit Penyerta": d.penyakit_penyerta, "Evaluasi Merokok": d.merokok, "Edukasi Dijalankan": d.edukasi_dijalankan, "Kendala Keluarga": d.kendala_keluarga, 
+                "Tindakan ASN": d.tindakan_asn, "Tindakan Lain": d.tindakan_lainnya 
+            }));
+
+            const wb = XLSX.utils.book_new(); 
+            // Buat Sheet 1
+            const wsP1 = XLSX.utils.json_to_sheet(formatP1.length ? formatP1 : [{"Info": "Belum ada data Kunjungan Pertama"}]);
+            XLSX.utils.book_append_sheet(wb, wsP1, "Kunjungan_Pertama"); 
+            // Buat Sheet 2
+            const wsL = XLSX.utils.json_to_sheet(formatL.length ? formatL : [{"Info": "Belum ada data Kunjungan Lanjutan"}]);
+            XLSX.utils.book_append_sheet(wb, wsL, "Kunjungan_Lanjutan"); 
+            
+            XLSX.writeFile(wb, `Data_Stunting_Karangkobar_${localDate}.xlsx`);
         };
 
 // --- CHARTS (DASHBOARD ANALITIK EKSEKUTIF) ---
@@ -1387,23 +1408,21 @@
                 }); 
             }
         }
-        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V3.3 - DYNAMIC AGE P1 & LANJUTAN) ---
+        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V3.4 - FIX CHECKBOX) ---
         setTimeout(() => {
             const arrGiziLanjutan = ['gizi_asi_l', 'gizi_makanan_pokok_l', 'gizi_kacang_l', 'gizi_susu_hewani_l', 'gizi_daging_l', 'gizi_telur_l', 'gizi_sayur_vitA_l', 'gizi_sayur_lain_l'];
             
-            // 1. Daftar Pengecualian (Checkbox & Radio khusus usia kita blacklist dari HTML default required)
             const blacklist = [
                 'imunisasi_kurang_p1', 'imunisasi_kurang_l', 'penyakit_penyerta_sebutkan_p1', 'penyakit_balita_l',
                 'asi_eksklusif_p1', 'asi_eksklusif_l', 'keterangan_tambahan_p1', 'kendala_keluarga_l', 'konsumsi_pmt_l',
                 'tindakan_lainnya_p1', 'tindakan_lainnya_l', 'foto_base64', 
-                'komposisi_makanan_p1', // MPASI P1 ditarik ke blacklist agar divalidasi dinamis
-                ...arrGiziLanjutan // Matriks gizi Lanjutan ditarik ke blacklist
+                'komposisi_makanan_p1', ...arrGiziLanjutan 
             ];
 
-            // 2. Patroli Bintang Merah Umum
             const form = document.getElementById('monitoringForm');
             if (form) {
-                const semuaInput = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
+                // BUG FIX: Kecualikan [type="checkbox"] dari atribut browser 'required'
+                const semuaInput = form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea, select');
                 semuaInput.forEach(el => {
                     const name = el.getAttribute('name');
                     if (name && !name.includes('jenis_kunjungan') && !name.includes('bulan_pemantauan') && !blacklist.includes(name)) {
@@ -1421,7 +1440,7 @@
                 });
             }
 
-            // 3. Modifikasi Bintang Merah Khusus (Tindakan ASN & Dinamis Usia)
+            // Bintang Merah Khusus
             ['tindakan_asn_p1', 'tindakan_asn_l'].forEach(name => {
                  const els = document.getElementsByName(name);
                  if(els.length > 0) {
@@ -1429,67 +1448,43 @@
                      if(label && !label.innerHTML.includes('*</span>')) label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
                  }
             });
-            
-            // Label khusus Gizi Lanjutan
             const radioAsiL = document.getElementsByName('gizi_asi_l');
             if(radioAsiL.length > 0) {
                 let lblGizi = radioAsiL[0].closest('.p-6').querySelector('label.block');
-                if(lblGizi && !lblGizi.innerHTML.includes('Wajib jika usia')) {
-                    lblGizi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
-                }
+                if(lblGizi && !lblGizi.innerHTML.includes('Wajib jika usia')) lblGizi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
             }
-
-            // Label khusus MPASI P1
             const chkMpasiP1 = document.getElementsByName('komposisi_makanan_p1');
             if(chkMpasiP1.length > 0) {
                 let lblMpasi = chkMpasiP1[0].closest('.border-t').querySelector('label.block');
-                if(lblMpasi && !lblMpasi.innerHTML.includes('Wajib jika usia')) {
-                    lblMpasi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
-                }
+                if(lblMpasi && !lblMpasi.innerHTML.includes('Wajib jika usia')) lblMpasi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
             }
 
             if(typeof updateUI === 'function') updateUI();
 
-            // 4. Intercept Tombol Simpan untuk Validasi Ekstra
             if (form) {
                 const fungsiSubmitAsli = form.onsubmit;
                 form.onsubmit = function(e) {
                     const isP1 = document.getElementById('jenisPertama')?.checked;
                     
                     if (isP1) {
-                        // A. Validasi Tindakan ASN P1
                         if (document.querySelectorAll('input[name="tindakan_asn_p1"]:checked').length === 0) {
                             e.preventDefault(); alert('Tindakan ASN (Kunjungan Pertama) Wajib dipilih minimal 1 tindakan!'); return false;
                         }
-                        // B. Validasi MPASI P1 (Usia >= 6 bln)
                         const usiaBulanP1 = parseInt(document.getElementById('usia_bulan')?.value) || 0;
-                        if (usiaBulanP1 >= 6) {
-                            if (document.querySelectorAll('input[name="komposisi_makanan_p1"]:checked').length === 0) {
-                                e.preventDefault(); 
-                                alert('Karena balita berusia ' + usiaBulanP1 + ' bulan, Komposisi MPASI di Form Kunjungan Pertama WAJIB DIISI minimal 1 pilihan!'); 
-                                return false;
-                            }
+                        if (usiaBulanP1 >= 6 && document.querySelectorAll('input[name="komposisi_makanan_p1"]:checked').length === 0) {
+                            e.preventDefault(); alert('Karena balita berusia ' + usiaBulanP1 + ' bulan, Komposisi MPASI di Form Kunjungan Pertama WAJIB DIISI minimal 1 pilihan!'); return false;
                         }
                     } else {
-                        // A. Validasi Tindakan ASN Lanjutan
                         if (document.querySelectorAll('input[name="tindakan_asn_l"]:checked').length === 0) {
                             e.preventDefault(); alert('Tindakan ASN (Kunjungan Lanjutan) Wajib dipilih minimal 1 tindakan!'); return false;
                         }
-                        // B. Validasi Gizi Lanjutan (Usia >= 6 bln)
                         const usiaBulanL = parseInt(document.getElementById('usia_bulan_l')?.value) || 0;
                         if (usiaBulanL >= 6) {
                             let giziKosong = false;
-                            for (let g of arrGiziLanjutan) {
-                                if (document.querySelectorAll(`input[name="${g}"]:checked`).length === 0) { giziKosong = true; break; }
-                            }
-                            if (giziKosong) {
-                                e.preventDefault(); 
-                                alert('Karena balita berusia ' + usiaBulanL + ' bulan, Matriks Pemantauan Asupan Gizi (ASI s/d Buah & Sayuran) WAJIB DIISI secara lengkap (Pilih Ya/Tidak di semua baris)!'); 
-                                return false;
-                            }
+                            for (let g of arrGiziLanjutan) { if (document.querySelectorAll(`input[name="${g}"]:checked`).length === 0) { giziKosong = true; break; } }
+                            if (giziKosong) { e.preventDefault(); alert('Karena balita berusia ' + usiaBulanL + ' bulan, Matriks Pemantauan Asupan Gizi (ASI s/d Buah & Sayuran) WAJIB DIISI secara lengkap (Pilih Ya/Tidak di semua baris)!'); return false; }
                         }
                     }
-                    
                     if(typeof fungsiSubmitAsli === 'function') return fungsiSubmitAsli.apply(this, arguments);
                 };
             }
