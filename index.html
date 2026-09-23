@@ -1450,17 +1450,33 @@
                      if(label && !label.innerHTML.includes('*</span>')) label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
                  }
             });
+            // FIX BUG PENEMPATAN TEKS LABEL GIZI (LANJUTAN)
             const radioAsiL = document.getElementsByName('gizi_asi_l');
             if(radioAsiL.length > 0) {
-                let lblGizi = radioAsiL[0].closest('.p-6').querySelector('label.block');
-                if(lblGizi && !lblGizi.innerHTML.includes('Wajib jika usia')) lblGizi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
-            }
-            const chkMpasiP1 = document.getElementsByName('komposisi_makanan_p1');
-            if(chkMpasiP1.length > 0) {
-                let lblMpasi = chkMpasiP1[0].closest('.border-t').querySelector('label.block');
-                if(lblMpasi && !lblMpasi.innerHTML.includes('Wajib jika usia')) lblMpasi.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
+                let p6Container = radioAsiL[0].closest('.p-6');
+                if (p6Container) {
+                    let labels = p6Container.querySelectorAll('label.block');
+                    labels.forEach(lbl => {
+                        if (lbl.textContent.includes('2. Khusus') && !lbl.innerHTML.includes('Wajib jika usia')) {
+                            lbl.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
+                        }
+                    });
+                }
             }
 
+            // FIX BUG PENEMPATAN TEKS LABEL MPASI (P1)
+            const chkMpasiP1 = document.getElementsByName('komposisi_makanan_p1');
+            if(chkMpasiP1.length > 0) {
+                let container = chkMpasiP1[0].closest('.border-t') || chkMpasiP1[0].closest('.p-6');
+                if (container) {
+                    let labels = container.querySelectorAll('label.block');
+                    labels.forEach(lbl => {
+                        if (lbl.textContent.includes('2. Khusus') && !lbl.innerHTML.includes('Wajib jika usia')) {
+                            lbl.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span> <span class="text-xs text-rose-500 font-bold ml-1">(Wajib jika usia &ge; 6 bln)</span>';
+                        }
+                    });
+                }
+            }
             if(typeof updateUI === 'function') updateUI();
 
             if (form) {
