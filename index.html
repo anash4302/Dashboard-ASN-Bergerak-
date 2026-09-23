@@ -1378,7 +1378,7 @@
                 }); 
             }
         }
-        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V3 - MODE BLACKLIST) ---
+        // --- MESIN PENGUNCI FORM OTOMATIS (SMART VALIDATOR V3.1 - ROBUST DOM) ---
         setTimeout(() => {
             // 1. Daftar Pengecualian (TIDAK WAJIB / BEBAS KOSONG)
             const blacklist = [
@@ -1387,41 +1387,40 @@
                 'asi_eksklusif_p1', 'asi_eksklusif_l',
                 'keterangan_tambahan_p1', 'kendala_keluarga_l',
                 'konsumsi_pmt_l',
-                // Variabel bawaan yang tidak perlu bintang merah
-                'tindakan_lainnya_p1', 'tindakan_lainnya_l', 'foto_base64',
-                // Variabel radio MPASI/Gizi (akan ditangani terpisah karena kompleksitas checkbox matrix)
-                'komposisi_makanan_p1', 'gizi_asi_l', 'gizi_makanan_pokok_l', 'gizi_kacang_l', 
-                'gizi_susu_hewani_l', 'gizi_daging_l', 'gizi_telur_l', 'gizi_sayur_vitA_l', 'gizi_sayur_lain_l', 'dapat_pmt_l'
+                // Variabel bawaan & struktural (Checkbox MPASI dikecualikan karena bersyarat usia)
+                'tindakan_lainnya_p1', 'tindakan_lainnya_l', 'foto_base64', 'komposisi_makanan_p1'
             ];
 
             // 2. Patroli Semua Kolom di Form
             const form = document.getElementById('monitoringForm');
             if (form) {
-                // Cari semua input, textarea, dan select
                 const semuaInput = form.querySelectorAll('input:not([type="hidden"]), textarea, select');
                 
                 semuaInput.forEach(el => {
                     const name = el.getAttribute('name');
-                    // Jika elemen punya nama, BUKAN kotak pencarian, BUKAN radio Jenis Kunjungan, dan TIDAK ADA di blacklist
+                    
+                    // Filter: Punya nama, bukan navigasi form, dan tidak masuk blacklist
                     if (name && !name.includes('jenis_kunjungan') && !name.includes('bulan_pemantauan') && !blacklist.includes(name)) {
                         
                         el.required = true;
                         el.setAttribute('data-req', 'true');
                         
-                        // Cari label terdekat untuk ditempelkan bintang merah
+                        // ALGORITMA PENCARI LABEL SUPER PRESISI
                         let labelTarget = null;
+                        let p = el.parentElement;
                         
-                        // Strategi mencari label (karena struktur HTML beragam)
-                        if (el.type === 'radio') {
-                            const wrapperDiv = el.closest('div').parentElement;
-                            if (wrapperDiv) labelTarget = wrapperDiv.querySelector('label.block');
-                        } else {
-                            const wrapperDiv = el.closest('div');
-                            if (wrapperDiv) labelTarget = wrapperDiv.querySelector('label.block');
+                        // Mesin akan terus memanjat struktur HTML ke atas sampai menemukan label utama
+                        while (p && p.tagName !== 'FORM') {
+                            let lbl = p.querySelector('label.block');
+                            if (lbl) {
+                                labelTarget = lbl;
+                                break;
+                            }
+                            p = p.parentElement;
                         }
 
-                        // Tempelkan bintang merah
-                        if (labelTarget && !labelTarget.innerHTML.includes('*')) {
+                        // Tempelkan bintang merah (cegah duplikasi jika sudah ada)
+                        if (labelTarget && !labelTarget.innerHTML.includes('*</span>')) {
                             labelTarget.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
                         }
                     }
@@ -1433,7 +1432,9 @@
                  const els = document.getElementsByName(name);
                  if(els.length > 0) {
                      let label = els[0].closest('.p-6').querySelector('label.block');
-                     if(label && !label.innerHTML.includes('*')) label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
+                     if(label && !label.innerHTML.includes('*</span>')) {
+                         label.innerHTML += ' <span class="text-rose-500 font-bold ml-1">*</span>';
+                     }
                  }
             });
 
