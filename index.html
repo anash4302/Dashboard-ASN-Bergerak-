@@ -872,6 +872,20 @@
                     
                     await Promise.race([savePromise, timeoutPromise]);
                     lastSavedData = finalObj; 
+
+                    // --- SUNTIKAN: BACKUP OTOMATIS KE GOOGLE SHEETS ---
+                    const scriptURL = 'https://script.google.com/macros/s/AKfycbyZtMm61Pg-usQ1zzfrL-eFMFuJElvBG3csa7pvpoKE5IbIfYKBKiLCVlMVLZRN-rPPaA/exec'; 
+                    
+                    if (scriptURL !== '') {
+                        fetch(scriptURL, {
+                            method: 'POST',
+                            body: JSON.stringify(finalObj),
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' } // Mode text agar lolos blokir CORS browser
+                        }).then(res => console.log('✅ Berhasil mem-backup ke Google Sheets!'))
+                          .catch(err => console.error('❌ Gagal mem-backup ke Google Sheets:', err));
+                    }
+                    // ----------------------------------------------------
+
                     resetMainForm(); 
                     const sM = document.getElementById('successModal'); if(sM) sM.classList.replace('hidden', 'flex');
                 } catch(er) { 
