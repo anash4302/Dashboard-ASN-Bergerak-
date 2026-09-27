@@ -1250,6 +1250,37 @@
             }
         }
         window.printSingle = id => { window.triggerEditData(id); setTimeout(() => window.print(), 500); };
+        (function pasangIkonShortcut() {
+            const c = document.createElement('canvas');
+            c.width = 192; c.height = 192;
+            const ctx = c.getContext('2d');
+            ctx.fillStyle = '#0d9488';
+            ctx.fillRect(0, 0, 192, 192);
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(96, 76, 48, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.font = '58px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🏥', 96, 80);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('STUNTING', 96, 156);
+            const pngUrl = c.toDataURL('image/png');
+            ['icon', 'shortcut icon', 'apple-touch-icon'].forEach(rel => {
+                const link = document.createElement('link');
+                link.rel = rel;
+                link.type = 'image/png';
+                link.sizes = '192x192';
+                link.href = pngUrl;
+                document.head.appendChild(link);
+            });
+            const meta = document.createElement('meta');
+            meta.name = 'theme-color';
+            meta.content = '#0d9488';
+            document.head.appendChild(meta);
+        })();
 
         // --- SUPER NATIVE EXCEL EXPORT (MULTI-SHEET) ---
         window.triggerExportExcel = () => {
