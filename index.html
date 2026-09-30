@@ -700,8 +700,15 @@
                         let nama = row['Nama'] || row['nama'] || row['NAMA'] || row['Nama Balita'] || ''; let desa = row['Desa'] || row['desa'] || row['DESA'] || '';
                         let nik = row['NIK'] || row['nik'] || ''; let jk = row['Jenis Kelamin'] || row['jenis kelamin'] || row['JK'] || '';
                         let tglLahir = ''; let rawTgl = row['Tanggal Lahir'] || row['tanggal lahir'] || row['Tgl Lahir'] || row['tgl lahir'];
-                        if (rawTgl) { if (rawTgl instanceof Date) { tglLahir = rawTgl.toISOString().split('T')[0]; } else { tglLahir = String(rawTgl).trim(); } }
-
+                        if (rawTgl) { 
+                            if (rawTgl instanceof Date) { 
+                                let d = new Date(rawTgl);
+                                tglLahir = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); 
+                            } else { 
+                                tglLahir = String(rawTgl).trim(); 
+                            } 
+                        }
+                        
                         if(nama && desa) { 
                             const newData = { nama: String(nama).trim().replace(/\s+/g, ' '), desa: String(desa).trim(), nik: nik ? String(nik).trim() : '', jk: jk ? String(jk).trim() : '', tglLahir: tglLahir, posyandu: row['Posyandu']||'', createdAt: Date.now() };
                             try { await addDoc(sasaranCol, newData); count++; } catch(err) { newData.id = 'temp-'+Date.now()+Math.random(); dynamicSasaran.push(newData); count++; } 
