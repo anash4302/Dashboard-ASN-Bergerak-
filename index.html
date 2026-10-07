@@ -3,28 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0B4F4A">
+    <meta name="theme-color" content="#073B37">
     <title>ASN Bergerak Cegah Stunting - Puskesmas Karangkobar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script>if(window.Chart){Chart.defaults.font.family="Inter,system-ui,sans-serif";Chart.defaults.font.size=13;Chart.defaults.color="#475569";}</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+        if (window.Chart) {
+            Chart.defaults.font.family = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
+            Chart.defaults.font.size = 12.5;
+            Chart.defaults.color = "#475569";
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-        input[type="radio"], input[type="checkbox"] { accent-color: #0f766e; width: 1.15rem; height: 1.15rem; cursor: pointer; }
-        .nav-active { background-color: rgba(255, 255, 255, 0.15); border-left: 4px solid #fff; color: #ffffff !important; }
-        .app-section { display: none; }
-        .app-section.active { display: block; }
-        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-animate { animation: scaleIn 0.3s ease-out forwards; }
 
+    <style id="ui-ux-pro-max-emil-kowalski">
+        :root {
+            /* Palet Warna Profesional UI/UX Pro Max */
+            --color-primary: #0d9488;
+            --color-primary-strong: #0f766e;
+            --color-primary-soft: #f0fdfa;
+            --color-on-primary: #ffffff;
+            --color-bg: #f8fafc;
+            --color-surface: #ffffff;
+            --color-surface-glass: rgba(255, 255, 255, 0.88);
+            --color-surface-muted: #f1f5f9;
+            --color-sidebar: #073b37;
+            --color-on-sidebar: #e2f1ee;
+            --color-on-sidebar-muted: #99cfc7;
+            --color-text: #0f172a;
+            --color-text-muted: #475569;
+            --color-border: rgba(15, 23, 42, 0.08);
+            --color-border-strong: rgba(15, 23, 42, 0.16);
+            --color-focus-ring: rgba(13, 148, 136, 0.18);
+            --color-success: #10b981;
+            --color-success-strong: #047857;
+            --color-success-soft: #ecfdf5;
+            --color-warning: #f59e0b;
+            --color-warning-strong: #b45309;
+            --color-warning-soft: #fffbeb;
+            --color-danger: #f43f5e;
+            --color-danger-strong: #be123c;
+            --color-danger-soft: #fff1f2;
+            --color-info: #2563eb;
+            --color-info-strong: #1d4ed8;
+            --color-info-soft: #eff6ff;
+
+            /* Tipografi & Dimensi */
+            --font-heading: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+            --font-body: "Inter", system-ui, -apple-system, sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --touch-min: 44px;
+
+            /* Emil Kowalski Physics & Elevation Tokens */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+            --duration-fast: 150ms;
+            --duration-base: 240ms;
+            --duration-slow: 380ms;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+            --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.06);
+            --shadow-card-hover: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 20px 32px -10px rgba(13, 148, 136, 0.12);
+            --shadow-lg: 0 20px 40px -12px rgba(15, 23, 42, 0.16);
+        }
+
+        /* Animasi Khas Emil Kowalski: Blur-to-Crisp & Spring Motion */
+        @keyframes emilEnter {
+            0% { opacity: 0; transform: translateY(10px) scale(0.992); filter: blur(3px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes emilPop {
+            0% { opacity: 0; transform: translateY(10px) scale(0.95); filter: blur(2px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes emilFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes emilBarReveal {
+            from { clip-path: inset(0 100% 0 0 round 9999px); }
+            to { clip-path: inset(0 0 0 0 round 9999px); }
+        }
+        @keyframes ds-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media screen {
+            html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+            body {
+                font-family: var(--font-body);
+                color: var(--color-text);
+                background-color: var(--color-bg);
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                letter-spacing: -0.011em;
+            }
+            :is(h1, h2, h3, h4) {
+                font-family: var(--font-heading);
+                letter-spacing: -0.022em;
+                line-height: 1.22;
+            }
+            /* Presisi Angka Tabular (NIK, BB, TB, Tanggal, KPI) */
+            :is(table, td, th, h4.text-3xl, #progress-text, input[type="number"], input[type="date"]) {
+                font-variant-numeric: tabular-nums;
+            }
+
+            /* Scrollbar Modern & Halus */
+            ::-webkit-scrollbar { width: 6px; height: 6px; }
+            ::-webkit-scrollbar-track { background: #f1f5f9; }
+            ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+            ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+            /* Aksesibilitas Skip Link */
+            .skip-link {
+                position: absolute; left: 1rem; top: -100px; z-index: 100;
+                background: var(--color-surface); color: var(--color-primary-strong);
+                padding: 0.75rem 1rem; border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg); font-weight: 700;
+                transition: top var(--duration-base) var(--ease-out-expo);
+            }
+            .skip-link:focus { top: 1rem; }
+
+            /* Visibilitas Halaman & Orkestrasi Animasi Masuk */
+            .app-section { display: none; }
+            .app-section.active {
+                display: block;
+                animation: emilEnter var(--duration-slow) var(--ease-out-expo) both;
+            }
+            #sec-dashboard.active > * {
+                animation: emilEnter 440ms var(--ease-out-expo) both;
+            }
+            #sec-dashboard.active > :nth-child(1) { animation-delay: 0ms; }
+            #sec-dashboard.active > :nth-child(2) { animation-delay: 65ms; }
+            #sec-dashboard.active > :nth-child(3) { animation-delay: 130ms; }
+            #sec-dashboard.active > :nth-child(4) { animation-delay: 195ms; }
+            #sec-dashboard.active #progress-bar {
+                animation: emilBarReveal 950ms var(--ease-out-expo) 280ms both;
+                background-image: linear-gradient(90deg, #0d9488 0%, #10b981 100%);
+                box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+            }
+
+            /* LOGIN SCREEN: Split Brand Panel + Floating Glass Card */
+            #loginScreen {
+                background: radial-gradient(circle at 15% 20%, #0f766e 0%, #073b37 60%, #042422 100%);
+            }
+            #loginScreen > .bg-white {
+                border-radius: 24px;
+                padding: 2.5rem 2rem;
+                box-shadow: var(--shadow-lg);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                animation: emilPop 460ms var(--ease-out-expo) both;
+            }
+            .login-brand { display: none; }
+            @media (min-width: 1024px) {
+                #loginScreen { padding: 0; background: var(--color-bg); }
+                .login-brand {
+                    display: flex; flex: 0 0 54%; align-self: stretch; position: relative;
+                    overflow: hidden; align-items: flex-end; padding: 3.5rem;
+                    background: radial-gradient(120% 120% at 0% 0%, #0f766e 0%, #073b37 58%, #042422 100%);
+                    color: var(--color-on-sidebar);
+                }
+                .login-brand-art {
+                    position: absolute; right: -40px; bottom: -40px;
+                    width: min(90%, 560px); color: var(--color-on-sidebar); opacity: 0.14;
+                }
+                .login-brand-copy { position: relative; max-width: 30rem; }
+                .login-brand h1 {
+                    font: 800 clamp(2.25rem, 4vw, 3.25rem)/1.06 var(--font-heading);
+                    letter-spacing: -0.03em; color: #ffffff;
+                }
+                .login-brand p { margin-top: 1.25rem; font-size: 1.0625rem; color: var(--color-on-sidebar); line-height: 1.6; }
+                .login-brand span {
+                    display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem;
+                    padding: 0.45rem 1rem; border-radius: 9999px; font-size: 0.85rem;
+                    font-weight: 700; color: #ffffff;
+                    background: rgba(255, 255, 255, 0.12);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    backdrop-filter: blur(8px);
+                }
+                #loginScreen > .bg-white { margin: auto; max-width: 26rem; }
+            }
+
+            /* SIDEBAR: Deep Clinical Emerald dengan Pill Navigasi Aktif */
+            aside#sidebar {
+                background: linear-gradient(180deg, #073b37 0%, #062f2c 100%) !important;
+                border-right: 1px solid rgba(255, 255, 255, 0.07);
+                box-shadow: var(--shadow-lg);
+                transition: transform 320ms var(--ease-out-expo) !important;
+            }
+            .nav-link {
+                border-radius: var(--radius-md) !important;
+                font-weight: 600 !important;
+                padding: 0.75rem 1rem !important;
+                color: var(--color-on-sidebar) !important;
+                border-left: none !important;
+                transition:
+                    background-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-base) var(--ease-out-expo),
+                    padding-left var(--duration-base) var(--ease-out-expo),
+                    box-shadow var(--duration-base) var(--ease-out-expo) !important;
+            }
+            .nav-link:not(.nav-active):hover {
+                background-color: rgba(255, 255, 255, 0.09) !important;
+                color: #ffffff !important;
+                padding-left: 1.25rem !important;
+            }
+            .nav-link.nav-active {
+                background: #ffffff !important;
+                color: var(--color-primary-strong) !important;
+                font-weight: 700 !important;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16) !important;
+                transform: translateY(-0.5px);
+            }
+            .avatar {
+                width: 2.5rem; height: 2.5rem; flex-shrink: 0; border-radius: 9999px;
+                display: flex; align-items: center; justify-content: center;
+                font: 700 0.875rem/1 var(--font-heading);
+                background: linear-gradient(135deg, #14b8a6, #0d9488);
+                color: #ffffff; border: 2px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            /* HEADER GLASSMORPHISM & LATAR AMBIENT */
+            header {
+                background: var(--color-surface-glass) !important;
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid var(--color-border);
+                box-shadow: none !important;
+            }
+            #mainContent {
+                background-color: var(--color-bg) !important;
+                background-image:
+                    radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.06) 0px, transparent 45%),
+                    radial-gradient(at 100% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 40%),
+                    radial-gradient(rgba(100, 116, 139, 0.16) 1px, transparent 1.2px) !important;
+                background-size: 100% 100%, 100% 100%, 24px 24px !important;
+            }
+
+            /* DASHBOARD HERO & KPI CARDS */
+            #sec-dashboard > :first-child {
+                padding: 2rem 2.25rem !important;
+                border-radius: var(--radius-xl) !important;
+                background: radial-gradient(120% 160% at 100% 0%, #14b8a6 0%, #0f766e 48%, #073b37 100%) !important;
+                box-shadow: 0 14px 34px -10px rgba(13, 148, 136, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            }
+            #sec-dashboard > :first-child h3 {
+                font-size: clamp(1.5rem, 3vw, 2.15rem);
+                font-weight: 800; color: #ffffff;
+            }
+            :is(#sec-dashboard, #sec-charts, #sec-history, #sec-edukasi, #sec-settings, #sec-form) :is(.rounded-2xl, .rounded-xl).bg-white {
+                border-radius: var(--radius-lg) !important;
+                border: 1px solid var(--color-border) !important;
+                box-shadow: var(--shadow-card) !important;
+                transition:
+                    transform var(--duration-base) var(--ease-out-expo),
+                    box-shadow var(--duration-base) var(--ease-out-expo),
+                    border-color var(--duration-base) var(--ease-out-expo);
+            }
+            :is(#sec-dashboard .grid > .bg-white, #sec-edukasi .grid > div):hover {
+                transform: translateY(-3px);
+                box-shadow: var(--shadow-card-hover) !important;
+                border-color: rgba(13, 148, 136, 0.28) !important;
+            }
+            #sec-dashboard .grid > .bg-white:nth-child(1) { border-top: 3.5px solid var(--color-info) !important; }
+            #sec-dashboard .grid > .bg-white:nth-child(2) { border-top: 3.5px solid var(--color-success) !important; }
+            #sec-dashboard .grid > .bg-white:nth-child(3) { border-top: 3.5px solid var(--color-danger) !important; }
+            #sec-dashboard h4.text-3xl { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; }
+
+            /* FORMULIR & INPUT TAKTIL (LINEAR / VERCEL STYLE) */
+            input[type="radio"], input[type="checkbox"] {
+                accent-color: var(--color-primary-strong);
+                width: 1.2rem; height: 1.2rem; cursor: pointer; flex-shrink: 0;
+            }
+            :is(input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), select, textarea) {
+                min-height: var(--touch-min);
+                background-color: #ffffff !important;
+                border: 1px solid var(--color-border-strong) !important;
+                border-radius: 10px !important;
+                box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+                transition:
+                    border-color var(--duration-fast) var(--ease-out-expo),
+                    box-shadow var(--duration-fast) var(--ease-out-expo),
+                    transform var(--duration-fast) var(--ease-out-expo) !important;
+            }
+            :is(input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), select, textarea):hover:not(:focus):not(:disabled) {
+                border-color: #64748b !important;
+            }
+            :is(input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), select, textarea):focus {
+                outline: none !important;
+                border-color: var(--color-primary) !important;
+                box-shadow: 0 0 0 3.5px var(--color-focus-ring) !important;
+                transform: translateY(-0.5px);
+            }
+            .has-\[\:checked\]\:border-teal-600:has(:checked) {
+                border-color: var(--color-primary) !important;
+                background-color: var(--color-primary-soft) !important;
+                box-shadow: 0 4px 12px -2px rgba(13, 148, 136, 0.14) !important;
+            }
+
+            /* EMIL KOWALSKI TACTILE BUTTON PHYSICS */
+            button, [role="button"] {
+                cursor: pointer;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+                transition:
+                    transform 160ms var(--ease-out-expo),
+                    box-shadow 180ms var(--ease-out-expo),
+                    background-color 150ms ease,
+                    filter 150ms ease !important;
+            }
+            button:hover:not(:disabled):not(.nav-link) {
+                transform: translateY(-1px);
+                filter: brightness(1.03);
+            }
+            button:active:not(:disabled) {
+                transform: scale(0.968) translateY(0) !important;
+                transition-duration: 75ms !important;
+            }
+            :is(button:disabled, input:disabled, select:disabled, textarea:disabled) {
+                opacity: 0.55; cursor: not-allowed;
+            }
+            :is(#simpan-btn, #loginBtn):disabled::before {
+                content: ""; display: inline-block; width: 1em; height: 1em;
+                margin-right: 0.5em; vertical-align: -0.15em;
+                border: 2px solid currentColor; border-right-color: transparent;
+                border-radius: 9999px; animation: ds-spin 0.7s linear infinite;
+            }
+
+            /* TABEL RIWAYAT & BARIS ANIMASI STAGGERED */
+            #sec-history thead tr {
+                background: #f1f5f9 !important;
+                color: var(--color-text) !important;
+            }
+            #sec-history thead th {
+                color: var(--color-text) !important;
+                font-weight: 700 !important;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                letter-spacing: 0.04em;
+                padding: 0.9rem 0.75rem !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+            #historyTableBody tr {
+                animation: emilEnter 320ms var(--ease-out-expo) both;
+                transition: background-color 140ms ease !important;
+            }
+            #historyTableBody tr:nth-child(even) {
+                background-color: rgba(248, 250, 252, 0.7);
+            }
+            #historyTableBody tr:hover {
+                background-color: var(--color-primary-soft) !important;
+            }
+            #sec-history td button {
+                display: inline-flex; align-items: center; gap: 0.35rem;
+                padding: 0.35rem 0.65rem; font-weight: 600; font-size: 0.78rem;
+                border-radius: 8px;
+            }
+
+            /* MODAL POP ANIMATION */
+            :is(#customAlertModal, #customConfirmModal, #edukasiModal, #successModal):not(.hidden) {
+                animation: emilFade 200ms var(--ease-standard) both;
+            }
+            .modal-animate {
+                animation: emilPop 320ms var(--ease-spring) both;
+            }
+            
+            /* NOMOR PERTANYAAN FORM (Q-NUM) */
+            .q-num {
+                display: inline-flex; align-items: center; justify-content: center;
+                min-width: 1.75rem; height: 1.75rem; padding: 0 0.4rem; margin-right: 0.625rem;
+                border-radius: var(--radius-sm); background-color: var(--color-primary);
+                color: #ffffff; font: 800 var(--text-sm)/1 var(--font-heading);
+                vertical-align: 0.05em;
+            }
+            label.block.font-semibold { font-size: var(--text-base); font-weight: 700; line-height: 1.45; color: var(--color-text); margin-bottom: 0.75rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* PRINT MODE (Dipertahankan 100%) */
         @media print {
             @page { margin: 1cm; }
             body * { visibility: hidden; }
@@ -43,294 +414,6 @@
             #previewFoto { max-height: 250px !important; width: auto !important; }
         }
     </style>
-<style id="design-system">
-:root{--color-primary:#0F766E;--color-primary-strong:#115E59;--color-primary-soft:#E6F4F1;--color-on-primary:#FFFFFF;
---color-bg:#F4F7F8;--color-surface:#FFFFFF;--color-surface-muted:#EAF0F2;--color-sidebar:#0B4F4A;--color-on-sidebar:#E2F1EE;--color-on-sidebar-muted:#A9D3CC;
---color-text:#0F172A;--color-text-muted:#475569;--color-border:#D5DEE3;--color-border-strong:#7C8B99;--color-focus-ring:#1D4ED8;
---color-success:#15803D;--color-success-strong:#166534;--color-success-soft:#E8F6EC;
---color-warning:#B45309;--color-warning-strong:#92400E;--color-warning-soft:#FEF4DC;
---color-danger:#B91C1C;--color-danger-strong:#991B1B;--color-danger-soft:#FDECEC;
---color-info:#1D4ED8;--color-info-strong:#1E40AF;--color-info-soft:#E8EFFD;
---font-heading:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--font-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
---text-xs:.75rem;--text-sm:.875rem;--text-base:1rem;--leading-body:1.5;--leading-tight:1.25;
---space-2:.5rem;--space-3:.75rem;--space-4:1rem;--touch-min:44px;
---radius-sm:6px;--radius-md:10px;--radius-lg:14px;
---shadow-sm:0 1px 2px rgb(15 23 42/.06);--shadow-md:0 4px 12px rgb(15 23 42/.08);--shadow-lg:0 12px 32px rgb(15 23 42/.14);
---duration-fast:150ms;--duration-base:200ms;--duration-slow:300ms;--ease-standard:cubic-bezier(.2,0,0,1)}
-
-@media screen{
-html{-webkit-text-size-adjust:100%}
-html body{font-family:var(--font-body);font-size:var(--text-base);line-height:var(--leading-body);color:var(--color-text);background-color:var(--color-bg)}
-html body :is(h1,h2,h3,h4){font-family:var(--font-heading);line-height:var(--leading-tight)}
-html body :is(table,h4.text-3xl,#progress-text){font-variant-numeric:tabular-nums}
-html body :is(.text-\[10px\],.text-\[11px\]){font-size:var(--text-xs)}
-html body :is(img,canvas,svg){max-width:100%}
-html body ::placeholder{color:var(--color-text-muted);opacity:1}
-html body .rounded-lg{border-radius:var(--radius-md)}
-html body :is(.rounded-xl,.rounded-2xl){border-radius:var(--radius-lg)}
-html body .shadow-sm{box-shadow:var(--shadow-sm)}
-html body :is(.shadow-md,.shadow-lg){box-shadow:var(--shadow-md)}
-html body :is(.shadow-xl,.shadow-2xl){box-shadow:var(--shadow-lg)}
-html body :is(.bg-teal-500,.bg-teal-600,.bg-teal-700){background-color:var(--color-primary)}
-html body :is(.hover\:bg-teal-600:hover,.hover\:bg-teal-700:hover){background-color:var(--color-primary-strong)}
-html body :is(.bg-teal-800){background-color:var(--color-sidebar)}
-html body :is(.bg-teal-900\/50){background-color:color-mix(in srgb,var(--color-sidebar) 75%,var(--color-text))}
-html body :is(.hover\:bg-teal-700\/50:hover){background-color:color-mix(in srgb,var(--color-on-sidebar) 12%,transparent)}
-html body :is(.bg-teal-50,.bg-teal-100){background-color:var(--color-primary-soft)}
-html body :is(.text-teal-100,.text-teal-200){color:var(--color-on-sidebar)}
-html body :is(.text-teal-300){color:var(--color-on-sidebar-muted)}
-html body :is(.text-teal-700,.text-teal-800,.text-teal-900,.hover\:text-teal-700,.hover\:text-teal-600){color:var(--color-primary-strong)}
-html body :is(.border-teal-100,.border-teal-200,.border-teal-300){border-color:color-mix(in srgb,var(--color-primary) 30%,var(--color-surface))}
-html body :is(.border-teal-600,.border-teal-700\/50){border-color:var(--color-primary)}
-html body .border-teal-700\/50{border-color:color-mix(in srgb,var(--color-on-sidebar) 15%,transparent)}
-html body .has-\[\:checked\]\:border-teal-600:has(:checked){border-color:var(--color-primary)}
-html body .has-\[\:checked\]\:bg-teal-50:has(:checked){background-color:var(--color-primary-soft)}
-html body :is(.ring-teal-300,.has-\[\:checked\]\:ring-teal-300:has(:checked)){--tw-ring-color:var(--color-primary)}
-html body :is(.text-slate-700,.text-slate-800,.text-slate-900){color:var(--color-text)}
-html body :is(.text-slate-300,.text-slate-400,.text-slate-500,.text-slate-600){color:var(--color-text-muted)}
-html body :is(.bg-white){background-color:var(--color-surface)}
-html body :is(.bg-slate-50){background-color:var(--color-bg)}
-html body :is(.bg-slate-100,.bg-slate-200,.hover\:bg-slate-50,.hover\:bg-slate-100,.hover\:bg-slate-200,.hover\:bg-slate-300){background-color:var(--color-surface-muted)}
-html body :is(.border-slate-100,.border-slate-200,.border-slate-300){border-color:var(--color-border)}
-html body :is(.bg-slate-900\/60,.bg-slate-900\/50){background-color:color-mix(in srgb,var(--color-text) 60%,transparent)}
-html body .divide-slate-200>:not([hidden])~:not([hidden]){border-color:var(--color-border)}
-html body :is(.bg-emerald-50,.bg-emerald-100,.bg-emerald-200){background-color:var(--color-success-soft)}
-html body :is(.bg-emerald-400,.bg-emerald-500,.bg-emerald-600,.bg-emerald-700){background-color:var(--color-success)}
-html body :is(.hover\:bg-emerald-600:hover,.hover\:bg-emerald-700:hover,.hover\:bg-emerald-800:hover){background-color:var(--color-success-strong)}
-html body :is(.hover\:bg-emerald-100:hover,.hover\:bg-emerald-200:hover){background-color:color-mix(in srgb,var(--color-success) 16%,var(--color-surface))}
-html body :is(.text-emerald-400,.text-emerald-500,.text-emerald-600,.text-emerald-700,.text-emerald-800,.text-emerald-900,.hover\:text-emerald-700,.hover\:text-emerald-800,.hover\:text-emerald-900){color:var(--color-success-strong)}
-html body :is(.border-emerald-100,.border-emerald-200,.border-emerald-300){border-color:color-mix(in srgb,var(--color-success) 30%,var(--color-surface))}
-html body :is(.bg-green-50,.bg-green-100,.bg-green-200){background-color:var(--color-success-soft)}
-html body :is(.bg-green-400,.bg-green-500,.bg-green-600,.bg-green-700){background-color:var(--color-success)}
-html body :is(.hover\:bg-green-600:hover,.hover\:bg-green-700:hover,.hover\:bg-green-800:hover){background-color:var(--color-success-strong)}
-html body :is(.hover\:bg-green-100:hover,.hover\:bg-green-200:hover){background-color:color-mix(in srgb,var(--color-success) 16%,var(--color-surface))}
-html body :is(.text-green-400,.text-green-500,.text-green-600,.text-green-700,.text-green-800,.text-green-900,.hover\:text-green-700,.hover\:text-green-800,.hover\:text-green-900){color:var(--color-success-strong)}
-html body :is(.border-green-100,.border-green-200,.border-green-300){border-color:color-mix(in srgb,var(--color-success) 30%,var(--color-surface))}
-html body :is(.bg-rose-50,.bg-rose-100,.bg-rose-200){background-color:var(--color-danger-soft)}
-html body :is(.bg-rose-400,.bg-rose-500,.bg-rose-600,.bg-rose-700){background-color:var(--color-danger)}
-html body :is(.hover\:bg-rose-600:hover,.hover\:bg-rose-700:hover,.hover\:bg-rose-800:hover){background-color:var(--color-danger-strong)}
-html body :is(.hover\:bg-rose-100:hover,.hover\:bg-rose-200:hover){background-color:color-mix(in srgb,var(--color-danger) 16%,var(--color-surface))}
-html body :is(.text-rose-400,.text-rose-500,.text-rose-600,.text-rose-700,.text-rose-800,.text-rose-900,.hover\:text-rose-700,.hover\:text-rose-800,.hover\:text-rose-900){color:var(--color-danger-strong)}
-html body :is(.border-rose-100,.border-rose-200,.border-rose-300){border-color:color-mix(in srgb,var(--color-danger) 30%,var(--color-surface))}
-html body :is(.bg-red-50,.bg-red-100,.bg-red-200){background-color:var(--color-danger-soft)}
-html body :is(.bg-red-400,.bg-red-500,.bg-red-600,.bg-red-700){background-color:var(--color-danger)}
-html body :is(.hover\:bg-red-600:hover,.hover\:bg-red-700:hover,.hover\:bg-red-800:hover){background-color:var(--color-danger-strong)}
-html body :is(.hover\:bg-red-100:hover,.hover\:bg-red-200:hover){background-color:color-mix(in srgb,var(--color-danger) 16%,var(--color-surface))}
-html body :is(.text-red-400,.text-red-500,.text-red-600,.text-red-700,.text-red-800,.text-red-900,.hover\:text-red-700,.hover\:text-red-800,.hover\:text-red-900){color:var(--color-danger-strong)}
-html body :is(.border-red-100,.border-red-200,.border-red-300){border-color:color-mix(in srgb,var(--color-danger) 30%,var(--color-surface))}
-html body :is(.bg-amber-50,.bg-amber-100,.bg-amber-200){background-color:var(--color-warning-soft)}
-html body :is(.bg-amber-400,.bg-amber-500,.bg-amber-600,.bg-amber-700){background-color:var(--color-warning)}
-html body :is(.hover\:bg-amber-600:hover,.hover\:bg-amber-700:hover,.hover\:bg-amber-800:hover){background-color:var(--color-warning-strong)}
-html body :is(.hover\:bg-amber-100:hover,.hover\:bg-amber-200:hover){background-color:color-mix(in srgb,var(--color-warning) 16%,var(--color-surface))}
-html body :is(.text-amber-400,.text-amber-500,.text-amber-600,.text-amber-700,.text-amber-800,.text-amber-900,.hover\:text-amber-700,.hover\:text-amber-800,.hover\:text-amber-900){color:var(--color-warning-strong)}
-html body :is(.border-amber-100,.border-amber-200,.border-amber-300){border-color:color-mix(in srgb,var(--color-warning) 30%,var(--color-surface))}
-html body :is(.bg-orange-50,.bg-orange-100,.bg-orange-200){background-color:var(--color-warning-soft)}
-html body :is(.bg-orange-400,.bg-orange-500,.bg-orange-600,.bg-orange-700){background-color:var(--color-warning)}
-html body :is(.hover\:bg-orange-600:hover,.hover\:bg-orange-700:hover,.hover\:bg-orange-800:hover){background-color:var(--color-warning-strong)}
-html body :is(.hover\:bg-orange-100:hover,.hover\:bg-orange-200:hover){background-color:color-mix(in srgb,var(--color-warning) 16%,var(--color-surface))}
-html body :is(.text-orange-400,.text-orange-500,.text-orange-600,.text-orange-700,.text-orange-800,.text-orange-900,.hover\:text-orange-700,.hover\:text-orange-800,.hover\:text-orange-900){color:var(--color-warning-strong)}
-html body :is(.border-orange-100,.border-orange-200,.border-orange-300){border-color:color-mix(in srgb,var(--color-warning) 30%,var(--color-surface))}
-html body :is(.bg-yellow-50,.bg-yellow-100,.bg-yellow-200){background-color:var(--color-warning-soft)}
-html body :is(.bg-yellow-400,.bg-yellow-500,.bg-yellow-600,.bg-yellow-700){background-color:var(--color-warning)}
-html body :is(.hover\:bg-yellow-600:hover,.hover\:bg-yellow-700:hover,.hover\:bg-yellow-800:hover){background-color:var(--color-warning-strong)}
-html body :is(.hover\:bg-yellow-100:hover,.hover\:bg-yellow-200:hover){background-color:color-mix(in srgb,var(--color-warning) 16%,var(--color-surface))}
-html body :is(.text-yellow-400,.text-yellow-500,.text-yellow-600,.text-yellow-700,.text-yellow-800,.text-yellow-900,.hover\:text-yellow-700,.hover\:text-yellow-800,.hover\:text-yellow-900){color:var(--color-warning-strong)}
-html body :is(.border-yellow-100,.border-yellow-200,.border-yellow-300){border-color:color-mix(in srgb,var(--color-warning) 30%,var(--color-surface))}
-html body :is(.bg-blue-50,.bg-blue-100,.bg-blue-200){background-color:var(--color-info-soft)}
-html body :is(.bg-blue-400,.bg-blue-500,.bg-blue-600,.bg-blue-700){background-color:var(--color-info)}
-html body :is(.hover\:bg-blue-600:hover,.hover\:bg-blue-700:hover,.hover\:bg-blue-800:hover){background-color:var(--color-info-strong)}
-html body :is(.hover\:bg-blue-100:hover,.hover\:bg-blue-200:hover){background-color:color-mix(in srgb,var(--color-info) 16%,var(--color-surface))}
-html body :is(.text-blue-400,.text-blue-500,.text-blue-600,.text-blue-700,.text-blue-800,.text-blue-900,.hover\:text-blue-700,.hover\:text-blue-800,.hover\:text-blue-900){color:var(--color-info-strong)}
-html body :is(.border-blue-100,.border-blue-200,.border-blue-300){border-color:color-mix(in srgb,var(--color-info) 30%,var(--color-surface))}
-html body :is(.bg-indigo-50,.bg-indigo-100,.bg-indigo-200){background-color:var(--color-info-soft)}
-html body :is(.bg-indigo-400,.bg-indigo-500,.bg-indigo-600,.bg-indigo-700){background-color:var(--color-info)}
-html body :is(.hover\:bg-indigo-600:hover,.hover\:bg-indigo-700:hover,.hover\:bg-indigo-800:hover){background-color:var(--color-info-strong)}
-html body :is(.hover\:bg-indigo-100:hover,.hover\:bg-indigo-200:hover){background-color:color-mix(in srgb,var(--color-info) 16%,var(--color-surface))}
-html body :is(.text-indigo-400,.text-indigo-500,.text-indigo-600,.text-indigo-700,.text-indigo-800,.text-indigo-900,.hover\:text-indigo-700,.hover\:text-indigo-800,.hover\:text-indigo-900){color:var(--color-info-strong)}
-html body :is(.border-indigo-100,.border-indigo-200,.border-indigo-300){border-color:color-mix(in srgb,var(--color-info) 30%,var(--color-surface))}
-html body :is(.bg-sky-50,.bg-sky-100,.bg-sky-200){background-color:var(--color-info-soft)}
-html body :is(.bg-sky-400,.bg-sky-500,.bg-sky-600,.bg-sky-700){background-color:var(--color-info)}
-html body :is(.hover\:bg-sky-600:hover,.hover\:bg-sky-700:hover,.hover\:bg-sky-800:hover){background-color:var(--color-info-strong)}
-html body :is(.hover\:bg-sky-100:hover,.hover\:bg-sky-200:hover){background-color:color-mix(in srgb,var(--color-info) 16%,var(--color-surface))}
-html body :is(.text-sky-400,.text-sky-500,.text-sky-600,.text-sky-700,.text-sky-800,.text-sky-900,.hover\:text-sky-700,.hover\:text-sky-800,.hover\:text-sky-900){color:var(--color-info-strong)}
-html body :is(.border-sky-100,.border-sky-200,.border-sky-300){border-color:color-mix(in srgb,var(--color-info) 30%,var(--color-surface))}
-html body :is(.bg-purple-50,.bg-purple-100,.bg-purple-200){background-color:var(--color-info-soft)}
-html body :is(.bg-purple-400,.bg-purple-500,.bg-purple-600,.bg-purple-700){background-color:var(--color-info)}
-html body :is(.hover\:bg-purple-600:hover,.hover\:bg-purple-700:hover,.hover\:bg-purple-800:hover){background-color:var(--color-info-strong)}
-html body :is(.hover\:bg-purple-100:hover,.hover\:bg-purple-200:hover){background-color:color-mix(in srgb,var(--color-info) 16%,var(--color-surface))}
-html body :is(.text-purple-400,.text-purple-500,.text-purple-600,.text-purple-700,.text-purple-800,.text-purple-900,.hover\:text-purple-700,.hover\:text-purple-800,.hover\:text-purple-900){color:var(--color-info-strong)}
-html body :is(.border-purple-100,.border-purple-200,.border-purple-300){border-color:color-mix(in srgb,var(--color-info) 30%,var(--color-surface))}
-html body :is(.bg-gradient-to-r,.bg-gradient-to-br){background-image:none}
-html body :is(.from-teal-700,.from-teal-800){background-color:var(--color-sidebar)}
-html body .from-rose-50{background-color:var(--color-danger-soft)}
-html body #loginScreen{background-color:var(--color-sidebar)}
-html body .nav-active{font-weight:700;background-color:color-mix(in srgb,var(--color-on-sidebar) 16%,transparent)}
-html body .avatar{width:2.5rem;height:2.5rem;flex-shrink:0;border-radius:9999px;display:flex;align-items:center;justify-content:center;font:700 var(--text-sm)/1 var(--font-heading);background:var(--color-primary);color:var(--color-on-primary);border:2px solid var(--color-primary-soft)}
-.skip-link{position:absolute;left:var(--space-4);top:-100px;z-index:100;background:var(--color-surface);color:var(--color-primary-strong);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);box-shadow:var(--shadow-md);font-weight:600}
-.skip-link:focus{top:var(--space-4)}
-/* interaksi & sentuhan */
-html body :is(button,[role=button],select,summary,label[for],input[type=file]){cursor:pointer}
-html body button{min-height:var(--touch-min);min-width:var(--touch-min);transition:background-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard)}
-html body :is(button:disabled,input:disabled,select:disabled,textarea:disabled){opacity:.55;cursor:not-allowed}
-html body :is(input:not([type=radio]):not([type=checkbox]):not([type=file]),select,textarea){min-height:var(--touch-min);font-size:var(--text-base);color:var(--color-text);background-color:var(--color-surface);border-color:var(--color-border-strong);border-radius:var(--radius-md);transition:border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)}
-html body :is(input:not([type=radio]):not([type=checkbox]):not([type=file]),select,textarea):focus{border-color:var(--color-primary)}
-html body :is(input[type=radio],input[type=checkbox]){width:1.25rem;height:1.25rem;flex-shrink:0}
-html body :is(label:has(>input[type=radio]),label:has(>input[type=checkbox])){min-height:var(--touch-min)}
-html body :is(#sec-history td button){display:inline-flex;align-items:center;gap:.375rem;padding:0 var(--space-3);margin:0 var(--space-2) var(--space-2) 0}
-html body :focus-visible:not(#mainContent){outline:3px solid var(--color-focus-ring)!important;outline-offset:2px}
-html body #mainContent:focus{outline:none}
-html body :is(#simpan-btn,#loginBtn):disabled::before{content:"";display:inline-block;width:1em;height:1em;margin-right:.5em;vertical-align:-.15em;border:2px solid currentColor;border-right-color:transparent;border-radius:9999px;animation:ds-spin .7s linear infinite}
-@keyframes ds-spin{to{transform:rotate(360deg)}}
-html body #progress-bar{transition:none}
-html body #sec-history tbody tr{transition:background-color var(--duration-fast) var(--ease-standard)}
-html body #sec-history tbody tr:hover{background-color:var(--color-primary-soft)}
-html body :is(th){font-weight:600}
-}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-</style>
-<style id="design-motion">
-:root{--ease-out:cubic-bezier(.16,1,.3,1);--shadow-card:0 1px 2px rgb(15 23 42/.05),0 10px 24px -14px rgb(15 23 42/.14);--shadow-card-hover:0 2px 4px rgb(15 23 42/.06),0 16px 32px -14px rgb(15 23 42/.22)}
-@media screen{
-@keyframes ds-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes ds-fade{from{opacity:0}to{opacity:1}}
-@keyframes ds-pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
-@keyframes ds-reveal{from{clip-path:inset(0 100% 0 0 round 9999px)}to{clip-path:inset(0 0 0 0 round 9999px)}}
-html body ::selection{background:color-mix(in srgb,var(--color-primary) 25%,transparent)}
-html body ::-webkit-scrollbar-track{background:var(--color-surface-muted)}
-html body ::-webkit-scrollbar-thumb{background:var(--color-border-strong)}
-html body :is(h2,h3){letter-spacing:-.01em}
-/* perpindahan halaman: gerak menjawab klik menu */
-html body .app-section.active:not(#sec-dashboard){animation:ds-enter var(--duration-slow) var(--ease-out) backwards}
-/* satu momen terorkestrasi: dashboard tampil berurutan */
-html body #sec-dashboard.active>*{animation:ds-enter 420ms var(--ease-out) backwards}
-html body #sec-dashboard.active>:nth-child(2){animation-delay:70ms}
-html body #sec-dashboard.active>:nth-child(3){animation-delay:140ms}
-html body #sec-dashboard.active>:nth-child(4){animation-delay:210ms}
-html body #sec-dashboard.active>:nth-child(5){animation-delay:280ms}
-html body #sec-dashboard.active #progress-bar{animation:ds-reveal 900ms var(--ease-out) 350ms backwards}
-/* permukaan kartu: garis tipis + bayangan berlapis */
-html body :is(#sec-dashboard,#sec-charts,#sec-history,#sec-edukasi,#sec-settings) :is(.rounded-2xl,.rounded-xl).bg-white{box-shadow:var(--shadow-card);border-color:var(--color-border)}
-html body :is(#sec-dashboard .grid>.bg-white,#sec-edukasi .grid>div){transition:transform var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out)}
-html body :is(#sec-dashboard .grid>.bg-white,#sec-edukasi .grid>div):hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover);border-color:color-mix(in srgb,var(--color-primary) 35%,var(--color-border))}
-html body #sec-dashboard h4.text-3xl{font-family:var(--font-heading);font-weight:800;letter-spacing:-.02em}
-html body #sec-dashboard>:first-child{box-shadow:var(--shadow-md),inset 0 0 0 1px color-mix(in srgb,var(--color-on-sidebar) 10%,transparent)}
-html body #sec-dashboard>:first-child h3{font-weight:800;letter-spacing:-.02em}
-/* header & sidebar */
-html body header{box-shadow:0 1px 0 var(--color-border)}
-html body aside{box-shadow:var(--shadow-md);transition-timing-function:var(--ease-out)}
-html body .nav-link{border-left:4px solid transparent;transition:background-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard),border-color var(--duration-base) var(--ease-standard),padding var(--duration-base) var(--ease-out)}
-html body .nav-link:not(.nav-active):hover{padding-left:1.25rem}
-html body .nav-active{border-left-color:var(--color-on-sidebar)}
-/* tombol: umpan balik tekan */
-html body button:not(:disabled){transition-property:background-color,color,border-color,box-shadow,opacity,transform}
-html body button:not(:disabled):active{transform:scale(.98)}
-html body :is(.bg-teal-600,.bg-teal-700):is(button){box-shadow:inset 0 1px 0 rgb(255 255 255/.14),var(--shadow-sm)}
-html body :is(input:not([type=radio]):not([type=checkbox]):not([type=file]),select,textarea):hover:not(:focus):not(:disabled){border-color:var(--color-text-muted)}
-/* tabel: baris selang-seling */
-html body #sec-history tbody tr:nth-child(even){background-color:color-mix(in srgb,var(--color-surface-muted) 45%,var(--color-surface))}
-html body #sec-history tbody tr:hover{background-color:var(--color-primary-soft)}
-/* modal */
-html body :is(#customAlertModal,#customConfirmModal,#edukasiModal,#successModal):not(.hidden){animation:ds-fade var(--duration-base) var(--ease-standard)}
-html body .modal-animate{animation:ds-pop var(--duration-slow) var(--ease-out) both}
-}
-</style>
-<style id="design-visual">
-@media screen{
-/* motif identitas: pola titik halus di area gelap */
-html body #loginScreen{background-image:radial-gradient(color-mix(in srgb,var(--color-on-sidebar) 16%,transparent) 1px,transparent 1.6px);background-size:22px 22px}
-html body #loginScreen>div{border-radius:20px;padding:2.5rem 2rem;box-shadow:var(--shadow-lg)}
-html body #loginScreen h2{font-size:1.375rem;font-weight:800;letter-spacing:-.02em}
-html body #loginBtn{min-height:48px;font-weight:700;border-radius:var(--radius-md)}
-/* sidebar */
-html body aside{background-image:linear-gradient(180deg,color-mix(in srgb,var(--color-on-sidebar) 6%,transparent),transparent 40%)}
-html body aside h1{font-family:var(--font-heading);font-weight:800;font-size:1rem;letter-spacing:-.01em}
-html body .nav-link{border-left:0;font-weight:600;padding-top:.8rem;padding-bottom:.8rem}
-html body .nav-link:not(.nav-active):hover{padding-left:1rem;background-color:color-mix(in srgb,var(--color-on-sidebar) 10%,transparent);color:#fff}
-html body .nav-active{border-left:0;background-color:color-mix(in srgb,var(--color-on-sidebar) 18%,transparent);box-shadow:inset 4px 0 0 var(--color-on-sidebar)}
-/* header & latar */
-html body header{padding-top:1rem;padding-bottom:1rem}
-html body header h2{font-weight:800;font-size:1.375rem}
-html body header span.rounded-full{background-color:var(--color-primary-soft);color:var(--color-primary-strong);font-weight:600;border-color:color-mix(in srgb,var(--color-primary) 25%,var(--color-surface))}
-html body #mainContent{background-image:radial-gradient(color-mix(in srgb,var(--color-border-strong) 24%,transparent) 1px,transparent 1.3px);background-size:24px 24px}
-/* dashboard: banner dan KPI */
-html body #sec-dashboard>:first-child{background-image:radial-gradient(color-mix(in srgb,var(--color-on-sidebar) 16%,transparent) 1px,transparent 1.6px);background-size:20px 20px;padding:2rem 2rem;border-radius:20px}
-html body #sec-dashboard>:first-child h3{font-size:clamp(1.5rem,4.2vw,2.25rem);line-height:1.15}
-html body #sec-dashboard>:first-child p{font-size:1rem;color:var(--color-on-sidebar)}
-html body #sec-dashboard .grid>.bg-white{border-top-width:4px;padding:1.5rem}
-html body #sec-dashboard .grid>.bg-white:nth-child(1){border-top-color:var(--color-info)}
-html body #sec-dashboard .grid>.bg-white:nth-child(2){border-top-color:var(--color-success)}
-html body #sec-dashboard .grid>.bg-white:nth-child(3){border-top-color:var(--color-danger)}
-html body #sec-dashboard .grid>.bg-white>div:first-child{border-radius:var(--radius-md)}
-html body #sec-dashboard h4.text-3xl{font-size:2.25rem;line-height:1}
-html body #progress-bar{background-image:repeating-linear-gradient(135deg,transparent 0 10px,rgb(255 255 255/.18) 10px 20px)}
-/* judul bagian form: aksen kiri */
-html body #sec-form .px-6.py-4.border-b{border-left:4px solid var(--color-primary)}
-html body #sec-form h3{font-weight:800}
-/* kolom isian bergaya terisi */
-html body #mainContent :is(input:not([type=radio]):not([type=checkbox]):not([type=file]),select,textarea){background-color:var(--color-bg)}
-html body #mainContent :is(input:not([type=radio]):not([type=checkbox]):not([type=file]),select,textarea):focus{background-color:var(--color-surface)}
-html body #mainContent label.block{font-weight:600;margin-bottom:.375rem}
-/* tombol utama */
-html body :is(#simpan-btn){border-radius:var(--radius-md);box-shadow:0 8px 20px -8px color-mix(in srgb,var(--color-primary) 70%,transparent)}
-/* tabel riwayat: kepala terang */
-html body #sec-history thead tr{background-color:var(--color-surface-muted)}
-html body #sec-history thead th{color:var(--color-text);padding:.9rem .75rem;border-bottom:2px solid var(--color-border-strong);font-weight:700}
-html body #sec-history tbody td{padding-top:.8rem;padding-bottom:.8rem}
-}
-</style>
-<style id="design-visual">
-:root{--space-12:3rem}
-@media screen{
-/* LOGIN: panel merek + kartu form */
-html body #loginScreen{background-color:var(--color-sidebar)}
-html body #loginScreen>.bg-white{box-shadow:var(--shadow-lg);animation:ds-pop 420ms var(--ease-out) backwards}
-html body .login-brand{display:none}
-@media (min-width:1024px){
-html body #loginScreen{padding:0;background-color:var(--color-bg)}
-html body .login-brand{display:flex;flex:0 0 54%;align-self:stretch;position:relative;overflow:hidden;align-items:flex-end;padding:var(--space-12);background-color:var(--color-sidebar);color:var(--color-on-sidebar)}
-html body .login-brand-art{position:absolute;right:-40px;bottom:-40px;width:min(90%,560px);color:var(--color-on-sidebar);opacity:.14}
-html body .login-brand-copy{position:relative;max-width:30rem}
-html body .login-brand h1{font:800 clamp(2.25rem,4vw,3.25rem)/1.05 var(--font-heading);letter-spacing:-.03em;color:var(--color-surface)}
-html body .login-brand p{margin-top:1.25rem;font-size:1.0625rem;color:var(--color-on-sidebar)}
-html body .login-brand span{display:inline-block;margin-top:2rem;padding:.375rem .875rem;border-radius:9999px;font-size:var(--text-sm);font-weight:600;color:var(--color-on-sidebar);background-color:color-mix(in srgb,var(--color-on-sidebar) 14%,transparent)}
-html body #loginScreen>.bg-white{margin:auto;box-shadow:var(--shadow-md);max-width:26rem}}
-/* SIDEBAR: menu aktif berupa pil terang */
-html body .nav-link{border-radius:var(--radius-md);font-size:var(--text-base)}
-html body .nav-link.nav-active{background-color:var(--color-surface);color:var(--color-primary-strong)!important;border-left-color:transparent;box-shadow:var(--shadow-sm)}
-html body .nav-link:not(.nav-active):hover{background-color:color-mix(in srgb,var(--color-on-sidebar) 12%,transparent);color:var(--color-surface)}
-/* HEADER */
-html body #pageTitle,html body #pageTitleMobile{font-weight:800;letter-spacing:-.02em}
-html body #pageTitle{font-size:1.5rem}
-/* DASHBOARD: hero, KPI, progres */
-html body #sec-dashboard>:first-child{padding:2rem;border-radius:var(--radius-lg);background-color:var(--color-sidebar);background-image:radial-gradient(120% 150% at 100% 0%,color-mix(in srgb,var(--color-primary) 65%,transparent),transparent 60%)}
-html body #sec-dashboard>:first-child h3{font-size:clamp(1.5rem,3.2vw,2.125rem);line-height:1.15;color:var(--color-surface)}
-html body #sec-dashboard>:first-child p{font-size:1.0625rem;color:var(--color-on-sidebar)}
-html body #sec-dashboard .grid>.bg-white{border-top:3px solid var(--color-border);padding:1.5rem}
-html body #sec-dashboard .grid>.bg-white:nth-child(1){border-top-color:var(--color-info)}
-html body #sec-dashboard .grid>.bg-white:nth-child(2){border-top-color:var(--color-success)}
-html body #sec-dashboard .grid>.bg-white:nth-child(3){border-top-color:var(--color-danger)}
-html body #sec-dashboard .grid>.bg-white>div:first-child{border-radius:var(--radius-md)}
-html body #sec-dashboard h4.text-3xl{font-size:2.25rem;line-height:1}
-html body #progress-text{font-family:var(--font-heading);font-weight:800;letter-spacing:-.02em}
-html body #progress-bar{background-color:var(--color-primary)}
-/* FORM: lencana seksi persegi lembut */
-html body #sec-form .rounded-full.w-8.h-8{border-radius:var(--radius-md)}
-html body #sec-form .bg-white.rounded-xl>div:first-child{padding-block:1rem}
-}
-</style>
-<style id="design-form">
-@media screen{
-html body #sec-form label.block.font-semibold{font-size:var(--text-base);font-weight:700;line-height:1.45;color:var(--color-text);margin-bottom:.75rem}
-html body .q-num{display:inline-flex;align-items:center;justify-content:center;min-width:1.75rem;height:1.75rem;padding:0 .4rem;margin-right:.625rem;border-radius:var(--radius-sm);background-color:var(--color-primary);color:var(--color-on-primary);font:800 var(--text-sm)/1 var(--font-heading);vertical-align:.05em}
-html body #sec-form .border-t.pt-4{padding-top:1.5rem}
-html body #sec-form label.flex.items-center.gap-2:not([class*="p-3"]):has(>input[type=radio],>input[type=checkbox]){padding:.5rem .875rem;background-color:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);transition:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard)}
-html body #sec-form label.flex.items-center.gap-2:not([class*="p-3"]):has(>input[type=radio],>input[type=checkbox]):hover{background-color:var(--color-primary-soft);border-color:color-mix(in srgb,var(--color-primary) 40%,var(--color-border))}
-html body #sec-form label.flex.items-center.gap-2:not([class*="p-3"]):has(>input:checked){background-color:var(--color-primary-soft);border-color:var(--color-primary)}
-html body #sec-form label.flex.items-center.gap-2:has(>input[type=radio],>input[type=checkbox])>span{font-size:var(--text-base);font-weight:500}
-html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-weight:700}
-@media (min-width:640px){html body #sec-form .flex-col>label.flex.items-center.gap-2:has(>input[type=radio],>input[type=checkbox]){align-self:flex-start}}
-}
-</style>
 </head>
 <body class="text-slate-800 flex h-screen overflow-hidden selection:bg-teal-200">
     <a href="#mainContent" class="skip-link">Lewati ke konten utama</a>
@@ -591,17 +674,15 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
 
                 <!-- BARIS 2: Tren BB & Intervensi -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                        <h4 class="font-bold text-slate-700 text-center mb-1">Outcome: Tren Berat Badan</h4>
-                        <p class="text-xs text-slate-500 text-center mb-4">Distribusi perubahan BB balita (Kunjungan Lanjutan)</p>
-                        <div class="relative h-64 w-full"><canvas id="trenBBChart" role="img" aria-label="Grafik donat tren berat badan"></canvas></div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                        <h4 class="font-bold text-slate-700 text-center mb-1">Pemetaan Intervensi ASN</h4>
-                        <p class="text-xs text-slate-500 text-center mb-4">Tindakan edukasi yang paling banyak diberikan</p>
-                        <div class="relative h-64 w-full"><canvas id="intervensiChart" role="img" aria-label="Grafik batang intervensi ASN pendamping"></canvas></div>
-                    </div>
-                </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col">
+    <h4 class="font-bold text-slate-700 text-center mb-1">Outcome: Tren Berat Badan</h4>
+    <p class="text-xs text-slate-500 text-center mb-4">Distribusi perubahan BB balita (Kunjungan Lanjutan)</p>
+    <div class="relative h-64 w-full mb-4"><canvas id="trenBBChart" role="img" aria-label="Grafik donat tren berat badan"></canvas></div>
+    <!-- WADAH BARU UNTUK DAFTAR NAMA BALITA -->
+    <div id="detailTrenBB" class="mt-auto pt-4 border-t border-slate-100 text-sm max-h-32 overflow-y-auto space-y-2">
+        <!-- Nama balita akan dimunculkan di sini oleh JavaScript -->
+    </div>
+</div>
                 
                 <!-- BARIS 3: Grafik Pertumbuhan Individu -->
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
@@ -724,8 +805,9 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
     </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-        import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import { initializeFirestore, getFirestore, persistentLocalCache, persistentMultipleTabManager, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot as fbOnSnapshot } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
         // --- DATA KAMUS EDUKASI ---
         const materiEdukasi = {
             'mpasi': {
@@ -785,21 +867,71 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
             document.getElementById('edukasiModal').classList.replace('hidden', 'flex');
         };
         window.tutupEdukasi = () => { document.getElementById('edukasiModal').classList.replace('flex', 'hidden'); };
+
         const firebaseConfig = { apiKey: "AIzaSyBe4h3Qm-wA3owJA4XDieEKaWDAxzpL07c", authDomain: "puskesmas-karangkobar-asn.firebaseapp.com", projectId: "puskesmas-karangkobar-asn", storageBucket: "puskesmas-karangkobar-asn.firebasestorage.app", messagingSenderId: "46506527118", appId: "1:46506527118:web:fa053420f51dd440c9bcdf" };
-        const fbApp = initializeApp(firebaseConfig); const db = getFirestore(fbApp); const auth = getAuth(fbApp); 
-        const kunjunganCol = collection(db, 'kunjungan_balita'); const sasaranCol = collection(db, 'master_sasaran_balita');
+        const fbApp = initializeApp(firebaseConfig);
+        
+        // Mesin Firebase Modern: Anti Macet Saat Banyak Tab
+        let db;
+        try {
+            db = initializeFirestore(fbApp, {
+                localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+            });
+        } catch (e) {
+            db = getFirestore(fbApp);
+        }
+        const auth = getAuth(fbApp);
+        const kunjunganCol = collection(db, 'kunjungan_balita');
+        const sasaranCol = collection(db, 'master_sasaran_balita');
         const asnCol = collection(db, 'master_asn_pendamping');
+
+        // Pengaman Mesin Pemuat: Menunggu Sesi Login Selesai Dulu Agar Tidak Ditolak Server (Permission Denied)
+        const pendingSnapshots = [];
+        const onSnapshot = (colRef, callback) => {
+            let unsub = null;
+            const startListener = () => {
+                if (unsub) { try { unsub(); } catch (e) {} }
+                unsub = fbOnSnapshot(colRef, callback, (err) => {
+                    console.warn("Sinkronisasi menunggu autentikasi:", err.code);
+                });
+            };
+            pendingSnapshots.push(startListener);
+            if (auth.currentUser) startListener();
+        };
 
         function showAlert(msg) { const el = document.getElementById('alertMessage'); if(el) el.textContent = msg; const m = document.getElementById('customAlertModal'); if(m) m.classList.replace('hidden','flex'); return new Promise(r => { const btn = document.getElementById('closeAlertBtn'); if(btn) btn.onclick = () => { m.classList.replace('flex','hidden'); r(); }; else r(); }); }
         function showConfirm(msg) { const el = document.getElementById('confirmMessage'); if(el) el.textContent = msg; const m = document.getElementById('customConfirmModal'); if(m) m.classList.replace('hidden','flex'); return new Promise(r => { const cBtn = document.getElementById('cancelConfirmBtn'); if(cBtn) cBtn.onclick = () => { m.classList.replace('flex','hidden'); r(false); }; const oBtn = document.getElementById('okConfirmBtn'); if(oBtn) oBtn.onclick = () => { m.classList.replace('flex','hidden'); r(true); }; }); }
 
-        // --- AUTH ---
+        // --- AUTH & AUTO-SYNC ---
         setPersistence(auth, browserLocalPersistence).catch(() => {});
         const toggleBtn = document.getElementById('togglePasswordBtn'); if(toggleBtn) toggleBtn.onclick = () => { const lp = document.getElementById('loginPassword'); lp.type = lp.type === 'password' ? 'text' : 'password'; document.getElementById('eyeIcon').classList.toggle('hidden'); document.getElementById('eyeSlashIcon').classList.toggle('hidden'); };
         const lForm = document.getElementById('loginForm'); if(lForm) lForm.onsubmit = async (e) => { e.preventDefault(); const btn = document.getElementById('loginBtn'); btn.disabled = true; btn.textContent = 'Memproses...'; try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value.trim(), document.getElementById('loginPassword').value); } catch(err) { document.getElementById('loginError').textContent = 'Kredensial salah!'; document.getElementById('loginError').classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Masuk'; } };
-        onAuthStateChanged(auth, user => { const s = document.getElementById('loginScreen'); if(s) s.style.display = user ? 'none' : 'flex'; const a = document.getElementById('appShell'); if(a) a.style.display = user ? 'flex' : 'none'; });
+        
+        onAuthStateChanged(auth, user => {
+            const s = document.getElementById('loginScreen'); if(s) s.style.display = user ? 'none' : 'flex';
+            const a = document.getElementById('appShell'); if(a) a.style.display = user ? 'flex' : 'none';
+            if (user) {
+                // Begitu login berhasil, jalankan semua penarikan data!
+                pendingSnapshots.forEach(fn => fn());
+            }
+        });
         window.triggerLogout = async () => { if (await showConfirm('Yakin ingin keluar?')) signOut(auth); };
-        enableIndexedDbPersistence(db).catch(() => {});
+
+        // Animasi Emil Kowalski: Baris Tabel Masuk Berurutan (Staggered)
+        setTimeout(() => {
+            if (typeof renderAsnList === 'function') renderAsnList();
+            if (typeof renderSasaranList === 'function') renderSasaranList();
+            if (typeof updateDashboardCards === 'function') updateDashboardCards();
+            if (typeof renderTable === 'function') renderTable();
+            const tbody = document.getElementById('historyTableBody');
+            if (tbody) {
+                new MutationObserver(() => {
+                    tbody.querySelectorAll('tr').forEach((tr, idx) => {
+                        tr.style.animationDelay = Math.min(idx * 22, 240) + 'ms';
+                    });
+                }).observe(tbody, { childList: true });
+            }
+        }, 150);
 
         // --- GLOBAL & UI SETUP ---
         let editingId = null; let cachedData = JSON.parse(localStorage.getItem('asnDataLokal') || '[]'); let lastSearchTerm = '';
@@ -1468,28 +1600,46 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
 
         // --- DASHBOARD & TABLE ---
         function updateDashboardCards() {
+            // 1. Total Kunjungan Keseluruhan (All-Time)
             const dT = document.getElementById('dash-total'); if(dT) dT.textContent = cachedData.length; 
-            const ym = localDate.substring(0, 7); 
-            const bulanIni = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ym));
+
+            // 2. SMART DETECTOR: Cari target bulan. Defaultnya bulan ini.
+            let ymTarget = localDate.substring(0, 7); 
+            let targetData = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ymTarget));
+
+            // Jika bulan ini masih kosong, otomatis mundur ke bulan terakhir yang ada datanya!
+            if (targetData.length === 0 && cachedData.length > 0) {
+                const dataTerbaru = [...cachedData].sort((a,b) => b.createdAt - a.createdAt)[0];
+                if (dataTerbaru && dataTerbaru.tanggal_kunjungan) {
+                    ymTarget = String(dataTerbaru.tanggal_kunjungan).substring(0, 7);
+                    targetData = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ymTarget));
+                }
+            }
             
-            const dSehat = document.getElementById('dash-sehat'); if(dSehat) dSehat.textContent = bulanIni.filter(d => d.kondisi_balita === 'Sehat').length; 
-            const dSakit = document.getElementById('dash-sakit'); if(dSakit) dSakit.textContent = bulanIni.filter(d => d.kondisi_balita === 'Sakit').length;
+            // 3. Update Kotak Sehat & Sakit berdasarkan bulan target
+            const dSehat = document.getElementById('dash-sehat'); 
+            if(dSehat) dSehat.textContent = targetData.filter(d => d.kondisi_balita === 'Sehat' || !d.kondisi_balita).length; 
             
-            const visited = new Set(bulanIni.map(d => d.nama_balita));
-            const total = combinedMaster.length; const pct = total > 0 ? Math.round((visited.size / total) * 100) : 0;
+            const dSakit = document.getElementById('dash-sakit'); 
+            if(dSakit) dSakit.textContent = targetData.filter(d => d.kondisi_balita === 'Sakit').length;
+            
+            // 4. Update Progres Bar (Hanya menghitung balita yang unik)
+            const visited = new Set(targetData.map(d => d.nama_balita));
+            const total = combinedMaster.length > 0 ? combinedMaster.length : 66; // 66 sebagai default jika master kosong
+            const pct = total > 0 ? Math.round((visited.size / total) * 100) : 0;
             
             const pT = document.getElementById('progress-text'); if(pT) pT.textContent = pct + '%'; 
             const pB = document.getElementById('progress-bar'); if(pB) pB.style.width = pct + '%'; 
             const pC = document.getElementById('progress-count'); if(pC) pC.textContent = visited.size; 
             const pTot = document.getElementById('progress-total'); if(pTot) pTot.textContent = total;
             
-            // --- MESIN DETEKTOR PERINGATAN DINI (RED FLAGS) ---
+            // 5. MESIN DETEKTOR PERINGATAN DINI (RED FLAGS)
             const ul = document.getElementById('dash-alert-list');
             if(ul) {
                 ul.innerHTML = '';
                 let alertItems = [];
 
-                bulanIni.forEach(d => {
+                targetData.forEach(d => {
                     const kondisi = String(d.kondisi_balita).toLowerCase();
                     const pbb = String(d.perbandingan_bb).toLowerCase();
                     let isRisikoTinggi = false;
@@ -1500,7 +1650,7 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
                     if (kondisi === 'sakit') { isRisikoTinggi = true; alasan.push('Sedang Sakit'); }
                     if (pbb.includes('turun')) { isRisikoTinggi = true; alasan.push('BB Turun'); }
 
-                    // Deteksi 🟡 Perlu Perhatian (Hanya jika tidak masuk Risiko Tinggi)
+                    // Deteksi 🟡 Perlu Perhatian
                     if (!isRisikoTinggi) {
                         if (pbb.includes('tetap')) { isPerhatian = true; alasan.push('BB Tetap (Weight Faltering)'); }
                         else if (pbb.includes('tidak sesuai')) { isPerhatian = true; alasan.push('Naik Tidak Sesuai KBM'); }
@@ -1516,7 +1666,7 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
                 });
 
                 if (alertItems.length === 0) {
-                    ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-5 rounded-xl font-medium shadow-sm border border-emerald-200 flex items-center justify-center gap-3"><svg class="h-6 w-6 inline-block flex-shrink-0" aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Hebat! Tidak ada balita dengan status peringatan kritis di bulan ini.</li>'; 
+                    ul.innerHTML = '<li class="text-sm text-emerald-700 bg-emerald-50 p-5 rounded-xl font-medium shadow-sm border border-emerald-200 flex items-center justify-center gap-3"><svg class="h-6 w-6 inline-block flex-shrink-0" aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Hebat! Tidak ada balita dengan status peringatan kritis pada periode ini.</li>'; 
                 } else {
                     // Tampilkan Risiko Tinggi paling atas, baru Perlu Perhatian
                     alertItems.sort((a, b) => a.tingkat === 'tinggi' ? -1 : 1).forEach(item => {
@@ -1678,18 +1828,34 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
                 }); 
             }
 
-            // 3. Kalkulasi Outcome Tren BB Bulan Ini
-            const bulanIni = cachedData.filter(d => d.jenis_kunjungan !== 'pertama');
-            let naikSesuai = 0, naikTidak = 0, tetap = 0, turun = 0;
-            bulanIni.forEach(d => {
-                const tren = String(d.perbandingan_bb).toLowerCase();
-                if(tren.includes('sesuai')) naikSesuai++;
-                else if(tren.includes('tidak sesuai')) naikTidak++;
-                else if(tren.includes('tetap')) tetap++;
-                else if(tren.includes('turun')) turun++;
-            });
-            const dataTren = bulanIni.length > 0 ? [naikSesuai, naikTidak, tetap, turun] : [0,0,0,0];
+// 3. Kalkulasi Outcome Tren BB Bulan Ini (Dilengkapi Daftar Nama)
+            // Detektor Pintar: Fokus ke bulan berjalan/terakhir agar sinkron dengan Dashboard utama
+            let ymTargetChart = localDate.substring(0, 7);
+            let targetDataChart = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ymTargetChart) && d.jenis_kunjungan !== 'pertama');
+            
+            if (targetDataChart.length === 0 && cachedData.filter(d => d.jenis_kunjungan !== 'pertama').length > 0) {
+                const dataTerbaru = [...cachedData.filter(d => d.jenis_kunjungan !== 'pertama')].sort((a,b) => b.createdAt - a.createdAt)[0];
+                if (dataTerbaru && dataTerbaru.tanggal_kunjungan) {
+                    ymTargetChart = String(dataTerbaru.tanggal_kunjungan).substring(0, 7);
+                    targetDataChart = cachedData.filter(d => String(d.tanggal_kunjungan).startsWith(ymTargetChart) && d.jenis_kunjungan !== 'pertama');
+                }
+            }
 
+            let naikSesuai = 0, naikTidak = 0, tetap = 0, turun = 0;
+            let listTurun = [], listTetap = [], listTidakSesuai = [];
+
+            targetDataChart.forEach(d => {
+                const tren = String(d.perbandingan_bb).toLowerCase();
+                const nama = d.nama_balita || 'Tanpa Nama';
+                
+                if(tren.includes('tidak sesuai')) { naikTidak++; listTidakSesuai.push(nama); }
+                else if(tren.includes('sesuai')) { naikSesuai++; }
+                else if(tren.includes('tetap')) { tetap++; listTetap.push(nama); }
+                else if(tren.includes('turun')) { turun++; listTurun.push(nama); }
+            });
+            const dataTren = targetDataChart.length > 0 ? [naikSesuai, naikTidak, tetap, turun] : [0,0,0,0];
+
+            // Render grafik Donat
             const cT = document.getElementById('trenBBChart');
             if(cT) { 
                 if(cTrenBB) cTrenBB.destroy(); 
@@ -1700,6 +1866,25 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
                 }); 
             }
 
+            // Tampilkan daftar nama ke layar (UI)
+            const detailTrenDiv = document.getElementById('detailTrenBB');
+            if(detailTrenDiv) {
+                detailTrenDiv.innerHTML = '';
+                if(listTurun.length > 0) {
+                    detailTrenDiv.innerHTML += `<div class="bg-rose-50 p-2.5 rounded-lg border border-rose-100"><span class="font-bold text-rose-700 text-[11px] uppercase tracking-wider block mb-0.5">BB Turun:</span> <span class="text-rose-600 font-medium">${listTurun.join(', ')}</span></div>`;
+                }
+                if(listTetap.length > 0) {
+                    detailTrenDiv.innerHTML += `<div class="bg-slate-100 p-2.5 rounded-lg border border-slate-200"><span class="font-bold text-slate-600 text-[11px] uppercase tracking-wider block mb-0.5">BB Tetap (Weight Faltering):</span> <span class="text-slate-700 font-medium">${listTetap.join(', ')}</span></div>`;
+                }
+                if(listTidakSesuai.length > 0) {
+                    detailTrenDiv.innerHTML += `<div class="bg-blue-50 p-2.5 rounded-lg border border-blue-100"><span class="font-bold text-blue-700 text-[11px] uppercase tracking-wider block mb-0.5">Naik Tidak Sesuai KBM:</span> <span class="text-blue-700 font-medium">${listTidakSesuai.join(', ')}</span></div>`;
+                }
+                if(listTurun.length === 0 && listTetap.length === 0 && listTidakSesuai.length === 0 && targetDataChart.length > 0) {
+                     detailTrenDiv.innerHTML = `<div class="text-center text-emerald-600 font-bold py-3 bg-emerald-50 border border-emerald-100 rounded-lg">Mantap! Semua balita naik sesuai KBM.</div>`;
+                } else if (targetDataChart.length === 0) {
+                     detailTrenDiv.innerHTML = `<div class="text-center text-slate-400 py-2">Belum ada data kunjungan lanjutan bulan ini.</div>`;
+                }
+            }
             // 4. Kalkulasi Kinerja Intervensi ASN
             let cMPASI=0, cImunisasi=0, cLingkungan=0, cRokok=0, cPosyandu=0, cRujuk=0, cPMT=0;
             cachedData.forEach(d => {
@@ -1851,6 +2036,25 @@ html body #sec-form label.flex.items-center.gap-2:has(>input:checked)>span{font-
                 };
             }
         }, 1000);
+// --- FITUR UNCHECK RADIO BUTTON (KLIK KEDUA KALI UNTUK MENGHAPUS) ---
+        let lastCheckedRadio = null;
+        document.addEventListener('mousedown', function(e) {
+            // Saat mouse / jari ditekan, catat apakah radio ini sedang dalam posisi tercentang
+            if (e.target.tagName.toLowerCase() === 'input' && e.target.type === 'radio') {
+                lastCheckedRadio = e.target.checked ? e.target : null;
+            }
+        });
+        document.addEventListener('click', function(e) {
+            // Saat klik dilepas, jika radio yang diklik adalah radio yang sama persis dengan yang dicatat tadi, kosongkan!
+            if (e.target.tagName.toLowerCase() === 'input' && e.target.type === 'radio') {
+                if (lastCheckedRadio === e.target) {
+                    e.target.checked = false;
+                    lastCheckedRadio = null;
+                    // Beri tahu sistem bahwa form telah berubah (agar UI otomatis menyesuaikan)
+                    e.target.dispatchEvent(new Event('change'));
+                }
+            }
+        });
     </script>
 </body>
 </html>
