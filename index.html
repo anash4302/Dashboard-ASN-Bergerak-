@@ -376,10 +376,12 @@ html body #sec-dashboard .grid>.bg-white>div:last-child>p{padding-right:3.5rem;f
 @media (min-width:1024px){
 html body #sec-dashboard.active{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.25rem;align-items:stretch}
 html body #sec-dashboard.active>*{margin:0!important}
-html body #sec-dashboard.active>:nth-child(1){grid-column:1/9;grid-row:1}
-html body #sec-dashboard.active>:nth-child(3){grid-column:9/13;grid-row:1}
+html body #sec-dashboard.active>:nth-child(1){grid-column:1/7;grid-row:1}
+html body #sec-dashboard.active>:nth-child(3){grid-column:7/10;grid-row:1}
+html body #sec-dashboard.active>:nth-child(4){grid-column:10/13;grid-row:1}
 html body #sec-dashboard.active>:nth-child(2){grid-column:1/13;grid-row:2}
-html body #sec-dashboard.active>:nth-child(4){grid-column:1/13;grid-row:3}}
+html body #sec-dashboard.active>:nth-child(5){grid-column:1/13;grid-row:3}
+html body #sec-dashboard.active>:is(:nth-child(3),:nth-child(4)) .sm\:flex-row{flex-direction:column;align-items:flex-start}}
 @media (min-width:768px){
 html body #sidebar{width:4.75rem;align-self:center;height:auto;margin:.75rem;padding:.5rem 0;border-radius:2.25rem;overflow:visible}
 html body #sidebar>div:first-child{padding:.5rem 0;justify-content:center;border:0}
@@ -405,7 +407,7 @@ html body .nav-link>span{position:absolute;width:1px;height:1px;overflow:hidden;
 html body #openSidebarBtn{display:none}
 html body main{padding-bottom:6rem}
 html body #sec-dashboard>.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-html body #sec-dashboard>.grid>:first-child{grid-column:span 2}}
+}
 }
 </style>
 <style id="design-glossy">
@@ -526,6 +528,13 @@ html body .bb-list-empty{font-size:var(--text-sm);color:var(--color-text-muted);
 @media (max-width:767.98px){html body #sec-charts .bg-white.rounded-xl{padding:1rem}}
 }
 </style>
+<style id="design-dashboard">
+@media screen{
+html body #progress-all-bar{background-color:var(--color-info);transition:none}
+html body #sec-dashboard.active #progress-all-bar{animation:ds-reveal 900ms var(--ease-out) 450ms backwards}
+@media (min-width:768px){html body #sidebar:has(#navLabelToggle:checked){width:6rem}}
+}
+</style>
 </head>
 <body class="text-slate-800 flex h-screen overflow-hidden selection:bg-teal-200">
     <a href="#mainContent" class="skip-link">Lewati ke konten utama</a>
@@ -585,16 +594,16 @@ html body .bb-list-empty{font-size:var(--text-sm);color:var(--color-text-muted);
                 <div class="bg-gradient-to-r from-teal-700 to-teal-500 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden"><div class="relative z-10"><h3 class="text-2xl sm:text-3xl font-bold mb-2">Selamat Datang, Anas Hamdani</h3><p class="text-teal-100 max-w-2xl">Aplikasi pencatatan dan monitoring bulanan balita untuk pencegahan stunting. Data tersinkron otomatis ke semua perangkat staf.</p></div><svg aria-hidden="true" focusable="false" class="absolute -bottom-10 -right-10 w-64 h-64 text-white opacity-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
                 
                 <!-- 3 Kotak Angka -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><svg aria-hidden="true" focusable="false" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Total Entry Kunjungan</p><h4 class="text-3xl font-bold text-slate-800" id="dash-total">-</h4></div></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><svg aria-hidden="true" focusable="false" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sehat</p><h4 class="text-3xl font-bold text-emerald-600" id="dash-sehat">-</h4></div></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-2xl"><svg aria-hidden="true" focusable="false" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg></div><div><p class="text-slate-500 text-sm font-medium">Kunjungan Bulan Ini</p><h4 class="text-3xl font-bold text-teal-700" id="dash-bulan-ini">-</h4></div></div> <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><svg aria-hidden="true" focusable="false" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sehat</p><h4 class="text-3xl font-bold text-emerald-600" id="dash-sehat">-</h4></div></div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4"><div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl"><svg aria-hidden="true" focusable="false" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div><p class="text-slate-500 text-sm font-medium">Kondisi Sakit (Bulan Ini)</p><h4 class="text-3xl font-bold text-rose-600" id="dash-sakit">-</h4></div></div>
                 </div>
                 
                 <!-- Kotak Progres -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mt-6"><div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-4 gap-2"><div><h4 class="font-bold text-slate-800 text-lg">Progres Kunjungan Bulan Ini</h4><p class="text-xs text-slate-500">Cakupan target balita yang sudah dikunjungi di bulan berjalan</p></div><div class="text-left sm:text-right"><span id="progress-text" class="text-3xl font-black text-teal-600">0%</span></div></div><div class="w-full bg-slate-100 rounded-full h-4 mb-3 overflow-hidden border border-slate-200"><div id="progress-bar" class="bg-teal-500 h-4 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div></div><p class="text-sm text-slate-600 font-medium"><span id="progress-count" class="text-teal-700 font-bold">0</span> dari <span id="progress-total" class="font-bold">0</span> Target Balita telah dikunjungi</p></div>
                 
-                <!-- PANEL PERINGATAN DINI (RED FLAGS ALERT) - PENGGANTI YANG LAMA -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mt-6"><div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-4 gap-2"><div><h4 class="font-bold text-slate-800 text-lg">Progres Kunjungan Total</h4><p class="text-xs text-slate-500">Balita yang pernah dikunjungi sejak awal (semua bulan)</p></div><div class="text-left sm:text-right"><span id="progress-all-text" class="text-3xl font-black text-blue-600">0%</span></div></div><div class="w-full bg-slate-100 rounded-full h-4 mb-3 overflow-hidden border border-slate-200"><div id="progress-all-bar" class="bg-blue-500 h-4 rounded-full" style="width: 0%"></div></div><p class="text-sm text-slate-600 font-medium"><span id="progress-all-count" class="text-blue-700 font-bold">0</span> dari <span id="progress-all-total" class="font-bold">0</span> Target Balita pernah dikunjungi</p></div> <!-- PANEL PERINGATAN DINI (RED FLAGS ALERT) - PENGGANTI YANG LAMA -->
                 <div class="bg-white rounded-2xl shadow-sm border border-rose-300 overflow-hidden mt-6 relative">
                     <div class="bg-gradient-to-r from-rose-50 to-white px-6 py-5 flex items-center gap-4 border-b border-rose-100">
                         <div class="bg-rose-500 text-white p-2.5 rounded-xl shadow-md">
@@ -626,7 +635,7 @@ html body .bb-list-empty{font-size:var(--text-sm);color:var(--color-text-muted);
                 <div class="w-16 h-1.5 bg-teal-500 mx-auto mt-4 rounded-full"></div>
             </div>
             <!-- AKHIR KOP SURAT -->
-                <div class="mb-6 no-print"><p class="text-slate-500">Silakan lengkapi data kunjungan bulanan balita.</p></div>
+                <div class="mb-6 no-print"><p class="text-slate-500">Silakan lengkapi data kunjungan bulanan balita. Klik dua kali pada sebuah pilihan untuk menghapus jawabannya.</p></div>
                 <div id="editModeBanner" class="hidden mb-6 no-print bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 flex items-center justify-between gap-3"><p class="text-amber-800 text-sm font-medium">Sedang mengedit data kunjungan. Simpan untuk memperbarui, atau batalkan.</p><button type="button" id="cancelEditBtn" class="text-amber-700 hover:text-amber-900 font-semibold text-sm underline flex-shrink-0">Batal Edit</button></div>
                 
                 <form id="monitoringForm" class="space-y-6">
@@ -1677,7 +1686,7 @@ html body .bb-list-empty{font-size:var(--text-sm);color:var(--color-text-muted);
             const pT = document.getElementById('progress-text'); if(pT) pT.textContent = pct + '%'; 
             const pB = document.getElementById('progress-bar'); if(pB) pB.style.width = pct + '%'; 
             const pC = document.getElementById('progress-count'); if(pC) pC.textContent = visited.size; 
-            const pTot = document.getElementById('progress-total'); if(pTot) pTot.textContent = total;
+            const pTot = document.getElementById('progress-total'); if(pTot) pTot.textContent = total; const dBI = document.getElementById('dash-bulan-ini'); if(dBI) dBI.textContent = bulanIni.length; const allVisited = new Set(cachedData.map(d => String(d.nama_balita || '').trim().toLowerCase()).filter(Boolean)); const pctAll = total > 0 ? Math.min(100, Math.round((allVisited.size / total) * 100)) : 0; const pAT = document.getElementById('progress-all-text'); if(pAT) pAT.textContent = pctAll + '%'; const pAB = document.getElementById('progress-all-bar'); if(pAB) pAB.style.width = pctAll + '%'; const pAC = document.getElementById('progress-all-count'); if(pAC) pAC.textContent = allVisited.size; const pAN = document.getElementById('progress-all-total'); if(pAN) pAN.textContent = total;
             
             // --- MESIN DETEKTOR PERINGATAN DINI (RED FLAGS) ---
             const ul = document.getElementById('dash-alert-list');
@@ -2055,5 +2064,15 @@ html body .bb-list-empty{font-size:var(--text-sm);color:var(--color-text-muted);
             }
         }, 1000);
     </script>
+<script>
+/* Klik dua kali pada pilihan (radio) di form untuk menghapus jawaban */
+document.addEventListener('dblclick', function(e){
+  var lab = e.target.closest && e.target.closest('#monitoringForm label'); if(!lab) return;
+  var inp = lab.querySelector('input[type="radio"]') || (lab.htmlFor ? document.getElementById(lab.htmlFor) : null);
+  if(!inp || inp.type !== 'radio' || inp.name === 'jenis_kunjungan' || !inp.checked) return;
+  inp.checked = false; inp.dispatchEvent(new Event('change', {bubbles: true}));
+});
+</script>
+
 </body>
 </html>
