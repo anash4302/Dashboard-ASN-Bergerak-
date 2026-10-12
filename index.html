@@ -1754,7 +1754,7 @@ html body #sec-dashboard.active #progress-all-bar{animation:ds-reveal 900ms var(
             }
         }
         window.printSingle = id => { window.triggerEditData(id); const img = document.getElementById('previewFoto'); const go = () => setTimeout(() => window.print(), 400); (img && img.getAttribute('src') ? img.decode() : Promise.resolve()).then(go, go); };
-        (function pasangIkonShortcut() {
+(function pasangIkonShortcut() {
             const c = document.createElement('canvas');
             c.width = 192; c.height = 192;
             const ctx = c.getContext('2d');
@@ -1772,6 +1772,8 @@ html body #sec-dashboard.active #progress-all-bar{animation:ds-reveal 900ms var(
             ctx.font = 'bold 24px Arial';
             ctx.fillText('STUNTING', 96, 156);
             const pngUrl = c.toDataURL('image/png');
+            
+            // Pasang ikon untuk Apple/Browser lama
             ['icon', 'shortcut icon', 'apple-touch-icon'].forEach(rel => {
                 const link = document.createElement('link');
                 link.rel = rel;
@@ -1780,12 +1782,33 @@ html body #sec-dashboard.active #progress-all-bar{animation:ds-reveal 900ms var(
                 link.href = pngUrl;
                 document.head.appendChild(link);
             });
+            
             const meta = document.createElement('meta');
             meta.name = 'theme-color';
             meta.content = '#0d9488';
             document.head.appendChild(meta);
-        })();
 
+            // --- SUNTIKAN MANIFEST PWA (Agar Chrome/MIUI merespon saat diklik) ---
+            const manifestJSON = {
+                "name": "ASN Bergerak Stunting",
+                "short_name": "Stunting",
+                "start_url": window.location.href.split('?')[0],
+                "display": "standalone", // Wajib: agar terbuka penuh tanpa bingkai Chrome
+                "background_color": "#f8fafc",
+                "theme_color": "#0d9488",
+                "icons": [{
+                    "src": pngUrl,
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/json'});
+            const manifestLink = document.createElement('link');
+            manifestLink.rel = 'manifest';
+            manifestLink.href = URL.createObjectURL(manifestBlob);
+            document.head.appendChild(manifestLink);
+        })();
         // --- SUPER NATIVE EXCEL EXPORT (MULTI-SHEET) ---
         window.triggerExportExcel = () => {
             if(!cachedData.length) return showAlert('Tidak ada data kunjungan untuk diekspor!');
